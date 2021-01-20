@@ -17,7 +17,7 @@ func (i *InMemoryRepository) GetBlog(id string) Blog {
 			return blog
 		}
 	}
-	return NewBlog("wtf this doesnt exist")
+	return NewBlog("This does not exist")
 }
 
 
