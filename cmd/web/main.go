@@ -1,9 +1,9 @@
 package main
 
 import (
-	blog "personal-blog"
 	"log"
 	"net/http"
+	blog "personal-blog"
 )
 
 const addr = ":8080"
