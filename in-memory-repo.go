@@ -24,9 +24,9 @@ func NewInMemoryRepository() *InMemoryRepository {
 }
 
 
-func (i *InMemoryRepository) GetBlog(id string) Blog {
+func (i *InMemoryRepository) GetBlog(title string) Blog {
 	for _, blog := range i.blogs {
-		if blog.Title ==id {
+		if blog.Title == title {
 			return blog
 		}
 	}

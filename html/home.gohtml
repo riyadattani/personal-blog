@@ -1,16 +1,19 @@
+<!DOCTYPE html>
 <html lang="en">
-{{template "header.partial.gohtml"}}
+{{template "head.partial.gohtml"}}
 <body>
 {{template "navBar.partial.gohtml"}}
-<h2>Blogs</h2>
-<ol>
-    {{range .}}
-      <li>
-        <a href="/blog/{{.Title}}">
-            {{.Title}}
-        </a>
-      </li>
-    {{end}}
-</ol>
+<main>
+  <h2>Blogs</h2>
+  <ol>
+      {{range .}}
+        <li>
+          <a href="/blog/{{.Title}}">
+              {{.Title}}
+          </a>
+        </li>
+      {{end}}
+  </ol>
+</main>
 </body>
 </html>
