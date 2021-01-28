@@ -10,7 +10,7 @@ import (
 
 type Repository interface {
 	GetBlogs() []Blog
-	GetBlog(id string) Blog
+	GetBlog(title string) Blog
 }
 
 type Server struct {
@@ -32,6 +32,10 @@ func NewServer(tempFolderPath string, repo Repository) (*Server, error) {
 
 	router.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		blogTemplate.ExecuteTemplate(writer, "home.gohtml", repo.GetBlogs())
+	}).Methods(http.MethodGet)
+
+	router.HandleFunc("/about", func(writer http.ResponseWriter, request *http.Request) {
+		blogTemplate.ExecuteTemplate(writer, "blog.gohtml", repo.GetBlog("about.md"))
 	}).Methods(http.MethodGet)
 
 	router.HandleFunc("/blog/{title}", func(writer http.ResponseWriter, request *http.Request) {
