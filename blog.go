@@ -2,7 +2,6 @@ package blog
 
 import (
 	"fmt"
-	"github.com/google/uuid"
 	"github.com/russross/blackfriday/v2"
 	"html/template"
 	"io/ioutil"
@@ -10,7 +9,7 @@ import (
 )
 
 type Blog struct {
-	ID      string
+	Title   string
 	Content template.HTML
 }
 
@@ -18,7 +17,7 @@ func NewBlog(title string) Blog {
 	output := loadBlog(title)
 
 	return Blog{
-		ID:      uuid.New().String(),
+		Title:   title,
 		Content: template.HTML(output),
 	}
 }
