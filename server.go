@@ -10,8 +10,8 @@ import (
 )
 
 type Repository interface {
-	GetBlogs() []Blog
-	GetBlog(title string) Blog
+	GetPosts() []Post
+	GetPost(title string) Post
 }
 
 type Server struct {
@@ -34,14 +34,14 @@ func NewServer(tempFolderPath string, repo Repository) (*Server, error) {
 	//router.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("css"))))
 
 	router.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-		err := blogTemplate.ExecuteTemplate(writer, "home.gohtml", repo.GetBlogs())
+		err := blogTemplate.ExecuteTemplate(writer, "home.gohtml", repo.GetPosts())
 		if err != nil {
 			log.Fatal(fmt.Sprint("Could not execute blogTemplate", err))
 		}
 	}).Methods(http.MethodGet)
 
 	router.HandleFunc("/about", func(writer http.ResponseWriter, request *http.Request) {
-		err := blogTemplate.ExecuteTemplate(writer, "blog.gohtml", repo.GetBlog("about.md"))
+		err := blogTemplate.ExecuteTemplate(writer, "blog.gohtml", repo.GetPost("about.md"))
 		if err != nil {
 			log.Fatal(fmt.Sprint("Could not execute blogTemplate", err))
 		}
@@ -50,7 +50,7 @@ func NewServer(tempFolderPath string, repo Repository) (*Server, error) {
 	router.HandleFunc("/blog/{title}", func(writer http.ResponseWriter, request *http.Request) {
 		vars := mux.Vars(request)
 		title := vars["title"]
-		err := blogTemplate.ExecuteTemplate(writer, "blog.gohtml", repo.GetBlog(title))
+		err := blogTemplate.ExecuteTemplate(writer, "blog.gohtml", repo.GetPost(title))
 		if err != nil {
 			log.Fatal(fmt.Sprint("Could not execute blogTemplate", err))
 		}

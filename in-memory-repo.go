@@ -7,34 +7,34 @@ import (
 )
 
 type InMemoryRepository struct {
-	blogs []Blog
+	posts []Post
 }
 
 func NewInMemoryRepository() *InMemoryRepository {
-	blogFiles, err := ioutil.ReadDir("blogs")
+	blogFiles, err := ioutil.ReadDir("posts")
 	if err != nil {
-		log.Fatal(fmt.Sprint("Cannot read the blogs directory -  ", err))
+		log.Fatal(fmt.Sprint("Cannot read the posts directory -  ", err))
 	}
 
-	var blogs []Blog
-	for _, blog := range blogFiles {
-		blogs = append(blogs, NewBlog(blog.Name()))
+	var posts []Post
+	for _, post := range blogFiles {
+		posts = append(posts, NewPost(post.Name()))
 	}
-	return &InMemoryRepository{blogs: blogs}
+	return &InMemoryRepository{posts: posts}
 }
 
 
-func (i *InMemoryRepository) GetBlog(title string) Blog {
-	for _, blog := range i.blogs {
-		if blog.Title == title {
-			return blog
+func (i *InMemoryRepository) GetPost(title string) Post {
+	for _, post := range i.posts {
+		if post.Title == title {
+			return post
 		}
 	}
-	return NewBlog("This does not exist")
+	return NewPost("This does not exist")
 }
 
 
-func (i *InMemoryRepository) GetBlogs() []Blog {
-	return i.blogs
+func (i *InMemoryRepository) GetPosts() []Post {
+	return i.posts
 }
 

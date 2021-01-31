@@ -8,22 +8,22 @@ import (
 	"log"
 )
 
-type Blog struct {
+type Post struct {
 	Title   string
 	Content template.HTML
 }
 
-func NewBlog(title string) Blog {
-	output := loadBlog(title)
+func NewPost(title string) Post {
+	output := loadPost(title)
 
-	return Blog{
+	return Post{
 		Title:   title,
 		Content: template.HTML(output),
 	}
 }
 
-func loadBlog(title string) []byte {
-	body, err := ioutil.ReadFile(fmt.Sprintf("../web/blogs/%s", title))
+func loadPost(title string) []byte {
+	body, err := ioutil.ReadFile(fmt.Sprintf("../web/posts/%s", title))
 	if err != nil {
 		log.Fatal(fmt.Sprint("Could not read blog file ", err))
 	}
