@@ -1,4 +1,4 @@
-# Title of my first blog
+## Title of my first blog
 
 ### Subtitle of the blog 
 
