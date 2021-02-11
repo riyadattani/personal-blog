@@ -30,7 +30,6 @@ func NewServer(tempFolderPath string, cssFolderPath string, repo Repository) (*m
 	}
 
 	router := mux.NewRouter()
-	//TODO: At the moment this does not work
 	router.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir(cssFolderPath))))
 	router.HandleFunc("/", server.viewAllPosts).Methods(http.MethodGet)
 	router.HandleFunc("/about", server.viewAbout).Methods(http.MethodGet)

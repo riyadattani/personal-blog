@@ -11,7 +11,7 @@
           <a href="/blog/{{.Title}}">
               {{.Title}}
           </a>
-            {{.Date}}
+            {{.Date.Format "Jan 02, 2006"}}
         </li>
       {{end}}
   </ol>
