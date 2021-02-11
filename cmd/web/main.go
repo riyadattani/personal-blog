@@ -6,7 +6,7 @@ import (
 	blog "personal-blog"
 )
 
-const addr = ":8080"
+const addr = ":3000"
 
 func main() {
 	server, err := blog.NewServer("../../html/*", blog.NewInMemoryRepository())
