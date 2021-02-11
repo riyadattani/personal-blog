@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"sort"
 )
 
 type InMemoryRepository struct {
@@ -35,6 +36,11 @@ func (i *InMemoryRepository) GetPost(title string) Post {
 
 
 func (i *InMemoryRepository) GetPosts() []Post {
-	return i.posts
+	posts := i.posts
+	sort.Slice(posts, func(i, j int) bool {
+		return posts[i].Date.After(posts[j].Date)
+	})
+
+	return posts
 }
 
