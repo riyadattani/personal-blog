@@ -18,14 +18,10 @@ type server struct {
 	repository   Repository
 }
 
-func NewServer(tempFolderPath string, repo Repository) (*mux.Router, error) {
-	blogTemplate, err := template.ParseGlob(tempFolderPath)
+func NewServer(tempFolderPath string, cssFolderPath string, repo Repository) (*mux.Router, error) {
+	blogTemplate, err := newBlogTemplate(tempFolderPath)
 	if err != nil {
-		return nil, fmt.Errorf(
-			"could not load template from %q, %v",
-			tempFolderPath,
-			err,
-		)
+		return nil, err
 	}
 
 	server := server{
@@ -35,8 +31,7 @@ func NewServer(tempFolderPath string, repo Repository) (*mux.Router, error) {
 
 	router := mux.NewRouter()
 	//TODO: At the moment this does not work
-	//router.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("css"))))
-
+	router.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir(cssFolderPath))))
 	router.HandleFunc("/", server.viewAllPosts).Methods(http.MethodGet)
 	router.HandleFunc("/about", server.viewAbout).Methods(http.MethodGet)
 	router.HandleFunc("/blog/{title}", server.viewPost).Methods(http.MethodGet)
@@ -44,16 +39,28 @@ func NewServer(tempFolderPath string, repo Repository) (*mux.Router, error) {
 	return router, nil
 }
 
-func (s *server) viewAllPosts(writer http.ResponseWriter, request *http.Request) {
-	s.blogTemplate.ExecuteTemplate(writer, "home.gohtml", s.repository.GetPosts())
+func newBlogTemplate(tempFolderPath string) (*template.Template, error) {
+	blogTemplate, err := template.ParseGlob(tempFolderPath)
+	if err != nil {
+		return nil, fmt.Errorf(
+			"could not load template from %q, %v",
+			tempFolderPath,
+			err,
+		)
+	}
+	return blogTemplate, nil
 }
 
-func (s *server) viewAbout(writer http.ResponseWriter, request *http.Request) {
-	s.blogTemplate.ExecuteTemplate(writer, "blog.gohtml", s.repository.GetPost("about.md"))
+func (s *server) viewAllPosts(w http.ResponseWriter, _ *http.Request) {
+	s.blogTemplate.ExecuteTemplate(w, "home.gohtml", s.repository.GetPosts())
 }
 
-func (s *server) viewPost(writer http.ResponseWriter, request *http.Request) {
+func (s *server) viewAbout(w http.ResponseWriter, _ *http.Request) {
+	s.blogTemplate.ExecuteTemplate(w, "blog.gohtml", s.repository.GetPost("about.md"))
+}
+
+func (s *server) viewPost(w http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
 	title := vars["title"]
-	s.blogTemplate.ExecuteTemplate(writer, "blog.gohtml", s.repository.GetPost(title))
+	s.blogTemplate.ExecuteTemplate(w, "blog.gohtml", s.repository.GetPost(title))
 }

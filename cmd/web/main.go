@@ -9,7 +9,11 @@ import (
 const addr = ":3000"
 
 func main() {
-	server, err := blog.NewServer("../../html/*", blog.NewInMemoryRepository())
+	server, err := blog.NewServer(
+		"../../html/*",
+		"../../css",
+		blog.NewInMemoryRepository(),
+	)
 	if err != nil {
 		log.Fatal(err)
 	}
