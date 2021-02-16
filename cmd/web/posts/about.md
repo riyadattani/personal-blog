@@ -1,6 +1,8 @@
-##About
+About
 
 2006-01-15
+
+-----
 
 This is the about me thing
 

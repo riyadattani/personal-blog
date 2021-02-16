@@ -9,6 +9,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"strings"
 	"time"
 )
 
@@ -26,7 +27,6 @@ func NewPost(title string) Post {
 	output, dateString := loadPost(title)
 
 	date, _ := time.Parse(layoutISO, dateString)
-	//formattedDate := date.Format(layoutUS)
 
 	return Post{
 		Title:   title,
@@ -42,22 +42,43 @@ func loadPost(title string) (postBody []byte, date string) {
 	}
 
 	r := bytes.NewReader(body)
-	date, _, err = readLine(r, 3)
+	date, _, err = readLine(r, 2)
 	if err != nil {
 		log.Fatal(fmt.Sprint("Could not read the date in the post", err))
 	}
+
 
 	output := blackfriday.Run(body)
 	return output, date
 }
 
 func readLine(r io.Reader, lineNum int) (line string, lastLine int, err error) {
-	sc := bufio.NewScanner(r)
-	for sc.Scan() {
+	scanner := bufio.NewScanner(r)
+	for scanner.Scan() {
 		lastLine++
 		if lastLine == lineNum {
-			return sc.Text(), lastLine, sc.Err()
+			return scanner.Text(), lastLine, scanner.Err()
 		}
 	}
 	return line, lastLine, io.EOF
+}
+
+func getMetaData(r io.Reader) string {
+	metaData := make([]string, 0)
+	scanner := bufio.NewScanner(r)
+	scanner.Split(bufio.ScanLines)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		//fmt.Printf("%s\n", line)
+
+		// Break if we hit line break.
+		if line == "-----" {
+			break
+		}
+
+		metaData = append(metaData, line)
+	}
+
+	return strings.Join(metaData, "\n")
 }
