@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestGETPlayers(t *testing.T) {
+func TestGETPosts(t *testing.T) {
 	post := Post{
 		Title:   "this is a title",
 		Content: "HTML template which is basically a string",

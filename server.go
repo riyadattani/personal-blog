@@ -55,7 +55,7 @@ func (s *server) viewAllPosts(w http.ResponseWriter, _ *http.Request) {
 }
 
 func (s *server) viewAbout(w http.ResponseWriter, _ *http.Request) {
-	s.blogTemplate.ExecuteTemplate(w, "blog.gohtml", s.repository.GetPost("about.md"))
+	s.blogTemplate.ExecuteTemplate(w, "about.gohtml", nil)
 }
 
 func (s *server) viewPost(w http.ResponseWriter, request *http.Request) {
