@@ -3,13 +3,17 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 	"personal-blog/pkg"
 	server2 "personal-blog/pkg/server"
 )
 
-const addr = ":3000"
-
 func main() {
+	port, ok := os.LookupEnv("PORT")
+	if !ok {
+		port = "3000"
+	}
+
 	server, err := server2.NewServer(
 		"../../html/*",
 		"../../css",
@@ -19,8 +23,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Println("listening on", addr)
-	if err := http.ListenAndServe(addr, server); err != nil {
+	log.Println("listening on", port)
+	if err := http.ListenAndServe(":"+port, server); err != nil {
 		log.Fatal("cannot listen and serve", err)
 	}
 }
