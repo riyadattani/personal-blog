@@ -1,3 +1,8 @@
-# personal-blog
+# My very own blog
 
-A blog written in Go
+To start: 
+
+```
+cd cmd/web/
+go run .
+```
