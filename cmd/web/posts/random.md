@@ -1,5 +1,4 @@
-## Title of my first blog
-
+Title of my first blog
 2005-01-15
 
 -----

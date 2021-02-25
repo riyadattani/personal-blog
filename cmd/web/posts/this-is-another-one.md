@@ -1,5 +1,4 @@
-# Title of my Second blog
-
+Title of my Second blog
 2008-01-15
 
 -----

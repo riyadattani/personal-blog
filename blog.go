@@ -9,7 +9,6 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	"strings"
 	"time"
 )
 
@@ -23,62 +22,52 @@ const (
 	layoutISO = "2006-01-15"
 )
 
-func NewPost(title string) Post {
-	output, dateString := loadPost(title)
-
-	date, _ := time.Parse(layoutISO, dateString)
+func NewPost(fileName string) Post {
+	title, content, date := createPost(fileName)
+	formattedDate, _ := time.Parse(layoutISO, date)
 
 	return Post{
 		Title:   title,
-		Content: template.HTML(output),
-		Date:    date,
+		Content: template.HTML(content),
+		Date:    formattedDate,
 	}
 }
 
-func loadPost(title string) (postBody []byte, date string) {
-	body, err := ioutil.ReadFile(fmt.Sprintf("../web/posts/%s", title))
+func createPost(filename string) (title string, body []byte, date string) {
+	fileContent, err := ioutil.ReadFile(fmt.Sprintf("../web/posts/%s", filename))
 	if err != nil {
-		log.Fatal(fmt.Sprint("Could not read blog file ", err))
+		log.Fatal(fmt.Sprint("Could not read markdown file, error: ", err))
 	}
 
-	r := bytes.NewReader(body)
-	date, _, err = readLine(r, 2)
-	if err != nil {
-		log.Fatal(fmt.Sprint("Could not read the date in the post", err))
-	}
+	r := bytes.NewReader(fileContent)
 
+	metaData := getMetaData(r)
+	title = metaData[0]
+	date = metaData[1]
 
-	output := blackfriday.Run(body)
-	return output, date
+	body = getContentBody(fileContent)
+	content := blackfriday.Run(body)
+
+	return title, content, date
 }
 
-func readLine(r io.Reader, lineNum int) (line string, lastLine int, err error) {
-	scanner := bufio.NewScanner(r)
-	for scanner.Scan() {
-		lastLine++
-		if lastLine == lineNum {
-			return scanner.Text(), lastLine, scanner.Err()
-		}
-	}
-	return line, lastLine, io.EOF
-}
-
-func getMetaData(r io.Reader) string {
+func getMetaData(r io.Reader) []string {
 	metaData := make([]string, 0)
 	scanner := bufio.NewScanner(r)
 	scanner.Split(bufio.ScanLines)
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		//fmt.Printf("%s\n", line)
-
-		// Break if we hit line break.
 		if line == "-----" {
 			break
 		}
-
 		metaData = append(metaData, line)
 	}
 
-	return strings.Join(metaData, "\n")
+	return metaData
+}
+
+func getContentBody(byteArray []byte) []byte {
+	content := bytes.Split(byteArray, []byte("-----\n"))[1]
+	return content
 }
