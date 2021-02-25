@@ -1,16 +1,17 @@
-package blog
+package server
 
 import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"personal-blog/pkg/blog"
 
 	"github.com/gorilla/mux"
 )
 
 type Repository interface {
-	GetPosts() []Post
-	GetPost(title string) Post
+	GetPosts() []blog.Post
+	GetPost(title string) blog.Post
 }
 
 type server struct {

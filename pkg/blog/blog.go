@@ -34,7 +34,7 @@ func NewPost(fileName string) Post {
 }
 
 func createPost(filename string) (title string, body []byte, date string) {
-	fileContent, err := ioutil.ReadFile(fmt.Sprintf("../web/posts/%s", filename))
+	fileContent, err := ioutil.ReadFile(fmt.Sprintf("../../cmd/web/posts/%s", filename))
 	if err != nil {
 		log.Fatal(fmt.Sprint("Could not read markdown file, error: ", err))
 	}

@@ -3,16 +3,17 @@ package main
 import (
 	"log"
 	"net/http"
-	blog "personal-blog"
+	"personal-blog/pkg"
+	server2 "personal-blog/pkg/server"
 )
 
 const addr = ":3000"
 
 func main() {
-	server, err := blog.NewServer(
+	server, err := server2.NewServer(
 		"../../html/*",
 		"../../css",
-		blog.NewInMemoryRepository(),
+		pkg.NewInMemoryRepository(),
 	)
 	if err != nil {
 		log.Fatal(err)

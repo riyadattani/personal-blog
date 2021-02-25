@@ -1,37 +1,38 @@
-package blog
+package server
 
 import (
 	"net/http"
 	"net/http/httptest"
+	"personal-blog/pkg/blog"
 	"testing"
 )
 
 type StubRepo struct {
-	posts []Post
-	post  Post
+	posts []blog.Post
+	post  blog.Post
 }
 
-func (s *StubRepo) GetPosts() []Post {
+func (s *StubRepo) GetPosts() []blog.Post {
 	return s.posts
 }
 
-func (s *StubRepo) GetPost(title string) Post {
+func (s *StubRepo) GetPost(title string) blog.Post {
 	return s.post
 }
 
 func TestServer(t *testing.T) {
-	post := Post{
+	post := blog.Post{
 		Title:   "this is a title",
 		Content: "HTML template which is basically a string",
 	}
 
-	post2 := Post{
+	post2 := blog.Post{
 		Title:   "this is another title",
 		Content: "HTML template which is basically a string",
 	}
 
 	repo := StubRepo{
-		[]Post{post, post2},
+		[]blog.Post{post, post2},
 		post,
 	}
 
