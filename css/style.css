@@ -21,6 +21,8 @@ html {
   --line-height-multiplier: 1.5;
 }
 
+/*This is for the header*/
+
 header {
   color: var(--bg-colour);
   position: sticky;
@@ -43,11 +45,6 @@ header {
 .mainHeadingLink {
   text-decoration: none;
   color: var(--text-colour);
-}
-
-main {
-  max-width: 75rem;
-  margin: 2rem auto;
 }
 
 nav {
@@ -92,6 +89,20 @@ nav div ul {
   color: var(--link-colour);
 }
 
+/*General things*/
+
+main {
+  max-width: 75rem;
+  max-width: 75rem;
+  margin: 2rem auto;
+}
+
+body {
+  margin: 0 1rem;
+  overflow-y: scroll;
+  font-size: var(--font-size);
+}
+
 h1 {
   text-align: center;
   font-size: var(--heading-font-size);
@@ -128,8 +139,8 @@ section p a {
   color: var(--link-colour);
 }
 
-
 /*This is for the home page */
+
 .blogList {
   text-decoration: none;
   margin: 2rem 0;
@@ -149,6 +160,8 @@ ol {
   padding: 0;
 }
 
+/*This is for the about page*/
+
 img {
   display: block;
   margin-left: auto;
@@ -159,10 +172,10 @@ img {
   border: 0.5rem solid var(--link-colour);
 }
 
-body {
-  margin: 0 1rem;
-  overflow-y: scroll;
-  font-size: var(--font-size);
+/*Footer*/
+
+footer {
+  border-top: 0.1rem solid var(--code-bg-colour);
 }
 
 /*Code to make it responsive*/
