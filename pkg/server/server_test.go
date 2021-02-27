@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"personal-blog/pkg/blog"
+	"strings"
 	"testing"
 )
 
@@ -36,7 +37,7 @@ func TestServer(t *testing.T) {
 		post,
 	}
 
-	template, err := newBlogTemplate("./html/*")
+	template, err := newBlogTemplate("../../html/*")
 	if err != nil {
 		t.Fatal("could not load blog template", err)
 	}
@@ -55,6 +56,16 @@ func TestServer(t *testing.T) {
 		gotStatusCode := response.Code
 		wantStatusCode := http.StatusOK
 
+		body := response.Body.String()
+
+		if !strings.Contains(body, post.Title) {
+			t.Error("Response body does not contain the first post")
+		}
+
+		if !strings.Contains(body, post2.Title) {
+			t.Error("Response body does not contain the second post")
+		}
+
 		if gotStatusCode != wantStatusCode {
 			t.Errorf("got %q, want %q", gotStatusCode, wantStatusCode)
 		}
@@ -68,6 +79,12 @@ func TestServer(t *testing.T) {
 
 		gotStatusCode := response.Code
 		wantStatusCode := http.StatusOK
+
+		body := response.Body.String()
+
+		if !strings.Contains(body, string(post2.Content)) {
+			t.Error("Response body does not contain the second post content")
+		}
 
 		if gotStatusCode != wantStatusCode {
 			t.Errorf("got %q, want %q", gotStatusCode, wantStatusCode)
