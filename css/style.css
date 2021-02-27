@@ -149,12 +149,23 @@ ol {
   padding: 0;
 }
 
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  height: 10%;
+  border-radius: 50%;
+  border: 0.5rem solid var(--link-colour);
+}
 
 body {
   margin: 0 1rem;
   overflow-y: scroll;
   font-size: var(--font-size);
 }
+
+/*Code to make it responsive*/
 
 @media only screen and (min-width: 320px) and (max-width: 480px) {
   :root {
