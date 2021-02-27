@@ -7,7 +7,7 @@ html {
 
 :root {
   --link-colour: #BB4430;
-  --bg-colour: #EFE6DD  ;
+  --bg-colour: #EFE6DD;
   /*--another-colour: #9BC1BC;*/
   --text-colour: #231F20;
   --blockquote-colour: #7EBDC2;
@@ -15,15 +15,21 @@ html {
 
   --heading-font: 'Courier New', sans-serif;
   --body-font: 'Roboto', sans-serif;
-  --code-font: Fira Code,Monaco,Consolas,monospace;
+  --code-font: Fira Code, Monaco, Consolas, monospace;
 
   --font-size: 2rem;
   --line-height-multiplier: 1.5;
 }
 
 header {
+  color: var(--bg-colour);
+  position: sticky;
+  top: 0;
+  width: 100%;
   border-bottom: solid 0.3rem var(--text-colour);
   box-shadow: 0 5px 5px -6px var(--text-colour);
+  margin: auto 1rem;
+  padding-top: 2rem;
 }
 
 .mainHeading {
@@ -47,6 +53,8 @@ nav, main {
 nav {
   display: flex;
   justify-content: space-between;
+  max-width: 75rem;
+  margin: 0 auto 2rem auto;
 }
 
 nav ul {
@@ -113,24 +121,24 @@ section p a {
 
 
 /*This is for the home page */
- .blogList {
-   text-decoration: none;
-   margin: 2rem 0;
-   padding: 1rem 0 0 0;
-   border-top: 0.1rem solid var(--code-bg-colour);
-   display: flex;
-   justify-content: space-between;
- }
+.blogList {
+  text-decoration: none;
+  margin: 2rem 0;
+  padding: 1rem 0 0 0;
+  border-top: 0.1rem solid var(--code-bg-colour);
+  display: flex;
+  justify-content: space-between;
+}
 
- .blogListLink {
-   text-decoration: none;
-   font-weight: bold;
-   color: var(--link-colour);
- }
+.blogListLink {
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--link-colour);
+}
 
- ol {
-   padding: 0;
- }
+ol {
+  padding: 0;
+}
 
 
 body {
