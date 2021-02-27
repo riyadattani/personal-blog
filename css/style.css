@@ -1,42 +1,42 @@
 html {
   font-size: 62.5%;
   font-family: var(--body-font);
+  color: var(--text-colour);
+  background: var(--bg-colour);
 }
 
 :root {
-  --nav-colour: hsla(16, 65%, 68%, 1);
-  --link-colour: hsla(16, 65%, 68%, 1);
-  --another-colour: hsla(15, 100%, 91%, 1);
-  --bg-colour: hsla(195, 50%, 95%, 1);
-  --code-colour: hsla(185, 100%, 23%, 1);
-  --text-colour: hsla(225, 28%, 23%, 1);
-  --header-colour: hsla(225, 28%, 23%, 1);
-  --code-bg-colour: white;
+  --link-colour: #BB4430;
+  --bg-colour: #EFE6DD  ;
+  /*--another-colour: #9BC1BC;*/
+  --text-colour: #231F20;
+  --blockquote-colour: #7EBDC2;
+  --code-bg-colour: #F3DFA2;
 
   --heading-font: 'Courier New', sans-serif;
   --body-font: 'Roboto', sans-serif;
   --code-font: Fira Code,Monaco,Consolas,monospace;
 
-  --font-size: 2.2rem;
+  --font-size: 2rem;
   --line-height-multiplier: 1.5;
 }
 
 header {
-  border-bottom: solid 0.3rem var(--code-colour);
+  border-bottom: solid 0.3rem var(--text-colour);
   box-shadow: 0 5px 5px -6px var(--text-colour);
 }
 
-h1 {
+.mainHeading {
   margin: 0;
   font-family: var(--heading-font);
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: bolder;
   text-transform: capitalize;
 }
 
-nav h1 a {
+.mainHeadingLink {
   text-decoration: none;
-  color: black;
+  color: var(--text-colour);
 }
 
 nav, main {
@@ -57,29 +57,86 @@ nav ul {
   padding: 0;
 }
 
-nav ul li {
+.navOption {
   padding: 0 2rem;
   font-family: var(--heading-font);
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: bolder;
   text-transform: lowercase;
 }
 
-nav ul li a {
+.navOption:not(:last-child) {
+  border-right: solid 0.1rem var(--text-colour);
+}
+
+.navOptionLink {
   text-decoration: none;
   height: inherit;
-  color: black;
+  color: var(--link-colour);
 }
 
-nav ul li:not(:last-child) {
-  border-right: solid 0.1rem var(--code-colour);
+h1 {
+  text-align: center;
+  font-size: 3.5rem;
+  margin: 4rem 2rem;
 }
+
+h2 {
+  text-align: center;
+}
+
+time {
+  color: var(--blockquote-colour);
+}
+
+p {
+  line-height: calc(var(--font-size) * var(--line-height-multiplier));
+}
+
+blockquote {
+  margin: 1rem 0;
+  border-left: 1rem solid var(--blockquote-colour);
+  color: var(--blockquote-colour);
+  padding-left: 1rem;
+  font-style: italic;
+}
+
+pre {
+  padding: 2rem;
+  font-size: 16px;
+  background: var(--code-bg-colour);
+}
+
+section p a {
+  color: var(--link-colour);
+}
+
+
+/*This is for the home page */
+ .blogList {
+   text-decoration: none;
+   margin: 2rem 0;
+   padding: 1rem 0 0 0;
+   border-top: 0.1rem solid var(--code-bg-colour);
+   display: flex;
+   justify-content: space-between;
+ }
+
+ .blogListLink {
+   text-decoration: none;
+   font-weight: bold;
+   color: var(--link-colour);
+ }
+
+ ol {
+   padding: 0;
+ }
+
 
 body {
+  margin: 0;
   /*change to px for the code block to adhere to the font size */
-  font-size: 1.4rem;
+  font-size: var(--font-size);
 }
 
-main {
-}
 

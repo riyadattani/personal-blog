@@ -4,14 +4,15 @@
 <body>
 {{template "navBar.partial.gohtml"}}
 <main>
-  <h2>Blogs</h2>
   <ol>
       {{range .}}
-        <li>
-          <a href="/blog/{{.Title}}">
+        <li class="blogList">
+          <a class="blogListLink" href="/blog/{{.Title}}">
               {{.Title}}
           </a>
-            {{.Date.Format "Jan 02, 2006"}}
+          <time>
+              {{.Date.Format "Jan 02, 2006"}}
+          </time>
         </li>
       {{end}}
   </ol>
