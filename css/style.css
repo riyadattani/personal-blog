@@ -81,7 +81,7 @@ nav div ul {
 /*General things*/
 
 main {
-  min-height: 75vh;
+  min-height: 70vh;
   max-width: 75rem;
   margin: 2rem auto;
 }
@@ -166,10 +166,42 @@ img {
 footer {
   text-align: center;
   width: 100%;
-  /*position: fixed;*/
-  /*bottom:0;*/
   margin: 3rem auto;
   color: var(--light-text);
+}
+
+footer p {
+  margin-top: 1rem;
+}
+
+footer a {
+  text-decoration: none;
+}
+
+.socialMediaLinks a {
+  margin: 0 0.5rem;
+}
+
+.githubIcon:hover {
+  fill: black;
+}
+
+.twitterIcon:hover {
+  fill: #1DA1F2;
+}
+
+.youTubeIcon:hover {
+  fill: #FF0000;
+}
+
+.linkedInIcon:hover {
+  fill: #0e76a8;
+}
+
+footer a svg {
+  fill: var(--light-text);
+  height: 2.4rem;
+  width: 2.4rem;
 }
 
 /*Code to make it responsive*/
