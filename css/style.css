@@ -83,7 +83,7 @@ nav div ul {
 /*General things*/
 
 main {
-  min-height: 70vh;
+  min-height: 75vh;
   max-width: 75rem;
   margin: 2rem auto;
 }
@@ -225,7 +225,7 @@ footer a svg {
   }
 
   main {
-    min-height: 65vh;
+    min-height: 70vh;
     margin: 2rem 1rem;
   }
 }
