@@ -6,14 +6,14 @@ html {
 }
 
 :root {
-  --link-colour: #BB4430;
-  --bg-colour: #EFE6DD;
-  --text-colour: #231F20;
-  --blockquote-colour: #7EBDC2;
-  --code-bg-colour: #F3DFA2;
+  --link-colour: #68bdb4;
+  --bg-colour: #f8f5f1;
+  --text-colour: #174e53;
+  --blockquote-colour: #ed7f53;
+  --code-bg-colour: #fac9b9;
 
   --heading-font: 'Courier New', sans-serif;
-  --body-font: 'Roboto', sans-serif;
+  --body-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
   --code-font: Fira Code, Monaco, Consolas, monospace;
 
   --heading-font-size: 3rem;
@@ -153,7 +153,7 @@ section p a {
 .blogListLink {
   text-decoration: none;
   font-weight: bold;
-  color: var(--link-colour);
+  color: var(--text-colour);
 }
 
 ol {
@@ -169,7 +169,7 @@ img {
   width: 40%;
   height: 10%;
   border-radius: 50%;
-  border: 0.5rem solid var(--link-colour);
+  border: 0.5rem solid var(--text-colour);
 }
 
 /*Footer*/
