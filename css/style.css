@@ -40,11 +40,11 @@ html {
 nav {
   position: sticky;
   top: 0;
-  padding: 2rem 0;
+  padding: 1rem 0;
   background: var(--code-bg-colour);
   border-bottom: 0.1rem solid var(--text-colour);
   box-shadow: 0 5px 5px -6px var(--text-colour);
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 nav div {
@@ -214,9 +214,7 @@ footer a svg {
     --line-height-multiplier: 1.5;
     --heading-font-size: 2.5rem;
   }
-}
 
-@media only screen and (min-width: 320px) and (max-width: 480px) {
   nav div {
     display: block;
   }
@@ -224,6 +222,11 @@ footer a svg {
   nav div ul {
     justify-content: center;
     max-width: 100%;
+  }
+
+  main {
+    min-height: 65vh;
+    margin: 2rem 1rem;
   }
 }
 
