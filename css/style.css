@@ -41,7 +41,9 @@ nav {
   position: sticky;
   top: 0;
   padding: 2rem 0;
-  background: var(--bg-colour);
+  background: var(--code-bg-colour);
+  border-bottom: 0.1rem solid var(--text-colour);
+  box-shadow: 0 5px 5px -6px var(--text-colour);
   margin-bottom: 3rem;
 }
 
@@ -87,7 +89,7 @@ main {
 }
 
 body {
-  margin: 0 1rem;
+  margin: 0;
   overflow-y: scroll;
   font-size: var(--font-size);
 }
