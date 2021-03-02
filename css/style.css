@@ -106,6 +106,7 @@ h2 {
 
 time {
   color: var(--blockquote-colour);
+  font-size: calc(var(--font-size) * 0.8);
 }
 
 p {
@@ -118,7 +119,7 @@ blockquote {
   color: var(--blockquote-colour);
   padding-left: 1rem;
   font-style: italic;
-  font-size: calc(var(--font-size) * 1.25);
+  font-size: calc(var(--font-size) * 1.15);
 }
 
 pre {
