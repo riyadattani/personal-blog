@@ -83,7 +83,7 @@ nav div ul {
 /*General things*/
 
 main {
-  min-height: 75vh;
+  min-height: calc(100vh - 210px);
   max-width: 75rem;
   margin: 2rem auto;
 }
@@ -118,6 +118,7 @@ blockquote {
   color: var(--blockquote-colour);
   padding-left: 1rem;
   font-style: italic;
+  font-size: calc(var(--font-size) * 1.25);
 }
 
 pre {
@@ -225,8 +226,7 @@ footer a svg {
   }
 
   main {
-    min-height: 70vh;
-    margin: 2rem 1rem;
+    margin: 2rem 2rem;
   }
 }
 
