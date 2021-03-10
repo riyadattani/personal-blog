@@ -109,6 +109,10 @@ time {
   font-size: calc(var(--font-size) * 0.8);
 }
 
+a {
+  color: var(--link-colour);
+}
+
 p {
   line-height: calc(var(--font-size) * var(--line-height-multiplier));
 }
@@ -126,10 +130,6 @@ pre {
   padding: 2rem;
   font-size: 16px;
   background: var(--code-bg-colour);
-}
-
-section p a {
-  color: var(--link-colour);
 }
 
 /*This is for the home page */
