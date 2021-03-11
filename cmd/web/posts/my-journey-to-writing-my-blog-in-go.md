@@ -1,12 +1,9 @@
-My journey to writing my blog in Go
-2021-Mar-11
+My journey to writing my blog in Go 2021-Mar-11
 -----
 
-I built my blog from scratch, without a blog engine. I used Go to build it and some html + css to make it look pretty.
-This is my first personal project in Go, in fact, its my first personal project on a live website. Check it
-out [here](http://www.riyadattani.com).
-
-[Tweet me](https://twitter.com/DattaniRiya) if you have any feedback whether its kind, mean or funny!
+I built this blog from scratch, without a blog engine. I used Go to build it and some html + css to make it look pretty.
+This is my first personal project in Go, in fact, its my first personal project on a live
+website. [Tweet me](https://twitter.com/DattaniRiya) if you have any feedback whether its kind, mean or funny!
 
 So I made the decision to make a blog in Go because it was different language to what I normally use at work (node) and
 when I was introduced to it, it felt fun and simple.
