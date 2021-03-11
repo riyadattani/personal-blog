@@ -1,6 +1,7 @@
-package blog
+package blog_test
 
 import (
+	"personal-blog/pkg/blog"
 	"strings"
 	"testing"
 )
@@ -13,7 +14,7 @@ func TestBlog(t *testing.T) {
 This is the about me thing`
 
 		byteArray := []byte(markdownDoc)
-		contentBody := string(getContentBody(byteArray))
+		contentBody := string(blog.GetContentBody(byteArray))
 		expectedBody := `This is the about me thing`
 
 		if contentBody != expectedBody {
@@ -28,7 +29,7 @@ This is the about me thing`
 This is the about me thing`
 
 		reader := strings.NewReader(markdownDoc)
-		metaData := getMetaData(reader)
+		metaData := blog.GetMetaData(reader)
 
 		title := metaData[0]
 		expectedTitle := `About something else`

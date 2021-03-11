@@ -41,17 +41,17 @@ func createPost(filename string) (title string, body []byte, date string) {
 
 	r := bytes.NewReader(fileContent)
 
-	metaData := getMetaData(r)
+	metaData := GetMetaData(r)
 	title = metaData[0]
 	date = metaData[1]
 
-	body = getContentBody(fileContent)
+	body = GetContentBody(fileContent)
 	content := blackfriday.Run(body)
 
 	return title, content, date
 }
 
-func getMetaData(r io.Reader) []string {
+func GetMetaData(r io.Reader) []string {
 	metaData := make([]string, 0)
 	scanner := bufio.NewScanner(r)
 	scanner.Split(bufio.ScanLines)
@@ -67,7 +67,7 @@ func getMetaData(r io.Reader) []string {
 	return metaData
 }
 
-func getContentBody(byteArray []byte) []byte {
+func GetContentBody(byteArray []byte) []byte {
 	content := bytes.Split(byteArray, []byte("-----\n"))[1]
 	return content
 }
