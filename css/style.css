@@ -17,9 +17,9 @@ html {
   --body-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
   --code-font: Fira Code, Monaco, Consolas, monospace;
 
-  --heading-font-size: 3rem;
-  --font-size: 2rem;
-  --line-height-multiplier: 1.5;
+  --heading-font-size: 2.4rem;
+  --font-size: 1.6rem;
+  --line-height-multiplier: 1.7;
 }
 
 /*This is for the header*/
@@ -97,7 +97,7 @@ body {
 h1 {
   text-align: center;
   font-size: var(--heading-font-size);
-  margin: 4rem 2rem;
+  margin: 3.5rem 2rem;
 }
 
 h2 {
@@ -106,7 +106,8 @@ h2 {
 
 time {
   color: var(--blockquote-colour);
-  font-size: calc(var(--font-size) * 0.8);
+  font-size: var(--font-size);
+  align-self: center;
 }
 
 a {
@@ -123,13 +124,17 @@ blockquote {
   color: var(--blockquote-colour);
   padding-left: 1rem;
   font-style: italic;
-  font-size: calc(var(--font-size) * 1.15);
+  font-size: var(--font-size);
 }
 
 pre {
   padding: 2rem;
   font-size: 16px;
   background: var(--code-bg-colour);
+}
+
+article li {
+  margin: 1.2rem 0;
 }
 
 /*This is for the home page */
@@ -147,6 +152,7 @@ pre {
   text-decoration: none;
   font-weight: bold;
   color: var(--text-colour);
+  font-size: var(--heading-font-size);
 }
 
 ol {
