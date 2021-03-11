@@ -1,4 +1,4 @@
-My journey to writing my blog in Go as junior developer
+My journey to writing my blog in Go
 2021-Mar-11
 -----
 

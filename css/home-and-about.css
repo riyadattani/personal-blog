@@ -29,3 +29,13 @@ img {
   border-radius: 50%;
   border: 0.5rem solid var(--text-colour);
 }
+
+img:hover {
+  animation: rotate 3s infinite linear;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
