@@ -1,10 +1,3 @@
-html {
-  font-size: 62.5%;
-  font-family: var(--body-font);
-  color: var(--text-colour);
-  background: var(--bg-colour);
-}
-
 :root {
   --link-colour: #68bdb4;
   --bg-colour: #fffdfb;
@@ -22,65 +15,12 @@ html {
   --line-height-multiplier: 1.7;
 }
 
-/*This is for the header*/
-
-.mainHeading {
-  margin: 0;
-  font-family: var(--heading-font);
-  font-size: var(--heading-font-size);
-  font-weight: bolder;
-  text-transform: capitalize;
-}
-
-.mainHeadingLink {
-  text-decoration: none;
+html {
+  font-size: 62.5%;
+  font-family: var(--body-font);
   color: var(--text-colour);
+  background: var(--bg-colour);
 }
-
-nav {
-  position: sticky;
-  top: 0;
-  padding: 1rem 0;
-  background: var(--code-bg-colour);
-  border-bottom: 0.1rem solid var(--text-colour);
-  box-shadow: 0 5px 5px -6px var(--text-colour);
-  margin-bottom: 2rem;
-}
-
-nav div {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  max-width: 75rem;
-}
-
-nav div ul {
-  display: flex;
-  flex-direction: row;
-  margin: 0;
-  list-style-type: none;
-  padding: 0;
-}
-
-.navOption {
-  padding: 0 2rem;
-  font-family: var(--heading-font);
-  font-size: var(--heading-font-size);
-  font-weight: bolder;
-  text-transform: lowercase;
-}
-
-.navOption:not(:last-child) {
-  border-right: solid 0.1rem var(--text-colour);
-}
-
-.navOptionLink {
-  text-decoration: none;
-  height: inherit;
-  color: var(--link-colour);
-}
-
-/*General things*/
 
 main {
   min-height: calc(100vh - 210px);
@@ -135,83 +75,6 @@ pre {
 
 article li {
   margin: 1.2rem 0;
-}
-
-/*This is for the home page */
-
-.blogList {
-  text-decoration: none;
-  margin: 2rem 0;
-  padding: 2rem 0 0 0;
-  border-top: 0.1rem solid var(--code-bg-colour);
-  display: flex;
-  justify-content: space-between;
-}
-
-.blogListLink {
-  text-decoration: none;
-  font-weight: bold;
-  color: var(--text-colour);
-  font-size: var(--heading-font-size);
-}
-
-ol {
-  padding: 0;
-}
-
-/*This is for the about page*/
-
-img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 33%;
-  height: 10%;
-  border-radius: 50%;
-  border: 0.5rem solid var(--text-colour);
-}
-
-/*Footer*/
-
-footer {
-  text-align: center;
-  width: 100%;
-  margin: 3rem auto;
-  color: var(--light-text);
-}
-
-footer p {
-  margin-top: 1rem;
-}
-
-footer a {
-  text-decoration: none;
-}
-
-.socialMediaLinks a {
-  margin: 0 0.5rem;
-}
-
-.githubIcon:hover {
-  fill: black;
-}
-
-.twitterIcon:hover {
-  fill: #1DA1F2;
-}
-
-.youTubeIcon:hover {
-  fill: #FF0000;
-}
-
-.linkedInIcon:hover {
-  fill: #0e76a8;
-}
-
-footer a svg {
-  fill: var(--light-text);
-  height: 2.4rem;
-  width: 2.4rem;
 }
 
 /*Code to make it responsive*/

@@ -1,0 +1,31 @@
+.blogList {
+  text-decoration: none;
+  margin: 2rem 0;
+  padding: 2rem 0 0 0;
+  border-top: 0.1rem solid var(--code-bg-colour);
+  display: flex;
+  justify-content: space-between;
+}
+
+.blogListLink {
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--text-colour);
+  font-size: var(--heading-font-size);
+}
+
+ol {
+  padding: 0;
+}
+
+/*This is for the about page*/
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 33%;
+  height: 10%;
+  border-radius: 50%;
+  border: 0.5rem solid var(--text-colour);
+}
