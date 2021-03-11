@@ -4,12 +4,13 @@ import (
 	"personal-blog/pkg/blog"
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestBlog(t *testing.T) {
 	t.Run("it should return the title, date and content separately", func(t *testing.T) {
 		markdownDoc := `About
-2006-01-15
+2013-Feb-03
 -----
 This is the about me thing`
 
@@ -24,7 +25,7 @@ This is the about me thing`
 
 	t.Run("it should read a line in the text", func(t *testing.T) {
 		markdownDoc := `About something else
-2006-01-15
+2013-Mar-03
 -----
 This is the about me thing`
 
@@ -35,7 +36,7 @@ This is the about me thing`
 		expectedTitle := `About something else`
 
 		date := metaData[1]
-		expectedDate := `2006-01-15`
+		expectedDate := `2013-Mar-03`
 
 		if title != expectedTitle {
 			t.Errorf("got %q, want %q", title, expectedTitle)
@@ -43,6 +44,17 @@ This is the about me thing`
 
 		if date != expectedDate {
 			t.Errorf("got %q, want %q", date, expectedDate)
+		}
+	})
+
+	t.Run("Format the date correctly", func(t *testing.T) {
+		date := "2013-Mar-03"
+		const layout = "2006-Jan-02"
+		formattedDate, _ := time.Parse(layout, date)
+		expectedFormattedDate := time.Date(2013, 03, 03, 0, 0, 0, 0, time.UTC)
+
+		if formattedDate != expectedFormattedDate {
+			t.Errorf("got %q, want %q", formattedDate, expectedFormattedDate)
 		}
 	})
 }

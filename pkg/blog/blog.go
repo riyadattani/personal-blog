@@ -18,13 +18,14 @@ type Post struct {
 	Date    time.Time
 }
 
-const (
-	layoutISO = "2006-01-15"
-)
-
 func NewPost(fileName string) Post {
 	title, content, date := createPost(fileName)
-	formattedDate, _ := time.Parse(layoutISO, date)
+
+	const shortForm = "2006-Jan-02"
+	formattedDate, err := time.Parse(shortForm, date)
+	if err != nil {
+		log.Fatal(fmt.Sprint("Error formatting the date: ", err))
+	}
 
 	return Post{
 		Title:   title,
