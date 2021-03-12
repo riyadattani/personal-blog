@@ -58,6 +58,15 @@ p {
   line-height: calc(var(--font-size) * var(--line-height-multiplier));
 }
 
+article ol li {
+  margin: 1.2rem 0;
+  line-height: calc(var(--font-size) * var(--line-height-multiplier));
+}
+
+article ol, ul {
+  padding-left: 2rem;
+}
+
 blockquote {
   margin: 1rem 0;
   border-left: 1rem solid var(--blockquote-colour);
@@ -71,10 +80,6 @@ pre {
   padding: 2rem;
   font-size: 16px;
   background: var(--code-bg-colour);
-}
-
-article li {
-  margin: 1.2rem 0;
 }
 
 code {

@@ -14,8 +14,8 @@
   font-size: var(--heading-font-size);
 }
 
-ol {
-  padding: 0;
+.blogListOL {
+  padding: 0
 }
 
 /*This is for the about page*/
