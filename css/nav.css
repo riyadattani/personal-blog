@@ -1,7 +1,8 @@
 .mainHeading {
-  margin: 0;
-  font-family: var(--heading-font);
-  font-size: var(--heading-font-size);
+  margin: 2rem 0;
+  font-family: var(--h1-font);
+  font-size: var(--h1-font-size);
+  letter-spacing: 1rem;
   font-weight: bolder;
   text-transform: capitalize;
 }
@@ -12,40 +13,34 @@
 }
 
 nav {
-  position: sticky;
-  top: 0;
-  padding: 1rem 0;
-  background: var(--code-bg-colour);
-  border-bottom: 0.1rem solid var(--text-colour);
-  box-shadow: 0 5px 5px -6px var(--text-colour);
   margin-bottom: 2rem;
 }
 
 nav div {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
   margin: 0 auto;
-  max-width: 75rem;
+  padding: 0 1rem;
+  max-width: 85rem;
+  border-bottom: 0.1rem solid var(--text-colour);
+  box-shadow: 0 5px 5px -6px var(--text-colour);
 }
 
 nav div ul {
   display: flex;
   flex-direction: row;
-  margin: 0;
+  margin: 0 0 0.8rem 0;
   list-style-type: none;
   padding: 0;
 }
 
 .navOption {
   padding: 0 2rem;
-  font-family: var(--heading-font);
-  font-size: var(--heading-font-size);
+  font-family: var(--h1-font);
+  font-size: calc(var(--font-size) * 1.5);
   font-weight: bolder;
   text-transform: lowercase;
-}
-
-.navOption:not(:last-child) {
-  border-right: solid 0.1rem var(--text-colour);
 }
 
 .navOptionLink {
