@@ -7,7 +7,7 @@ I built this blog from scratch, without a blog engine. I used Go to build it and
 This is my first personal project in Go, in fact, its my first personal project on a live
 website. [Tweet me](https://twitter.com/DattaniRiya) if you have any feedback whether its kind, mean or funny!
 
-So I made the decision to make a blog in Go because it was different language to what I normally use at work (node) and
+So I made the decision to make a blog in Go because it was different language to what I normally use at work (Node) and
 when I was introduced to it, it felt fun and simple.
 
 ### First attempt
@@ -19,11 +19,12 @@ fabulous but in reality, they were a nice-to-have rather than necessary. Frankly
 should look like, the more I ventured further away from the purpose of the blog: to share articles. "Agile" developers
 would say I envisioned a shiny gold standard website rather than a MVP (Minimum Viable Product).
 
-I started building the `Hello World` version of my site and I cheated a little bit by not writing any tests. Not very
-long after, I frantically searched for tutorials to get me these fancy features. I was directed to multiple plugins, I
+I started building the `Hello World` version of my site and I cheated a little by not writing any tests. Not very long after, I frantically searched for tutorials to get me these fancy features. I was directed to multiple plugins, I
 read a lot of stack overflow and I spent most of my time searching for resources on google rather than coding... I
 eventually got frustrated. Naturally, I didn't want to open the project anymore because I didn't really know what to do
-and where to start. The tutorials and articles I read felt overwhelming and not perfectly suitable to what I am trying
+and where to start.
+
+The tutorials and articles I read felt overwhelming and not perfectly suitable to what I am trying
 to build. I told myself some unworthy excuses and left the blog alone for a couple of weeks.
 
 > I needed to go back to the basics and start simple.
@@ -45,8 +46,7 @@ learnings:
       about.
     - **Why**: I want to build a network and connect with people who have similar interests, share knowledge that other
       people might find useful and practice communicating through writing effectively.
-    - **How**: I made a decision to not use a blog engine and to build the blog from scratch in Go in an _iterative_ way
-      because... I am a developer.
+    - **How**: I made a decision to not use a blog engine and to build the blog from scratch in Go in an _iterative_ way. Whilst a blog engine would easily achieve my goals, I would not have gained this invaluable learning experience.
 
 2. Decide on the _MVP_: I wrote down 2 features which I think I need for my blog to be functional
     - A home page which has a list of my blogs in descending order by date
