@@ -26,6 +26,7 @@ This is the about me thing`
 	t.Run("it should read a line in the text", func(t *testing.T) {
 		markdownDoc := `About something else
 2013-Mar-03
+picture.jpg
 -----
 This is the about me thing`
 
@@ -38,12 +39,19 @@ This is the about me thing`
 		date := metaData[1]
 		expectedDate := `2013-Mar-03`
 
+		picture := metaData[2]
+		expectedPic := `picture.jpg`
+
 		if title != expectedTitle {
 			t.Errorf("got %q, want %q", title, expectedTitle)
 		}
 
 		if date != expectedDate {
 			t.Errorf("got %q, want %q", date, expectedDate)
+		}
+
+		if picture != expectedPic {
+			t.Errorf("got %q, want %q", picture, expectedPic)
 		}
 	})
 

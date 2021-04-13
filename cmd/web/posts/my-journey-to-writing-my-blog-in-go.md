@@ -1,5 +1,6 @@
 My journey to writing my blog in Go 
 2021-Mar-11
+golangPic.png
 -----
 
 I built this blog from scratch, without a blog engine. I used Go to build it and some html + css to make it look pretty.

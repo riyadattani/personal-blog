@@ -16,10 +16,11 @@ type Post struct {
 	Title   string
 	Content template.HTML
 	Date    time.Time
+	Picture string
 }
 
 func NewPost(fileName string) Post {
-	title, content, date := createPost(fileName)
+	title, content, date, picture := createPost(fileName)
 
 	const shortForm = "2006-Jan-02"
 	formattedDate, err := time.Parse(shortForm, date)
@@ -31,10 +32,11 @@ func NewPost(fileName string) Post {
 		Title:   title,
 		Content: template.HTML(content),
 		Date:    formattedDate,
+		Picture: picture,
 	}
 }
 
-func createPost(filename string) (title string, body []byte, date string) {
+func createPost(filename string) (title string, body []byte, date string, picture string) {
 	fileContent, err := ioutil.ReadFile(fmt.Sprintf("../../cmd/web/posts/%s", filename))
 	if err != nil {
 		log.Fatal(fmt.Sprint("Could not read markdown file, error: ", err))
@@ -45,11 +47,12 @@ func createPost(filename string) (title string, body []byte, date string) {
 	metaData := GetMetaData(r)
 	title = metaData[0]
 	date = metaData[1]
+	picture = metaData[2]
 
 	body = GetContentBody(fileContent)
 	content := blackfriday.Run(body)
 
-	return title, content, date
+	return title, content, date, picture
 }
 
 func GetMetaData(r io.Reader) []string {

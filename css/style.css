@@ -3,7 +3,7 @@
   --bg-colour: #fbf9f4;
   --text-colour: #174e53;
   --blockquote-colour: #ed7f53;
-  --code-bg-colour: #fac9b9;
+  --code-bg-colour: #fffdfb;
   --light-text: #aadad5;
 
   --h1-font: 'Courier New', sans-serif;
@@ -14,6 +14,8 @@
   --h1-font-size: 4.8rem;
   --font-size: 1.6rem;
   --line-height-multiplier: 1.7;
+  --image-width: 28rem;
+  --image-height: 18rem;
 }
 
 html {
@@ -49,7 +51,6 @@ h2 {
 time {
   color: var(--blockquote-colour);
   font-size: var(--font-size);
-  align-self: center;
 }
 
 a {
@@ -97,7 +98,7 @@ code {
   :root {
     --font-size: 1.4rem;
     --line-height-multiplier: 1.5;
-    --heading-font-size: 2rem;
+    --heading-font-size: 1.8rem;
     --h1-font-size: 2.3rem;
   }
 
@@ -112,6 +113,20 @@ code {
   nav div ul {
     justify-content: center;
     max-width: 100%;
+  }
+
+  .blogList {
+    flex-direction: column;
+  }
+
+  .blogImage {
+    align-self: center;
+  }
+
+  .blogInfo {
+    margin: 0.5rem 0 0 0;
+    max-width: var(--image-width);
+    align-self: center;
   }
 }
 
