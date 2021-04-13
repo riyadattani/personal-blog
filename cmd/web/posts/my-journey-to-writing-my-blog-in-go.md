@@ -53,8 +53,7 @@ learnings:
     - The blogs are links that open up on a separate page
 
 3. Write _tests_ or you will regret it in the future.
-    - Go through [Learn Go With Tests](https://github.com/quii/learn-go-with-tests) to learn how to test the code _
-      correctly_ in Go
+    - Go through [Learn Go With Tests](https://github.com/quii/learn-go-with-tests) to learn how to test the code _correctly_ in Go
     - What would be included in my acceptance test? Do I need one?
 
 4. Have a _process_ and develop it to be more systematic.
