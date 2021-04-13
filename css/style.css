@@ -57,6 +57,10 @@ a {
   color: var(--link-colour);
 }
 
+a:hover {
+  color: var(--blockquote-colour);
+}
+
 p {
   line-height: calc(var(--font-size) * var(--line-height-multiplier));
 }
