@@ -67,7 +67,7 @@ learnings:
           used by Heroku when deploying my site.
 
 5. Don't bother following a tutorial. Figure out what you _want_ to build in the simplest way possible. I started with a
-   hard coded blog list on the site and that aimed to replace it with non-hard coded blogs.
+   hard coded blog list on the site and then aimed to replace it with non-hard coded blogs.
 
 In retrospect, I would have _still_ done things differently if I took another shot at creating this blog again. I guess
 that's the best (or worst) thing about software development - nothing is perfect and there is _always_ room to improve.
