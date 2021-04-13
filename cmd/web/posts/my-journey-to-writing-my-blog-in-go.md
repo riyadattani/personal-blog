@@ -62,7 +62,7 @@ learnings:
       when they crop up in the middle of something else.
     - **Continuous Integration**:
         - I tried to apply some processes from work to make it as easy as possible to continuously integrate my code to
-          the live site. I created a pipeline that builds, tests and deploys the code at every time I push to master. I
+          the live site. I created a github action that builds and deploys the code, every time I push to master. I
           always work on master.
         - I took this opportunity to learn more about docker. I used docker to build my code in a container and this is
           used by Heroku when deploying my site.
