@@ -132,6 +132,10 @@ code {
     max-width: var(--image-width);
     align-self: center;
   }
+
+  .about {
+    flex-direction: column-reverse;
+  }
 }
 
 
