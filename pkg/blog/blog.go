@@ -8,7 +8,6 @@ import (
 	"html/template"
 	"io"
 	"io/ioutil"
-	"log"
 	"time"
 )
 
@@ -19,13 +18,16 @@ type Post struct {
 	Picture string
 }
 
-func NewPost(fileName string) Post {
-	title, content, date, picture := createPost(fileName)
+func NewPost(fileName string) (Post, error) {
+	title, content, date, picture, err := createPost(fileName)
+	if err != nil {
+		return Post{}, err
+	}
 
 	const shortForm = "2006-Jan-02"
 	formattedDate, err := time.Parse(shortForm, date)
 	if err != nil {
-		log.Fatal(fmt.Sprint("Error formatting the date: ", err))
+		return Post{}, err
 	}
 
 	return Post{
@@ -33,13 +35,13 @@ func NewPost(fileName string) Post {
 		Content: template.HTML(content),
 		Date:    formattedDate,
 		Picture: picture,
-	}
+	}, nil
 }
 
-func createPost(filename string) (title string, body []byte, date string, picture string) {
+func createPost(filename string) (title string, body []byte, date string, picture string, err error) {
 	fileContent, err := ioutil.ReadFile(fmt.Sprintf("../../cmd/web/posts/%s", filename))
 	if err != nil {
-		log.Fatal(fmt.Sprint("Could not read markdown file, error: ", err))
+		return "", nil, "", "", err
 	}
 
 	r := bytes.NewReader(fileContent)
@@ -52,7 +54,7 @@ func createPost(filename string) (title string, body []byte, date string, pictur
 	body = GetContentBody(fileContent)
 	content := blackfriday.Run(body)
 
-	return title, content, date, picture
+	return title, content, date, picture, nil
 }
 
 func GetMetaData(r io.Reader) []string {

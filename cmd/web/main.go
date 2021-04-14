@@ -1,11 +1,13 @@
 package main
 
 import (
+	"fmt"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	"os"
 	"personal-blog/pkg"
-	server2 "personal-blog/pkg/server"
+	server "personal-blog/pkg/server"
 )
 
 func main() {
@@ -14,17 +16,29 @@ func main() {
 		port = "3000"
 	}
 
-	server, err := server2.NewServer(
+	log.Println("listening on", port)
+
+	if err := http.ListenAndServe(":"+port, newServer()); err != nil {
+		log.Fatal("Cannot listen and serve", err)
+	}
+}
+
+func newServer() *mux.Router {
+	repository, err := pkg.NewInMemoryRepository()
+	if err != nil {
+		log.Fatal(fmt.Sprintf("Failed to create a repository %s", err))
+	}
+
+	s, err := server.NewServer(
 		"../../html/*",
 		"../../css",
-		pkg.NewInMemoryRepository(),
+		repository,
 	)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Println("listening on", port)
-	if err := http.ListenAndServe(":"+port, server); err != nil {
-		log.Fatal("cannot listen and serve", err)
-	}
+	return s
 }
+
+//TODO: 4 greens on lighthouse!!!

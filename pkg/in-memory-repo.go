@@ -3,7 +3,6 @@ package pkg
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"personal-blog/pkg/blog"
 	"sort"
 )
@@ -12,19 +11,27 @@ type InMemoryRepository struct {
 	posts []blog.Post
 }
 
-func NewInMemoryRepository() *InMemoryRepository {
+func NewInMemoryRepository() (*InMemoryRepository, error) {
 	blogFiles, err := ioutil.ReadDir("posts")
 	if err != nil {
-		log.Fatal(fmt.Sprint("Cannot read the posts directory -  ", err))
+		return &InMemoryRepository{}, fmt.Errorf("cannot read the posts directory: %s", err)
 	}
 
 	var posts []blog.Post
 	for _, post := range blogFiles {
-		posts = append(posts, blog.NewPost(post.Name()))
+		newPost, err := blog.NewPost(post.Name())
+		if err != nil {
+			return &InMemoryRepository{}, fmt.Errorf("cannot create a new post: %s", err)
+		}
+		posts = append(posts, newPost)
 	}
-	return &InMemoryRepository{posts: posts}
-}
 
+	sort.Slice(posts, func(i, j int) bool {
+		return posts[i].Date.After(posts[j].Date)
+	})
+
+	return &InMemoryRepository{posts: posts}, nil
+}
 
 func (i *InMemoryRepository) GetPost(title string) blog.Post {
 	for _, post := range i.posts {
@@ -32,16 +39,11 @@ func (i *InMemoryRepository) GetPost(title string) blog.Post {
 			return post
 		}
 	}
-	return blog.NewPost("This does not exist")
+	//TODO handle the 404 - return an error (sentinal?) if err == RiyaNotFound, do something. What if someone god /blog/bob? - write a sad path test in server.test
+	post, _ := blog.NewPost("This does not exist")
+	return post
 }
-
 
 func (i *InMemoryRepository) GetPosts() []blog.Post {
-	posts := i.posts
-	sort.Slice(posts, func(i, j int) bool {
-		return posts[i].Date.After(posts[j].Date)
-	})
-
-	return posts
+	return i.posts
 }
-
