@@ -1,10 +1,11 @@
 :root {
   --link-colour: #68bdb4;
-  --bg-colour: #fbf9f4;
-  --text-colour: #174e53;
-  --blockquote-colour: #ed7f53;
-  --code-bg-colour: #fffdfb;
   --light-text: #aadad5;
+  --bg-colour: #fbf9f4;
+  --block-bg-colour: #ffffff;
+  --pastel-pink: #ffd0d7;
+  --blockquote-colour: #ed7f53;
+  --text-colour: #174e53;
 
   --h1-font: 'Courier New', sans-serif;
   --body-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -124,7 +125,7 @@ nav div ul {
   margin: 1rem 0;
   padding: 1rem;
   display: flex;
-  background: var(--code-bg-colour);
+  background: var(--block-bg-colour);
 }
 
 .blogInfo {
@@ -155,6 +156,24 @@ nav div ul {
   padding: 0
 }
 
+.tagList {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+}
+
+.tag {
+  background: var(--pastel-pink);
+  margin-right: 0.8rem;
+  text-transform: capitalize;
+  border-radius: 0.5rem;
+  list-style-type: none;
+  padding: 0.4rem;
+}
+
+.tag::before {
+  content: "#";
+}
 
 
 
@@ -187,7 +206,7 @@ blockquote {
 pre {
   padding: 2rem;
   font-size: 16px;
-  background: var(--code-bg-colour);
+  background: var(--block-bg-colour);
 }
 
 code {

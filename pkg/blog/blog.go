@@ -8,6 +8,7 @@ import (
 	"html/template"
 	"io"
 	"io/ioutil"
+	"strings"
 	"time"
 )
 
@@ -16,10 +17,11 @@ type Post struct {
 	Content template.HTML
 	Date    time.Time
 	Picture string
+	Tags    []string
 }
 
 func NewPost(fileName string) (Post, error) {
-	title, content, date, picture, err := createPost(fileName)
+	title, content, date, picture, tags, err := createPost(fileName)
 	if err != nil {
 		return Post{}, err
 	}
@@ -35,13 +37,14 @@ func NewPost(fileName string) (Post, error) {
 		Content: template.HTML(content),
 		Date:    formattedDate,
 		Picture: picture,
+		Tags:    tags,
 	}, nil
 }
 
-func createPost(filename string) (title string, body []byte, date string, picture string, err error) {
+func createPost(filename string) (title string, body []byte, date string, picture string, tags []string, err error) {
 	fileContent, err := ioutil.ReadFile(fmt.Sprintf("../../cmd/web/posts/%s", filename))
 	if err != nil {
-		return "", nil, "", "", err
+		return "", nil, "", "", nil, nil
 	}
 
 	r := bytes.NewReader(fileContent)
@@ -50,11 +53,12 @@ func createPost(filename string) (title string, body []byte, date string, pictur
 	title = metaData[0]
 	date = metaData[1]
 	picture = metaData[2]
+	tags = strings.Split(metaData[3], ",")
 
 	body = GetContentBody(fileContent)
 	content := blackfriday.Run(body)
 
-	return title, content, date, picture, nil
+	return title, content, date, picture, tags, nil
 }
 
 func GetMetaData(r io.Reader) []string {

@@ -27,6 +27,7 @@ This is the about me thing`
 		markdownDoc := `About something else
 2013-Mar-03
 picture.jpg
+cat,dog
 -----
 This is the about me thing`
 
