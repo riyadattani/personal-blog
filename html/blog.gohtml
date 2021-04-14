@@ -4,7 +4,7 @@
 <body>
 {{template "navBar.partial.gohtml"}}
 <main>
-  <h1>{{.Title}}</h1>
+  <h2 class="blogPostHeading">{{.Title}}</h2>
   <time>{{.Date.Format "Jan 02, 2006"}}</time>
   <article>
       {{.Content}}
