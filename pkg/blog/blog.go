@@ -21,10 +21,16 @@ type Post struct {
 }
 
 func NewPost(fileName string) (Post, error) {
-	title, content, date, picture, tags, err := createPost(fileName)
+	fileContent, err := readFile(fileName)
 	if err != nil {
 		return Post{}, err
 	}
+
+	title, body, date, picture, tags, err := CreatePost(fileContent)
+	if err != nil {
+		return Post{}, err
+	}
+	content := blackfriday.Run(body)
 
 	const shortForm = "2006-Jan-02"
 	formattedDate, err := time.Parse(shortForm, date)
@@ -41,27 +47,29 @@ func NewPost(fileName string) (Post, error) {
 	}, nil
 }
 
-func createPost(filename string) (title string, body []byte, date string, picture string, tags []string, err error) {
-	fileContent, err := ioutil.ReadFile(fmt.Sprintf("../../cmd/web/posts/%s", filename))
-	if err != nil {
-		return "", nil, "", "", nil, nil
-	}
-
+func CreatePost(fileContent []byte) (title string, body []byte, date string, picture string, tags []string, err error) {
 	r := bytes.NewReader(fileContent)
 
-	metaData := GetMetaData(r)
+	metaData := getMetaData(r)
 	title = metaData[0]
 	date = metaData[1]
 	picture = metaData[2]
 	tags = strings.Split(metaData[3], ",")
 
-	body = GetContentBody(fileContent)
-	content := blackfriday.Run(body)
+	body = getContentBody(fileContent)
 
-	return title, content, date, picture, tags, nil
+	return title, body, date, picture, tags, nil
 }
 
-func GetMetaData(r io.Reader) []string {
+func readFile(filename string) ([]byte, error) {
+	fileContent, err := ioutil.ReadFile(fmt.Sprintf("../../cmd/web/posts/%s", filename))
+	if err != nil {
+		return nil, err
+	}
+	return fileContent, nil
+}
+
+func getMetaData(r io.Reader) []string {
 	metaData := make([]string, 0)
 	scanner := bufio.NewScanner(r)
 	scanner.Split(bufio.ScanLines)
@@ -77,7 +85,7 @@ func GetMetaData(r io.Reader) []string {
 	return metaData
 }
 
-func GetContentBody(byteArray []byte) []byte {
+func getContentBody(byteArray []byte) []byte {
 	content := bytes.Split(byteArray, []byte("-----\n"))[1]
 	return content
 }

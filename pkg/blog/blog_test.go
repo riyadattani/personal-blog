@@ -2,28 +2,12 @@ package blog_test
 
 import (
 	"personal-blog/pkg/blog"
-	"strings"
 	"testing"
 	"time"
 )
 
 func TestBlog(t *testing.T) {
 	t.Run("it should return the title, date and content separately", func(t *testing.T) {
-		markdownDoc := `About
-2013-Feb-03
------
-This is the about me thing`
-
-		byteArray := []byte(markdownDoc)
-		contentBody := string(blog.GetContentBody(byteArray))
-		expectedBody := `This is the about me thing`
-
-		if contentBody != expectedBody {
-			t.Errorf("got %q, want %q", expectedBody, contentBody)
-		}
-	})
-
-	t.Run("it should read a line in the text", func(t *testing.T) {
 		markdownDoc := `About something else
 2013-Mar-03
 picture.jpg
@@ -31,17 +15,19 @@ cat,dog
 -----
 This is the about me thing`
 
-		reader := strings.NewReader(markdownDoc)
-		metaData := blog.GetMetaData(reader)
+		byteArray := []byte(markdownDoc)
+		title, body, date, picture, _, _ := blog.CreatePost(byteArray)
 
-		title := metaData[0]
+		expectedBody := `This is the about me thing`
 		expectedTitle := `About something else`
-
-		date := metaData[1]
 		expectedDate := `2013-Mar-03`
-
-		picture := metaData[2]
 		expectedPic := `picture.jpg`
+		//expectedTags := []string{"cat", "dog"}
+
+
+		if string(body) != expectedBody {
+			t.Errorf("got %q, want %q", body, expectedBody)
+		}
 
 		if title != expectedTitle {
 			t.Errorf("got %q, want %q", title, expectedTitle)
@@ -54,6 +40,10 @@ This is the about me thing`
 		if picture != expectedPic {
 			t.Errorf("got %q, want %q", picture, expectedPic)
 		}
+		//TODO: why doesnt this work
+		//if tags != expectedTags {
+		//	t.Errorf("got %q, want %q", tags, expectedTags)
+		//}
 	})
 
 	t.Run("Format the date correctly", func(t *testing.T) {
