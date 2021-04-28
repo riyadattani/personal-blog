@@ -21,7 +21,7 @@ type Post struct {
 }
 
 func NewPost(fileName string) (Post, error) {
-	fileContent, err := readFile(fileName)
+	fileContent, err := ioutil.ReadFile(fmt.Sprintf("../../cmd/web/posts/%s", fileName))
 	if err != nil {
 		return Post{}, err
 	}
@@ -59,14 +59,6 @@ func CreatePost(fileContent []byte) (title string, body []byte, date string, pic
 	body = getContentBody(fileContent)
 
 	return title, body, date, picture, tags, nil
-}
-
-func readFile(filename string) ([]byte, error) {
-	fileContent, err := ioutil.ReadFile(fmt.Sprintf("../../cmd/web/posts/%s", filename))
-	if err != nil {
-		return nil, err
-	}
-	return fileContent, nil
 }
 
 func getMetaData(r io.Reader) []string {
