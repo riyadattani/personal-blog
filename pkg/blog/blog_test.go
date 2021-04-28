@@ -2,6 +2,7 @@ package blog_test
 
 import (
 	"personal-blog/pkg/blog"
+	"reflect"
 	"testing"
 	"time"
 )
@@ -16,14 +17,13 @@ cat,dog
 This is the about me thing`
 
 		byteArray := []byte(markdownDoc)
-		title, body, date, picture, _, _ := blog.CreatePost(byteArray)
+		title, body, date, picture, tags, _ := blog.CreatePost(byteArray)
 
 		expectedBody := `This is the about me thing`
 		expectedTitle := `About something else`
 		expectedDate := `2013-Mar-03`
 		expectedPic := `picture.jpg`
-		//expectedTags := []string{"cat", "dog"}
-
+		expectedTags := []string{"cat", "dog"}
 
 		if string(body) != expectedBody {
 			t.Errorf("got %q, want %q", body, expectedBody)
@@ -40,10 +40,10 @@ This is the about me thing`
 		if picture != expectedPic {
 			t.Errorf("got %q, want %q", picture, expectedPic)
 		}
-		//TODO: why doesnt this work
-		//if tags != expectedTags {
-		//	t.Errorf("got %q, want %q", tags, expectedTags)
-		//}
+
+		if !reflect.DeepEqual(tags, expectedTags) {
+			t.Errorf("got %q, want %q", tags, expectedTags)
+		}
 	})
 
 	t.Run("Format the date correctly", func(t *testing.T) {
