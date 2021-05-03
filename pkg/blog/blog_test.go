@@ -11,6 +11,8 @@ func TestBlog(t *testing.T) {
 	t.Run("it should split the markdown file into the metadata and the content", func(t *testing.T) {
 		markdownDoc := `This is the title
 2013-Mar-03
+picture.jpg
+cat,dog
 -----
 This is the first sentence of the content`
 
