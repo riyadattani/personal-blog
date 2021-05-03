@@ -62,7 +62,7 @@ the `InMemoryRepository` to markdown files.
 
 This is how I did it:
 
-- I created a `blog-posts` folder for the markdown files.
+- I created a `blog-posts` folder to store markdown files.
 - The main gist is to map over each file in the `blog-posts` folder and create a `Post` out of them. I had some fun
   challenges here. How do I read a markdown file? How do I transform it into html?
 - I used `ioutil.ReadFile` to read the file.
@@ -80,7 +80,7 @@ func readPost(title string) ([]byte, error) {
 }
 ```
 
-- The post struct, `content` is no longer a `string` but of type `template.HTML`
+- The `content` in the `Post` struct is no longer a `string` but of type `template.HTML`.
 
 This was a great milestone to achieve however, I had not actually built my MVP yet. I had two problems:
 
@@ -88,7 +88,7 @@ This was a great milestone to achieve however, I had not actually built my MVP y
 2. I want to order the blogs by date
 
 I had to think of a solution to specify the key attributes of a `Post`. I decided to split the
-markdown file with metadata, and the content of the blog post. Here is an example of a typical blog post:
+markdown file by metadata, and the content of the blog post. Here is an example of a typical blog post:
 
 <img src="../css/images/markdown-example.png" alt="Markdown example" />
 
@@ -193,7 +193,7 @@ func getContentBody(byteArray []byte) []byte {
 ```
 
 
-To finally accomplish the MVP, I want the blogs to be listed in descending order. I chose to make my life easier by writing
+To finally accomplish the MVP, I want the blogs to be listed in descending order by date. I chose to make my life easier by writing
 the date in a particular format in the markdown file so that I can transform that `string` into a`time.Time` type using
 the built-in `time` package. As a`time.Time` type, I could sort the posts in descending order in
 the `InMemoryRepository`. It was a pleasant surprise when I discovered that I could format the date to look more readable in the html
