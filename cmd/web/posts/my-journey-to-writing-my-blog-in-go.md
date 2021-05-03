@@ -47,7 +47,7 @@ learnings:
       about.
     - **Why**: I want to build a network and connect with people who have similar interests, share knowledge that other
       people might find useful and practice communicating through writing effectively.
-    - **How**: I made a decision to not use a blog engine and to build the blog from scratch in Go in an _iterative_ way. Whilst a blog engine would easily achieve my goals, I would not have gained this invaluable learning experience.
+    - **How**: I made a decision to not use a blog engine and to build the blog from scratch in Go in an _iterative_ way. Whilst a blog engine would have easily enabled me to achieve my goals, I would not have gained this invaluable learning experience.
 
 2. Decide on the _MVP_: I wrote down 2 features which I think I need for my blog to be functional.
     - A home page which has a list of my blogs in descending order by date.
