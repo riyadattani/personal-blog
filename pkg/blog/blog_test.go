@@ -8,19 +8,17 @@ import (
 )
 
 func TestBlog(t *testing.T) {
-	t.Run("it should return the title, date and content separately", func(t *testing.T) {
-		markdownDoc := `About something else
+	t.Run("it should split the markdown file into the metadata and the content", func(t *testing.T) {
+		markdownDoc := `This is the title
 2013-Mar-03
-picture.jpg
-cat,dog
 -----
-This is the about me thing`
+This is the first sentence of the content`
 
 		byteArray := []byte(markdownDoc)
 		title, body, date, picture, tags, _ := blog.CreatePost(byteArray)
 
-		expectedBody := `This is the about me thing`
-		expectedTitle := `About something else`
+		expectedBody := `This is the first sentence of the content`
+		expectedTitle := `This is the title`
 		expectedDate := `2013-Mar-03`
 		expectedPic := `picture.jpg`
 		expectedTags := []string{"cat", "dog"}

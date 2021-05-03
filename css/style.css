@@ -60,12 +60,20 @@ p {
   line-height: calc(var(--font-size) * var(--line-height-multiplier));
 }
 
+p img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  width: auto
+}
+
 
 
 /*Navigation!*/
 
 .mainHeading {
-  margin: 2rem 0;
+  margin: calc(1.2rem * var(--line-height-multiplier)) 0;
   font-family: var(--h1-font);
   font-size: var(--h1-font-size);
   letter-spacing: 1rem;
@@ -185,8 +193,8 @@ nav div ul {
   margin: 3.5rem 2rem;
 }
 
-article ol li {
-  margin: 1.2rem 0;
+article ol li, article ul li {
+  margin: 0.8rem 0;
   line-height: calc(var(--font-size) * var(--line-height-multiplier));
 }
 
@@ -206,13 +214,14 @@ blockquote {
 pre {
   padding: 2rem;
   font-size: 16px;
-  background: var(--block-bg-colour);
+  max-height: 30rem;
+  overflow: auto;
 }
 
 code {
   font-size: calc(var(--font-size) * 1.1);
   padding: 0 0.5rem;
-  background: #efe6dd;
+  background: var(--block-bg-colour);
   border-radius: 0.3rem;
 }
 

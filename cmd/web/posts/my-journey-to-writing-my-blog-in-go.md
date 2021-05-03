@@ -1,6 +1,6 @@
 My journey to writing my blog in Go 
 2021-Apr-12
-golangPic.png
+golangPic1.png
 golang
 -----
 

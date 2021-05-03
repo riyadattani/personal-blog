@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	"github.com/Depado/bfchroma"
+	"github.com/alecthomas/chroma/formatters/html"
 	"github.com/russross/blackfriday/v2"
 	"html/template"
 	"io"
@@ -30,7 +32,21 @@ func NewPost(fileName string) (Post, error) {
 	if err != nil {
 		return Post{}, err
 	}
-	content := blackfriday.Run(body)
+
+	renderer := bfchroma.NewRenderer(
+		bfchroma.WithoutAutodetect(),
+		bfchroma.ChromaOptions(
+			html.WithLineNumbers(true),
+		),
+		bfchroma.Extend(
+			blackfriday.NewHTMLRenderer(blackfriday.HTMLRendererParameters{
+				Flags: blackfriday.CommonHTMLFlags,
+			}),
+		),
+		bfchroma.Style("lovelace"),
+	)
+
+	content := blackfriday.Run(body, blackfriday.WithRenderer(renderer), blackfriday.WithExtensions(blackfriday.CommonExtensions))
 
 	const shortForm = "2006-Jan-02"
 	formattedDate, err := time.Parse(shortForm, date)
