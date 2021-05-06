@@ -6,7 +6,7 @@ golang
 
 I built this blog from scratch, without a blog engine. I used Go to build it and some html + css to make it look pretty.
 This is my first personal project in Go, in fact, its my first personal project on a live
-website. [Tweet me](https://twitter.com/DattaniRiya) if you have any feedback whether its kind, mean or funny!
+website. [Tweet me](https://twitter.com/DattaniRiya) if you have any feedback whether its kind, mean or funny! I also wrote a technical counterpart to this blog - you can find it [here](http://localhost:3000/blog/A%20technical%20approach%20on%20building%20this%20blog%20from%20scratch%20).
 
 So I made the decision to make a blog in Go because it was different language to what I normally use at work (Node) and
 when I was introduced to it, it felt fun and simple.
@@ -62,7 +62,7 @@ learnings:
       when they crop up in the middle of something else.
     - **Continuous Integration**:
         - I tried to apply some processes from work to make it as easy as possible to continuously integrate my code to
-          the live site. I created a github action that builds and deploys the code, every time I push to master. I
+          the live site. I created a github action that builds, tests and deploys the code, every time I push to master. I
           always work on master.
         - I took this opportunity to learn more about docker. I used docker to build my code in a container and this is
           used by Heroku when deploying my site.
@@ -81,5 +81,5 @@ Looking back at my second attempt at building this blog, here is what I would've
    Instead of focusing on the most important task, I wanted to make the site look pixel perfect.
 3. Get feedback on the code and the design as soon as possible.
 
-In hindsight, building this blog has been a fantastic learning experience! I felt technically challenged and I learned
-about the process of creating a website from scratch to live. 
+In hindsight, building this blog has been a fantastic learning experience! I felt technically challenged, and I learned
+about the process of creating a website from scratch to live. If you are interested in the technicalities, have a read through [this complimentary blog](http://localhost:3000/blog/A%20technical%20approach%20on%20building%20this%20blog%20from%20scratch%20) to view some code.
