@@ -28,48 +28,30 @@ func NewPost(fileName string) (Post, error) {
 		return Post{}, err
 	}
 
-	metData, body, err := CreatePost(fileContent)
-	if err != nil {
-		return Post{}, err
-	}
-
-	renderer := bfchroma.NewRenderer(
-		bfchroma.WithoutAutodetect(),
-		bfchroma.ChromaOptions(
-			html.WithLineNumbers(true),
-		),
-		bfchroma.Extend(
-			blackfriday.NewHTMLRenderer(blackfriday.HTMLRendererParameters{
-				Flags: blackfriday.CommonHTMLFlags,
-			}),
-		),
-		bfchroma.Style("lovelace"),
-	)
-
-	content := blackfriday.Run(body, blackfriday.WithRenderer(renderer), blackfriday.WithExtensions(blackfriday.CommonExtensions))
-
-	const shortForm = "2006-Jan-02"
-	formattedDate, err := time.Parse(shortForm, metData.Date)
+	metData, content, err := CreatePost(fileContent)
 	if err != nil {
 		return Post{}, err
 	}
 
 	return Post{
 		Title:   metData.Title,
-		Content: template.HTML(content),
-		Date:    formattedDate,
+		Content: content,
+		Date:    metData.Date,
 		Picture: metData.Picture,
 		Tags:    metData.Tags,
 	}, nil
 }
 
-func CreatePost(fileContent []byte) (metaData MetaData, body []byte, err error) {
-	r := bytes.NewReader(fileContent)
 
-	metaData = getMetaData(r)
-	body = getContentBody(fileContent)
+func CreatePost(fileContent []byte) (metaData MetaData, content template.HTML, err error) {
+	metaData, err = getMetaData(bytes.NewReader(fileContent))
+	if err != nil {
+		return MetaData{}, "", err
+	}
 
-	return metaData, body,nil
+	content = getContent(fileContent)
+
+	return metaData, content,nil
 }
 
 //TODO: return a structure rather than a string
@@ -77,12 +59,12 @@ func CreatePost(fileContent []byte) (metaData MetaData, body []byte, err error) 
 
 type MetaData struct {
 	Title   string
-	Date    string
+	Date    time.Time
 	Picture string
 	Tags    []string
 }
 
-func getMetaData(r io.Reader) MetaData {
+func getMetaData(r io.Reader) (MetaData, error) {
 	metaData := make([]string, 0)
 	scanner := bufio.NewScanner(r)
 	scanner.Split(bufio.ScanLines)
@@ -95,15 +77,45 @@ func getMetaData(r io.Reader) MetaData {
 		metaData = append(metaData, line)
 	}
 
+	date, err := stringToDate(metaData[1])
+	if err != nil {
+		return MetaData{}, err
+	}
+
 	return MetaData{
 		Title:   metaData[0],
-		Date:    metaData[1],
+		Date:    date,
 		Picture: metaData[2],
 		Tags:    strings.Split(metaData[3], ","),
-	}
+	}, nil
 }
 
-func getContentBody(byteArray []byte) []byte {
-	content := bytes.Split(byteArray, []byte("-----\n"))[1]
-	return content
+func getContent(byteArray []byte) template.HTML {
+	body := bytes.Split(byteArray, []byte("-----\n"))[1]
+	content := blackfriday.Run(body, blackfriday.WithRenderer(renderer()), blackfriday.WithExtensions(blackfriday.CommonExtensions))
+	return template.HTML(content)
+}
+
+func renderer() *bfchroma.Renderer {
+	return bfchroma.NewRenderer(
+		bfchroma.WithoutAutodetect(),
+		bfchroma.ChromaOptions(
+			html.WithLineNumbers(true),
+		),
+		bfchroma.Extend(
+			blackfriday.NewHTMLRenderer(blackfriday.HTMLRendererParameters{
+				Flags: blackfriday.CommonHTMLFlags,
+			}),
+		),
+		bfchroma.Style("lovelace"),
+	)
+}
+
+func stringToDate(stringDate string) (time.Time, error) {
+	const shortFormDate = "2006-Jan-02"
+	date, err := time.Parse(shortFormDate, stringDate)
+	if err != nil {
+		return time.Time{}, err
+	}
+	return date, nil
 }
