@@ -234,6 +234,15 @@ type MetaData struct {
 }
 ```
 
+- Using a static type is advantageous because I am explicitly communicating what I expect `getMetaData` to return. I can make use of the type system here and spot errors even before I run the system. 
 - This way, I can control the metadata values in the `getMetaData` function rather than indexing a slice in another function. In this situation, relying on indexing can be dangerous. What if the order of the metadata in the markdown file is incorrect? 
 - I can push some implementation detail down into `getMetaData` from the public functions, such as parsing the date. 
 
+### Key takeaways 
+
+- **Start small**. The Steel thread approach helped me streamline my work and focus on delivering value to the user. 
+- If you have _good_ **tests**, you can always refactor your code with confidence. I think I need to increase the test coverage for this blog and practice TDD more thoroughly.
+- Read the documentation and find **examples**. I found it especially difficult to wrap my head around the `bufio` package. After spending a long time "googling" how to do scan a file, I broke down the problem further and focused on solving something simpler. This changed how I "googled", hence, I learned how to search for the right thing and apply the example solution to my problem. The [Go website](https://golang.org/) itself has some great examples.
+- **Feedback** is SO important. It's one thing to write software, but it's another thing to write _good quality_ software. Getting feedback on the code, the design and the content is not only beneficial to the user, but it is motivating for me to grow the blog and make it better.
+
+Overall, writing this blog has been quite fun and I learned some valuable lessons. This is only the start of my Golang journey. I can't wait to explore it more. 
