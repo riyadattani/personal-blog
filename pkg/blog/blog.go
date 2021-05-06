@@ -28,7 +28,7 @@ func NewPost(fileName string) (Post, error) {
 		return Post{}, err
 	}
 
-	title, body, date, picture, tags, err := CreatePost(fileContent)
+	metData, body, err := CreatePost(fileContent)
 	if err != nil {
 		return Post{}, err
 	}
@@ -49,35 +49,40 @@ func NewPost(fileName string) (Post, error) {
 	content := blackfriday.Run(body, blackfriday.WithRenderer(renderer), blackfriday.WithExtensions(blackfriday.CommonExtensions))
 
 	const shortForm = "2006-Jan-02"
-	formattedDate, err := time.Parse(shortForm, date)
+	formattedDate, err := time.Parse(shortForm, metData.Date)
 	if err != nil {
 		return Post{}, err
 	}
 
 	return Post{
-		Title:   title,
+		Title:   metData.Title,
 		Content: template.HTML(content),
 		Date:    formattedDate,
-		Picture: picture,
-		Tags:    tags,
+		Picture: metData.Picture,
+		Tags:    metData.Tags,
 	}, nil
 }
 
-func CreatePost(fileContent []byte) (title string, body []byte, date string, picture string, tags []string, err error) {
+func CreatePost(fileContent []byte) (metaData MetaData, body []byte, err error) {
 	r := bytes.NewReader(fileContent)
 
-	metaData := getMetaData(r)
-	title = metaData[0]
-	date = metaData[1]
-	picture = metaData[2]
-	tags = strings.Split(metaData[3], ",")
-
+	metaData = getMetaData(r)
 	body = getContentBody(fileContent)
 
-	return title, body, date, picture, tags, nil
+	return metaData, body,nil
 }
 
-func getMetaData(r io.Reader) []string {
+//TODO: return a structure rather than a string
+// do not use a for loop. You only need a for loop when reading the body because you dont know how many lines that will be
+
+type MetaData struct {
+	Title   string
+	Date    string
+	Picture string
+	Tags    []string
+}
+
+func getMetaData(r io.Reader) MetaData {
 	metaData := make([]string, 0)
 	scanner := bufio.NewScanner(r)
 	scanner.Split(bufio.ScanLines)
@@ -90,7 +95,12 @@ func getMetaData(r io.Reader) []string {
 		metaData = append(metaData, line)
 	}
 
-	return metaData
+	return MetaData{
+		Title:   metaData[0],
+		Date:    metaData[1],
+		Picture: metaData[2],
+		Tags:    strings.Split(metaData[3], ","),
+	}
 }
 
 func getContentBody(byteArray []byte) []byte {

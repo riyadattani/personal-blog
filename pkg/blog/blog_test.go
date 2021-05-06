@@ -17,7 +17,7 @@ cat,dog
 This is the first sentence of the content`
 
 		byteArray := []byte(markdownDoc)
-		title, body, date, picture, tags, _ := blog.CreatePost(byteArray)
+		metaData, body, _ := blog.CreatePost(byteArray)
 
 		expectedBody := `This is the first sentence of the content`
 		expectedTitle := `This is the title`
@@ -29,20 +29,20 @@ This is the first sentence of the content`
 			t.Errorf("got %q, want %q", body, expectedBody)
 		}
 
-		if title != expectedTitle {
-			t.Errorf("got %q, want %q", title, expectedTitle)
+		if metaData.Title != expectedTitle {
+			t.Errorf("got %q, want %q", metaData.Title, expectedTitle)
 		}
 
-		if date != expectedDate {
-			t.Errorf("got %q, want %q", date, expectedDate)
+		if metaData.Date != expectedDate {
+			t.Errorf("got %q, want %q", metaData.Date, expectedDate)
 		}
 
-		if picture != expectedPic {
-			t.Errorf("got %q, want %q", picture, expectedPic)
+		if metaData.Picture != expectedPic {
+			t.Errorf("got %q, want %q", metaData.Picture, expectedPic)
 		}
 
-		if !reflect.DeepEqual(tags, expectedTags) {
-			t.Errorf("got %q, want %q", tags, expectedTags)
+		if !reflect.DeepEqual(metaData.Tags, expectedTags) {
+			t.Errorf("got %q, want %q", metaData.Tags, expectedTags)
 		}
 	})
 
