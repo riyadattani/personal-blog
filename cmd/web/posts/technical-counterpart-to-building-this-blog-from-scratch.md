@@ -75,13 +75,13 @@ The next step was to shift the hard-coded blog posts from the `InMemoryRepositor
 
 ```go
 func readPost(title string) ([]byte, error) {
-	body, err := ioutil.ReadFile(fmt.Sprintf("../web/blogs/%s", title))
-	if err != nil {
-		return nil, err
-	}
-
-	output := blackfriday.Run(body)
-	return output, nil
+   body, err := ioutil.ReadFile(fmt.Sprintf("../web/blogs/%s", title))
+   if err != nil {
+    return nil, err
+   }
+   
+   output := blackfriday.Run(body)
+   return output, nil
 }
 ```
 
@@ -227,10 +227,10 @@ When creating a post, `getMetaData` should return structured data `MetaData` rat
   
 ```go
 type MetaData struct {
-	Title   string
-	Date    time.Time
-	Picture string
-	Tags    []string
+   Title   string
+   Date    time.Time
+   Picture string
+   Tags    []string
 }
 ```
 

@@ -100,7 +100,7 @@ func renderer() *bfchroma.Renderer {
 	return bfchroma.NewRenderer(
 		bfchroma.WithoutAutodetect(),
 		bfchroma.ChromaOptions(
-			html.WithLineNumbers(true),
+			html.WithLineNumbers(false),
 		),
 		bfchroma.Extend(
 			blackfriday.NewHTMLRenderer(blackfriday.HTMLRendererParameters{

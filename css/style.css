@@ -1,6 +1,5 @@
 :root {
   --link-colour: #68bdb4;
-  --light-text: #aadad5;
   --bg-colour: #fbf9f4;
   --block-bg-colour: #ffffff;
   --pastel-pink: #ffd0d7;
@@ -267,7 +266,7 @@ footer {
   text-align: center;
   width: 100%;
   margin: 3rem auto;
-  color: var(--light-text);
+  color: var(--link-colour);
 }
 
 footer p {
@@ -299,7 +298,7 @@ footer a {
 }
 
 footer a svg {
-  fill: var(--light-text);
+  fill: var(--link-colour);
   height: 2.4rem;
   width: 2.4rem;
 }
