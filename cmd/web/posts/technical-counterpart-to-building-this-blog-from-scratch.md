@@ -39,7 +39,7 @@ What is the minimal amount of work I can do to deliver value to the user? To bui
       routing. At this point, I had a server up and something was on the page - a great start. My next step was to
       render a list of links that represent blog posts.
 2. Hard-coded blogs
-    - This was where the fun began. Instead of printing text on the page, I wanted to render some html with an unordered
+    - This was where the fun began! Instead of printing text on the page, I wanted to render some html with an unordered
       list. I used the built-in `html/template` to point to a html file that had a list of hard-coded blog titles.
     - I pushed the hard-coded titles from the html file into an `InMemoryRespository`. Here is where the list of blog
       posts would live. I passed the list from this repository to the handler for the homepage in order to map over
@@ -56,7 +56,7 @@ For a user to complete their journey, they should be able to click on the blog p
 that particular blog. I iteratively added a route `/blogs/{blogPostTitle}`and a html template to render the contents of
 the post.
 
-Hooray, the Steel thread is complete. The proof of concept is now a reality, and the site had an end-to-end user journey. 
+Hooray, the Steel thread is complete! The proof of concept is now a reality, and the site had an end-to-end user journey. 
 
 ### How can I publish blog posts easily?
 
@@ -101,7 +101,7 @@ markdown file by metadata, and the content of the blog post. Here is an example 
 
 This was a tricky challenge because I had to figure out a way to read the metadata line by line, and after the dash
 characters `-----`, I wanted to assign the rest of the file as the content. TDD (Test Driven Development) to my
-rescue. _Properly_ test-driving this part of the code helped me break down the problem into smaller chucks. I used the
+rescue. _Properly_ test-driving this part of the code helped me break down the problem into smaller chunks. I used the
 built-in package `bufio` (see [docs](https://golang.org/pkg/bufio/)) to scan the file. Here is a code snippet of my test and solution:
 
 Test:
@@ -242,7 +242,7 @@ type MetaData struct {
 
 - **Start small**. The Steel thread approach helped me streamline my work and focus on delivering value to the user. 
 - If you have _good_ **tests**, you can always refactor your code with confidence. I think I need to increase the test coverage for this blog and practice TDD more thoroughly.
-- Read the documentation and find **examples**. I found it especially difficult to wrap my head around the `bufio` package. After spending a long time "googling" how to do scan a file, I broke down the problem further and focused on solving something simpler. This changed how I "googled", hence, I learned how to search for the right thing and apply the example solution to my problem. The [Go website](https://golang.org/) itself has some great examples.
+- Read the documentation and find **examples**. I found it especially difficult to wrap my head around the `bufio` package. After spending a long time "googling" how to scan a file, I broke down the problem further and focused on solving something simpler. This allowed me to narrow my search terms and apply the relevant solutions to my problem. The [Go website](https://golang.org/) itself has some great examples.
 - **Feedback** is SO important. It's one thing to write software, but it's another thing to write _good quality_ software. Getting feedback on the code, the design and the content is not only beneficial to the user, but it is motivating for me to grow the blog and make it better.
 
-Overall, writing this blog has been quite fun and I learned some valuable lessons. This is only the start of my Golang journey. I can't wait to explore it more. 
+Overall, writing this blog has been quite fun and I learned some valuable lessons. This is only the start of my Golang journey. I can't wait to explore it more!
