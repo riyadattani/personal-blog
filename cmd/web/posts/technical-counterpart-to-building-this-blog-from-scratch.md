@@ -8,6 +8,10 @@ I am writing a more technical counterpart to my [previous blog post](https://www
 
 ### What is my MVP?
 
+I want to publish blog posts and allow my readers to access my content.
+
+### What are my objectives? 
+
 1. A home page which has a list of my blogs in descending order by date
 2. The blogs are links that open up on a separate page
 
@@ -18,19 +22,15 @@ developers generally strive to be agile. I think this illustration best describe
 
 <img src="../css/images/building-software.jpg" alt="Building software - agile" />
 
+The essence here is that each product before the car, in the second row, is _usable_. A skateboard, a scooter, a bike and a motorcycle fulfil the purpose of transporting someone from point A to point B and so it is _valuable_ to the user. Individual car parts are worthless if they do not assemble a car and transport someone. In terms of software, it is worthless _to the user_ to separately build individual parts of the system simply because the user cannot use it. To build the _correct_ product for the user, we need to have the ability to adapt the software based on feedback from them.
+
 > The key to agile is incremental development
 
-To build the "skateboard" of my site, I used the **Steel thread** concept to figure out where to start. A Steel thread
-is some important, minimal thread of functionality that runs throughout the system. What is the minimal amount of work
-you can do to deliver value to the user of your site? Here is a sequence diagram of what I defined as my Steel thread:
+What is the minimal amount of work I can do to deliver value to the user? To build the "skateboard" of my site, I used the **Steel thread** concept to figure out where to start. A Steel thread is some important, minimal thread of functionality that runs throughout the system. I used this approach because it urges you to build the scaffolding of the software end-to-end. Here is a sequence diagram of what I defined as my Steel thread:
 
 <img src="../css/images/sequence-diagram-steel-thread.png" alt="Steel thread diagram" />
 
-In respect to _my own_ experience of adding blogs to the website, my ultimate goal was to use markdown files to write
-the blogs that I can simply commit to the Github repository for this site. Markdown files are perfect as I can reap the
-benefits of basic formatting, and I can easily embed videos or images.
-
-Here are the steps I took to get started:
+### The steps I took to achieve the Steel thread: 
 
 1. The "Hello world" version
     - This is the simplest way to get the show on the road. I used this example: https://gobyexample.com/http-servers,
@@ -56,16 +56,21 @@ For a user to complete their journey, they should be able to click on the blog p
 that particular blog. I iteratively added a route `/blogs/{blogPostTitle}`and a html template to render the contents of
 the post.
 
-Hooray, the Steel thread is complete. The proof of concept is now a reality, and the site had an end-to-end user journey.
-The scaffolding of the software is shaping up, and the next step was to shift the hard-coded blog posts from
-the `InMemoryRepository` to markdown files.
+Hooray, the Steel thread is complete. The proof of concept is now a reality, and the site had an end-to-end user journey. 
 
-This is how I did it:
+### How can I publish blog posts easily?
+
+In respect to _my own_ experience of publishing blogs to the website, my ultimate goal was to use markdown files to write
+the blogs that I can simply commit to the Github repository for this site. Markdown files are perfect as I can reap the
+benefits of basic formatting, and I can easily embed videos or images.
+The next step was to shift the hard-coded blog posts from the `InMemoryRepository` to markdown files.
+
+#### 1. Read content from a markdown file 
 
 - I created a `blog-posts` folder to store markdown files.
 - The main gist is to map over each file in the `blog-posts` folder and create a `Post` out of them. I had some fun
   challenges here. How do I read a markdown file? How do I transform it into html?
-- I used `ioutil.ReadFile` to read the file.
+- I used `ioutil.ReadFile` (see [docs](https://golang.org/pkg/io/ioutil/#example_ReadFile)) to read the file.
 - I transformed the content into html using https://github.com/russross/blackfriday.
 
 ```go
@@ -82,10 +87,12 @@ func readPost(title string) ([]byte, error) {
 
 - The `content` in the `Post` struct is no longer a `string` but of type `template.HTML`.
 
-This was a great milestone to achieve however, I had not actually built my MVP yet. I had two problems:
+This was a great milestone to achieve however, I had two problems:
 
 1. The titles were still hardcoded on the homepage
 2. I want to order the blogs by date
+
+#### 2. Define metadata
 
 I had to think of a solution to specify the key attributes of a `Post`. I decided to split the
 markdown file by metadata, and the content of the blog post. Here is an example of a typical blog post:
@@ -95,7 +102,7 @@ markdown file by metadata, and the content of the blog post. Here is an example 
 This was a tricky challenge because I had to figure out a way to read the metadata line by line, and after the dash
 characters `-----`, I wanted to assign the rest of the file as the content. TDD (Test Driven Development) to my
 rescue. _Properly_ test-driving this part of the code helped me break down the problem into smaller chucks. I used the
-built-in package `bufio` to scan the file. Here is a code snippet of my test and solution:
+built-in package `bufio` (see [docs](https://golang.org/pkg/bufio/)) to scan the file. Here is a code snippet of my test and solution:
 
 Test:
 
@@ -192,6 +199,7 @@ func getContentBody(byteArray []byte) []byte {
 }
 ```
 
+#### 3. Order by date
 
 To finally accomplish the MVP, I want the blogs to be listed in descending order by date. I chose to make my life easier by writing
 the date in a particular format in the markdown file so that I can transform that `string` into a`time.Time` type using
@@ -215,6 +223,17 @@ digestible small problems. Soon after, I added tags and a picture to the metadat
 
 ### To refactor 
 
-- When creating a post, `getMetaData` should return structured data `MetaData` rather than `string[]`. 
-- Use `io.Reader` effectively instead of bytes. 
+When creating a post, `getMetaData` should return structured data `MetaData` rather than `[]string`.
+  
+```go
+type MetaData struct {
+	Title   string
+	Date    time.Time
+	Picture string
+	Tags    []string
+}
+```
+
+- This way, I can control the metadata values in the `getMetaData` function rather than indexing a slice in another function. In this situation, relying on indexing can be dangerous. What if the order of the metadata in the markdown file is incorrect? 
+- I can push some implementation detail down into `getMetaData` from the public functions, such as parsing the date. 
 

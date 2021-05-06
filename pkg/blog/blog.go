@@ -77,14 +77,14 @@ func getMetaData(r io.Reader) (MetaData, error) {
 		metaData = append(metaData, line)
 	}
 
-	date, err := stringToDate(metaData[1])
+	parsedDate, err := stringToDate(metaData[1])
 	if err != nil {
 		return MetaData{}, err
 	}
 
 	return MetaData{
 		Title:   metaData[0],
-		Date:    date,
+		Date:    parsedDate,
 		Picture: metaData[2],
 		Tags:    strings.Split(metaData[3], ","),
 	}, nil

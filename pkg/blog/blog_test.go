@@ -45,4 +45,6 @@ This is the first sentence of the content`
 			t.Errorf("got %q, want %q", metaData.Tags, expectedTags)
 		}
 	})
+
+	//TODO: test error case
 }
