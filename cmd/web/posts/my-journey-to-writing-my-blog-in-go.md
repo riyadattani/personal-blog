@@ -6,7 +6,7 @@ golang
 
 I built this blog from scratch, without a blog engine. I used Go to build it and some html + css to make it look pretty.
 This is my first personal project in Go, in fact, its my first personal project on a live
-website. [Tweet me](https://twitter.com/DattaniRiya) if you have any feedback whether its kind, mean or funny! I also wrote a technical counterpart to this blog - you can find it [here](http://localhost:3000/blog/A%20technical%20approach%20on%20building%20this%20blog%20from%20scratch%20).
+website. [Tweet me](https://twitter.com/DattaniRiya) if you have any feedback whether its kind, mean or funny! I also wrote a technical counterpart to this blog - you can find it [here](https://www.riyadattani.com/blog/A%20technical%20approach%20on%20building%20this%20blog%20from%20scratch%20).
 
 So I made the decision to make a blog in Go because it was different language to what I normally use at work (Node) and
 when I was introduced to it, it felt fun and simple.
@@ -82,4 +82,4 @@ Looking back at my second attempt at building this blog, here is what I would've
 3. Get feedback on the code and the design as soon as possible.
 
 In hindsight, building this blog has been a fantastic learning experience! I felt technically challenged, and I learned
-about the process of creating a website from scratch to live. If you are interested in the technicalities, have a read through [this complimentary blog](http://localhost:3000/blog/A%20technical%20approach%20on%20building%20this%20blog%20from%20scratch%20) to view some code.
+about the process of creating a website from scratch to live. If you are interested in the technicalities, have a read through [this complimentary blog](https://www.riyadattani.com/blog/A%20technical%20approach%20on%20building%20this%20blog%20from%20scratch%20) to view some code.
