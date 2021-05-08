@@ -1,10 +1,17 @@
 :root {
-  --link-colour: #68bdb4;
-  --bg-colour: #fbf9f4;
-  --block-bg-colour: #ffffff;
-  --pastel-pink: #ffd0d7;
-  --blockquote-colour: #ed7f53;
-  --text-colour: #174e53;
+  --link-colour: hsl(174, 39%, var(--l-57));
+  --bg-colour: 	hsl(43, 47%, var(--l-97));
+  --block-bg-colour: hsl(0, 0%, var(--l-100));
+  --pastel-pink: hsl(351, 100%, var(--l-91));
+  --orange-colour: hsl(17, 81%, var(--l-63));
+  --text-colour: 	hsl(185, 57%, var(--l-21));
+
+  --l-21: 21%;
+  --l-57: 57%;
+  --l-63: 63%;
+  --l-91: 91%;
+  --l-97: 97%;
+  --l-100: 100%;
 
   --h1-font: 'Courier New', sans-serif;
   --body-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -16,6 +23,17 @@
   --line-height-multiplier: 1.7;
   --image-width: 28rem;
   --image-height: 18rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --l-21: 79%;
+    --l-57: 43%;
+    --l-63: 37%;
+    --l-91: 12%;
+    --l-97: 3%;
+    --l-100: 0%;
+  }
 }
 
 html {
@@ -43,7 +61,7 @@ h2 {
 }
 
 time {
-  color: var(--blockquote-colour);
+  color: var(--orange-colour);
   font-size: var(--font-size);
 }
 
@@ -52,7 +70,7 @@ a {
 }
 
 a:hover {
-  color: var(--blockquote-colour);
+  color: var(--orange-colour);
 }
 
 p {
@@ -203,8 +221,8 @@ article ol, ul {
 
 blockquote {
   margin: 1rem 0;
-  border-left: 1rem solid var(--blockquote-colour);
-  color: var(--blockquote-colour);
+  border-left: 1rem solid var(--orange-colour);
+  color: var(--orange-colour);
   padding-left: 1rem;
   font-style: italic;
   font-size: var(--font-size);
