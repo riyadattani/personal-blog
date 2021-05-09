@@ -54,8 +54,7 @@ func CreatePost(fileContent []byte) (metaData MetaData, content template.HTML, e
 	return metaData, content,nil
 }
 
-//TODO: return a structure rather than a string
-// do not use a for loop. You only need a for loop when reading the body because you dont know how many lines that will be
+// TODO: do not use a for loop. You only need a for loop when reading the body because you dont know how many lines that will be
 
 type MetaData struct {
 	Title   string

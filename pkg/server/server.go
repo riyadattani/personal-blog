@@ -11,7 +11,7 @@ import (
 
 type Repository interface {
 	GetPosts() []blog.Post
-	GetPost(title string) blog.Post
+	GetPost(title string) (blog.Post, error)
 }
 
 type server struct {
@@ -35,6 +35,8 @@ func NewServer(tempFolderPath string, cssFolderPath string, repo Repository) (*m
 	router.HandleFunc("/", server.viewAllPosts).Methods(http.MethodGet)
 	router.HandleFunc("/about", server.viewAbout).Methods(http.MethodGet)
 	router.HandleFunc("/blog/{title}", server.viewPost).Methods(http.MethodGet)
+	//TODO: You can create a custom 404 page
+	router.NotFoundHandler = router.NewRoute().HandlerFunc(http.NotFound).GetHandler()
 
 	return router, nil
 }
@@ -62,5 +64,10 @@ func (s *server) viewAbout(w http.ResponseWriter, _ *http.Request) {
 func (s *server) viewPost(w http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
 	title := vars["title"]
-	s.blogTemplate.ExecuteTemplate(w, "blog.gohtml", s.repository.GetPost(title))
+	post, err := s.repository.GetPost(title)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+	s.blogTemplate.ExecuteTemplate(w, "blog.gohtml", post)
 }

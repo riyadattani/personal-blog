@@ -1,6 +1,7 @@
 package pkg
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"personal-blog/pkg/blog"
@@ -33,15 +34,14 @@ func NewInMemoryRepository() (*InMemoryRepository, error) {
 	return &InMemoryRepository{posts: posts}, nil
 }
 
-func (i *InMemoryRepository) GetPost(title string) blog.Post {
+func (i *InMemoryRepository) GetPost(title string) (blog.Post, error) {
 	for _, post := range i.posts {
 		if post.Title == title {
-			return post
+			return post, nil
 		}
 	}
-	//TODO handle the 404 - return an error (sentinal?) if err == RiyaNotFound, do something. What if someone god /blog/bob? - write a sad path test in server.test
-	post, _ := blog.NewPost("This does not exist")
-	return post
+
+	return blog.Post{}, errors.New("blog not found")
 }
 
 func (i *InMemoryRepository) GetPosts() []blog.Post {
