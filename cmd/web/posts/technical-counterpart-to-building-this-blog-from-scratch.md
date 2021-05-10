@@ -218,8 +218,9 @@ digestible small problems. Soon after, I added tags and a picture to the metadat
 
 ### Future features
 
-- An RSS feed to enable users to subscribe to the site.
-- Dark mode.
+- An RSS feed to enable users to subscribe to the site
+- Dark mode
+- Readable URLs
 
 ### To refactor 
 
