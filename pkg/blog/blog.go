@@ -42,7 +42,6 @@ func NewPost(fileName string) (Post, error) {
 	}, nil
 }
 
-
 func CreatePost(fileContent []byte) (metaData MetaData, content template.HTML, err error) {
 	metaData, err = getMetaData(bytes.NewReader(fileContent))
 	if err != nil {
@@ -51,10 +50,8 @@ func CreatePost(fileContent []byte) (metaData MetaData, content template.HTML, e
 
 	content = getContent(fileContent)
 
-	return metaData, content,nil
+	return metaData, content, nil
 }
-
-// TODO: do not use a for loop. You only need a for loop when reading the body because you dont know how many lines that will be
 
 type MetaData struct {
 	Title   string
@@ -64,29 +61,25 @@ type MetaData struct {
 }
 
 func getMetaData(r io.Reader) (MetaData, error) {
-	metaData := make([]string, 0)
+	metaData := MetaData{}
 	scanner := bufio.NewScanner(r)
 	scanner.Split(bufio.ScanLines)
 
-	for scanner.Scan() {
-		line := scanner.Text()
-		if line == "-----" {
-			break
-		}
-		metaData = append(metaData, line)
+	readLine := func() string {
+		scanner.Scan()
+		return scanner.Text()
 	}
 
-	parsedDate, err := stringToDate(metaData[1])
+	metaData.Title = readLine()
+	date, err := stringToDate(readLine())
 	if err != nil {
 		return MetaData{}, err
 	}
+	metaData.Date = date
+	metaData.Picture = readLine()
+	metaData.Tags = strings.Split(readLine(), ",")
 
-	return MetaData{
-		Title:   metaData[0],
-		Date:    parsedDate,
-		Picture: metaData[2],
-		Tags:    strings.Split(metaData[3], ","),
-	}, nil
+	return metaData, nil
 }
 
 func getContent(byteArray []byte) template.HTML {
