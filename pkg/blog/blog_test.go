@@ -3,6 +3,7 @@ package blog_test
 import (
 	"personal-blog/pkg/blog"
 	"reflect"
+	"strings"
 	"testing"
 	"time"
 )
@@ -16,33 +17,32 @@ cat,dog
 -----
 This is the first sentence of the content`
 
-		byteArray := []byte(markdownDoc)
-		metaData, _, _ := blog.CreatePost(byteArray)
+		post, _ := blog.CreatePost(strings.NewReader(markdownDoc))
 
-		//expectedBody :=  "This is the first sentence of the content"
+		expectedBody := "<p>This is the first sentence of the content</p>\n"
 		expectedTitle := `This is the title`
 		expectedDate := time.Date(2013, 03, 03, 0, 0, 0, 0, time.UTC)
 		expectedPic := `picture.jpg`
 		expectedTags := []string{"cat", "dog"}
 
-		//if strings.Contains(body, expectedBody) {
-		//	t.Errorf("got %q, want %q", body, expectedBody)
-		//}
-
-		if metaData.Title != expectedTitle {
-			t.Errorf("got %q, want %q", metaData.Title, expectedTitle)
+		if string(post.Content) != expectedBody {
+			t.Errorf("got %q, want %q", post.Content, expectedBody)
 		}
 
-		if metaData.Date != expectedDate {
-			t.Errorf("got %q, want %q", metaData.Date, expectedDate)
+		if post.Title != expectedTitle {
+			t.Errorf("got %q, want %q", post.Title, expectedTitle)
 		}
 
-		if metaData.Picture != expectedPic {
-			t.Errorf("got %q, want %q", metaData.Picture, expectedPic)
+		if post.Date != expectedDate {
+			t.Errorf("got %q, want %q", post.Date, expectedDate)
 		}
 
-		if !reflect.DeepEqual(metaData.Tags, expectedTags) {
-			t.Errorf("got %q, want %q", metaData.Tags, expectedTags)
+		if post.Picture != expectedPic {
+			t.Errorf("got %q, want %q", post.Picture, expectedPic)
+		}
+
+		if !reflect.DeepEqual(post.Tags, expectedTags) {
+			t.Errorf("got %q, want %q", post.Tags, expectedTags)
 		}
 	})
 
