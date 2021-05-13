@@ -17,17 +17,17 @@ cat,dog
 This is the first sentence of the content`
 
 		byteArray := []byte(markdownDoc)
-		metaData, _, _ := blog.CreatePost(byteArray)
+		metaData, body, _ := blog.CreatePost(byteArray)
 
-		//expectedBody :=  "This is the first sentence of the content"
+		expectedBody :=  "<p>This is the first sentence of the content</p>\n"
 		expectedTitle := `This is the title`
 		expectedDate := time.Date(2013, 03, 03, 0, 0, 0, 0, time.UTC)
 		expectedPic := `picture.jpg`
 		expectedTags := []string{"cat", "dog"}
 
-		//if strings.Contains(body, expectedBody) {
-		//	t.Errorf("got %q, want %q", body, expectedBody)
-		//}
+		if string(body) != expectedBody {
+			t.Errorf("got %q, want %q", body, expectedBody)
+		}
 
 		if metaData.Title != expectedTitle {
 			t.Errorf("got %q, want %q", metaData.Title, expectedTitle)
