@@ -3,13 +3,11 @@ package blog
 import (
 	"bufio"
 	"bytes"
-	"fmt"
 	"github.com/Depado/bfchroma"
 	"github.com/alecthomas/chroma/formatters/html"
 	"github.com/russross/blackfriday/v2"
 	"html/template"
 	"io"
-	"io/ioutil"
 	"strings"
 	"time"
 )
@@ -20,21 +18,6 @@ type Post struct {
 	Date    time.Time
 	Picture string
 	Tags    []string
-}
-
-// TODO: this should take a reader
-func NewPost(fileName string) (Post, error) {
-	fileContent, err := ioutil.ReadFile(fmt.Sprintf("../../cmd/web/posts/%s", fileName))
-	if err != nil {
-		return Post{}, err
-	}
-
-	post, err := CreatePost(bytes.NewReader(fileContent))
-	if err != nil {
-		return Post{}, err
-	}
-
-	return post, nil
 }
 
 func CreatePost(fileContent io.Reader) (Post, error) {

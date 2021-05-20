@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"personal-blog/pkg/blog"
 	"sort"
 )
@@ -19,8 +20,15 @@ func NewInMemoryRepository() (*InMemoryRepository, error) {
 	}
 
 	var posts []blog.Post
-	for _, post := range blogFiles {
-		newPost, err := blog.NewPost(post.Name())
+	for _, file := range blogFiles {
+		f, err := os.Open(fmt.Sprintf("../../cmd/web/posts/%s", file.Name()))
+		if err != nil {
+			return nil, fmt.Errorf("cannot open the file %s: %s", file.Name(), err)
+		}
+
+		defer f.Close()
+
+		newPost, err := blog.CreatePost(f)
 		if err != nil {
 			return &InMemoryRepository{}, fmt.Errorf("cannot create a new post: %s", err)
 		}
