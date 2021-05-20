@@ -15,11 +15,14 @@ func TestBlog(t *testing.T) {
 picture.jpg
 cat,dog
 -----
-This is the first sentence of the content`
+This is the first sentence of the content
+This is the second line
+
+This is the second paragraph`
 
 		post, _ := blog.CreatePost(strings.NewReader(markdownDoc))
 
-		expectedBody := "<p>This is the first sentence of the content</p>\n"
+		expectedBody := "<p>This is the first sentence of the content\nThis is the second line</p>\n\n<p>This is the second paragraph</p>\n"
 		expectedTitle := `This is the title`
 		expectedDate := time.Date(2013, 03, 03, 0, 0, 0, 0, time.UTC)
 		expectedPic := `picture.jpg`

@@ -67,9 +67,9 @@ func getPost(r io.Reader) (Post, error) {
 	readLine()
 
 	body := bytes.Buffer{}
-
 	for scanner.Scan() {
 		body.Write(scanner.Bytes())
+		body.WriteString("\n")
 	}
 	post.Content = renderMarkdown(body.Bytes())
 
