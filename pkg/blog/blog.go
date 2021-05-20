@@ -22,46 +22,32 @@ type Post struct {
 	Tags    []string
 }
 
+// TODO: this should take a reader
 func NewPost(fileName string) (Post, error) {
 	fileContent, err := ioutil.ReadFile(fmt.Sprintf("../../cmd/web/posts/%s", fileName))
 	if err != nil {
 		return Post{}, err
 	}
 
-	metData, content, err := CreatePost(fileContent)
+	post, err := CreatePost(bytes.NewReader(fileContent))
 	if err != nil {
 		return Post{}, err
 	}
 
-	return Post{
-		Title:   metData.Title,
-		Content: content,
-		Date:    metData.Date,
-		Picture: metData.Picture,
-		Tags:    metData.Tags,
-	}, nil
+	return post, nil
 }
 
-func CreatePost(fileContent []byte) (metaData MetaData, content template.HTML, err error) {
-	metaData, err = getMetaData(bytes.NewReader(fileContent))
+func CreatePost(fileContent io.Reader) (Post, error) {
+	post, err := getPost(fileContent)
 	if err != nil {
-		return MetaData{}, "", err
+		return Post{}, err
 	}
 
-	content = getContent(fileContent)
-
-	return metaData, content, nil
+	return post, nil
 }
 
-type MetaData struct {
-	Title   string
-	Date    time.Time
-	Picture string
-	Tags    []string
-}
-
-func getMetaData(r io.Reader) (MetaData, error) {
-	metaData := MetaData{}
+func getPost(r io.Reader) (Post, error) {
+	post := Post{}
 	scanner := bufio.NewScanner(r)
 	scanner.Split(bufio.ScanLines)
 
@@ -70,20 +56,27 @@ func getMetaData(r io.Reader) (MetaData, error) {
 		return scanner.Text()
 	}
 
-	metaData.Title = readLine()
+	post.Title = readLine()
 	date, err := stringToDate(readLine())
 	if err != nil {
-		return MetaData{}, err
+		return Post{}, err
 	}
-	metaData.Date = date
-	metaData.Picture = readLine()
-	metaData.Tags = strings.Split(readLine(), ",")
+	post.Date = date
+	post.Picture = readLine()
+	post.Tags = strings.Split(readLine(), ",")
+	readLine()
 
-	return metaData, nil
+	body := bytes.Buffer{}
+	for scanner.Scan() {
+		body.Write(scanner.Bytes())
+		body.WriteString("\n")
+	}
+	post.Content = renderMarkdown(body.Bytes())
+
+	return post, nil
 }
 
-func getContent(byteArray []byte) template.HTML {
-	body := bytes.Split(byteArray, []byte("-----\n"))[1]
+func renderMarkdown(body []byte) template.HTML {
 	content := blackfriday.Run(body, blackfriday.WithRenderer(renderer()), blackfriday.WithExtensions(blackfriday.CommonExtensions))
 	return template.HTML(content)
 }

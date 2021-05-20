@@ -3,6 +3,7 @@ package blog_test
 import (
 	"personal-blog/pkg/blog"
 	"reflect"
+	"strings"
 	"testing"
 	"time"
 )
@@ -14,35 +15,37 @@ func TestBlog(t *testing.T) {
 picture.jpg
 cat,dog
 -----
-This is the first sentence of the content`
+This is the first sentence of the content.
+This is the second sentence.
 
-		byteArray := []byte(markdownDoc)
-		metaData, body, _ := blog.CreatePost(byteArray)
+This is the second paragraph.`
 
-		expectedBody :=  "<p>This is the first sentence of the content</p>\n"
+		post, _ := blog.CreatePost(strings.NewReader(markdownDoc))
+
+		expectedBody := "<p>This is the first sentence of the content.\nThis is the second sentence.</p>\n\n<p>This is the second paragraph.</p>\n"
 		expectedTitle := `This is the title`
 		expectedDate := time.Date(2013, 03, 03, 0, 0, 0, 0, time.UTC)
 		expectedPic := `picture.jpg`
 		expectedTags := []string{"cat", "dog"}
 
-		if string(body) != expectedBody {
-			t.Errorf("got %q, want %q", body, expectedBody)
+		if string(post.Content) != expectedBody {
+			t.Errorf("got %q, want %q", post.Content, expectedBody)
 		}
 
-		if metaData.Title != expectedTitle {
-			t.Errorf("got %q, want %q", metaData.Title, expectedTitle)
+		if post.Title != expectedTitle {
+			t.Errorf("got %q, want %q", post.Title, expectedTitle)
 		}
 
-		if metaData.Date != expectedDate {
-			t.Errorf("got %q, want %q", metaData.Date, expectedDate)
+		if post.Date != expectedDate {
+			t.Errorf("got %q, want %q", post.Date, expectedDate)
 		}
 
-		if metaData.Picture != expectedPic {
-			t.Errorf("got %q, want %q", metaData.Picture, expectedPic)
+		if post.Picture != expectedPic {
+			t.Errorf("got %q, want %q", post.Picture, expectedPic)
 		}
 
-		if !reflect.DeepEqual(metaData.Tags, expectedTags) {
-			t.Errorf("got %q, want %q", metaData.Tags, expectedTags)
+		if !reflect.DeepEqual(post.Tags, expectedTags) {
+			t.Errorf("got %q, want %q", post.Tags, expectedTags)
 		}
 	})
 
