@@ -1,7 +1,8 @@
 package server
 
 import (
-	"github.com/pkg/errors"
+	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"personal-blog/pkg/blog"
@@ -24,7 +25,7 @@ func (s *StubRepo) GetPost(title string) (blog.Post, error) {
 		}
 	}
 
-	return blog.Post{}, errors.New("Uh oh")
+	return blog.Post{}, fmt.Errorf("could not find %q in %+v", title, s.posts)
 }
 
 func TestServer(t *testing.T) {
@@ -47,7 +48,7 @@ func TestServer(t *testing.T) {
 		t.Fatal("could not load blog template", err)
 	}
 
-	server := &server{
+	blogServer := &BlogServer{
 		blogTemplate: template,
 		repository:   &repo,
 	}
@@ -56,12 +57,16 @@ func TestServer(t *testing.T) {
 		request, _ := http.NewRequest(http.MethodGet, "/", nil)
 		response := httptest.NewRecorder()
 
-		server.viewAllPosts(response, request)
+		blogServer.viewAllPosts(response, request)
 
 		gotStatusCode := response.Code
 		wantStatusCode := http.StatusOK
 
 		body := response.Body.String()
+
+		if gotStatusCode != wantStatusCode {
+			t.Fatalf("got %d, want %d", gotStatusCode, wantStatusCode)
+		}
 
 		if !strings.Contains(body, post.Title) {
 			t.Error("Response body does not contain the first post")
@@ -70,45 +75,49 @@ func TestServer(t *testing.T) {
 		if !strings.Contains(body, post2.Title) {
 			t.Error("Response body does not contain the second post")
 		}
-
-		if gotStatusCode != wantStatusCode {
-			t.Errorf("got %q, want %q", gotStatusCode, wantStatusCode)
-		}
 	})
 
-	//t.Run("returns a status OK on a single post", func(t *testing.T) {
-	//	request, _ := http.NewRequest(http.MethodGet, "/blog/this is a title", nil)
-	//	response := httptest.NewRecorder()
-	//
-	//	server.viewPost(response, request)
-	//
-	//	gotStatusCode := response.Code
-	//	wantStatusCode := http.StatusOK
-	//
-	//	body := response.Body.String()
-	//	fmt.Print(body)
-	//
-	//	if !strings.Contains(body, string(post.Content)) {
-	//		t.Error("Response body does not contain the first post content")
-	//	}
-	//
-	//	if gotStatusCode != wantStatusCode {
-	//		t.Errorf("got %q, want %q", gotStatusCode, wantStatusCode)
-	//	}
-	//})
+	t.Run("returns a status OK on a single post and has the content", func(t *testing.T) {
+		server2, _ := NewServer("../../html/*", "../../css/*", &repo)
+		newServer := httptest.NewServer(server2)
+		defer newServer.Close()
+
+		url := newServer.URL + "/blog/this is a title"
+
+		res, err := http.Get(url)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		gotStatusCode := res.StatusCode
+		wantStatusCode := http.StatusOK
+
+		if gotStatusCode != wantStatusCode {
+			t.Fatalf("got %d, want %d", gotStatusCode, wantStatusCode)
+		}
+
+		body, err := ioutil.ReadAll(res.Body)
+		res.Body.Close()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if !strings.Contains(string(body), string(post.Content)) {
+			t.Error("Response body does not contain the first post content")
+		}
+	})
 
 	t.Run("returns a status OK on the about page", func(t *testing.T) {
 		request, _ := http.NewRequest(http.MethodGet, "/about", nil)
 		response := httptest.NewRecorder()
 
-		server.viewAbout(response, request)
+		blogServer.viewAbout(response, request)
 
 		gotStatusCode := response.Code
 		wantStatusCode := http.StatusOK
 
 		if gotStatusCode != wantStatusCode {
-			t.Errorf("got %q, want %q", gotStatusCode, wantStatusCode)
+			t.Fatalf("got %d, want %d", gotStatusCode, wantStatusCode)
 		}
 	})
 }
-

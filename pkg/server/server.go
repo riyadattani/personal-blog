@@ -14,7 +14,7 @@ type Repository interface {
 	GetPost(title string) (blog.Post, error)
 }
 
-type server struct {
+type BlogServer struct {
 	blogTemplate *template.Template
 	repository   Repository
 }
@@ -25,11 +25,11 @@ func NewServer(tempFolderPath string, cssFolderPath string, repo Repository) (*m
 		return nil, err
 	}
 
-	server := server{
+	server := BlogServer{
 		blogTemplate: blogTemplate,
 		repository:   repo,
 	}
-
+	//TODO: allow cloudflare to cache website
 	router := mux.NewRouter()
 	router.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir(cssFolderPath))))
 	router.HandleFunc("/", server.viewAllPosts).Methods(http.MethodGet)
@@ -53,15 +53,15 @@ func newBlogTemplate(tempFolderPath string) (*template.Template, error) {
 	return blogTemplate, nil
 }
 
-func (s *server) viewAllPosts(w http.ResponseWriter, _ *http.Request) {
+func (s *BlogServer) viewAllPosts(w http.ResponseWriter, _ *http.Request) {
 	s.blogTemplate.ExecuteTemplate(w, "home.gohtml", s.repository.GetPosts())
 }
 
-func (s *server) viewAbout(w http.ResponseWriter, _ *http.Request) {
+func (s *BlogServer) viewAbout(w http.ResponseWriter, _ *http.Request) {
 	s.blogTemplate.ExecuteTemplate(w, "about.gohtml", nil)
 }
 
-func (s *server) viewPost(w http.ResponseWriter, request *http.Request) {
+func (s *BlogServer) viewPost(w http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
 	title := vars["title"]
 	post, err := s.repository.GetPost(title)
