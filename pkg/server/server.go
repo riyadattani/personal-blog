@@ -31,6 +31,12 @@ func NewServer(tempFolderPath string, cssFolderPath string, repo Repository) (*m
 	}
 	//TODO: allow cloudflare to cache website
 	router := mux.NewRouter()
+	router.Use(func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Add("Cache-Control", "public, max-age=86400")
+			next.ServeHTTP(w, r)
+		})
+	})
 	router.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir(cssFolderPath))))
 	router.HandleFunc("/", server.viewAllPosts).Methods(http.MethodGet)
 	router.HandleFunc("/about", server.viewAbout).Methods(http.MethodGet)

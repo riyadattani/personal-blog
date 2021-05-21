@@ -68,6 +68,11 @@ func TestServer(t *testing.T) {
 			t.Fatalf("got %d, want %d", gotStatusCode, wantStatusCode)
 		}
 
+		//TODO: this does not work in the test (works on live) because we are not using NewServer in this test. Source of header code: https://stackoverflow.com/questions/51456253/how-to-set-http-responsewriter-content-type-header-globally-for-all-api-endpoint
+		//if response.Header().Get("Cache-Control") != "public, max-age=86400" {
+		//	t.Error("Response header does not contain the cache control values")
+		//}
+
 		if !strings.Contains(body, post.Title) {
 			t.Error("Response body does not contain the first post")
 		}
@@ -105,6 +110,10 @@ func TestServer(t *testing.T) {
 		if !strings.Contains(string(body), string(post.Content)) {
 			t.Error("Response body does not contain the first post content")
 		}
+
+		if res.Header.Get("Cache-Control") != "public, max-age=86400" {
+			t.Error("Response header does not contain the cache control values")
+		}
 	})
 
 	t.Run("returns a status OK on the about page", func(t *testing.T) {
@@ -119,5 +128,10 @@ func TestServer(t *testing.T) {
 		if gotStatusCode != wantStatusCode {
 			t.Fatalf("got %d, want %d", gotStatusCode, wantStatusCode)
 		}
+
+		//TODO: this does not work in the test (works on live) because we are not using NewServer in this test. Source of header code: https://stackoverflow.com/questions/51456253/how-to-set-http-responsewriter-content-type-header-globally-for-all-api-endpoint
+		//if response.Header().Get("Cache-Control") != "public, max-age=86400" {
+		//	t.Error("Response header does not contain the cache control values")
+		//}
 	})
 }
