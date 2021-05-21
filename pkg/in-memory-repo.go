@@ -59,5 +59,5 @@ func createPostFromFile(file string) (blog.Post, error) {
 
 	defer f.Close()
 
-	return blog.CreatePost(f)
+	return blog.NewPost(f)
 }

@@ -20,7 +20,7 @@ This is the second sentence.
 
 This is the second paragraph.`
 
-		post, _ := blog.CreatePost(strings.NewReader(markdownDoc))
+		post, _ := blog.NewPost(strings.NewReader(markdownDoc))
 
 		expectedBody := "<p>This is the first sentence of the content.\nThis is the second sentence.</p>\n\n<p>This is the second paragraph.</p>\n"
 		expectedTitle := `This is the title`
