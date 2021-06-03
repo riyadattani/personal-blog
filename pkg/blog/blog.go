@@ -20,6 +20,8 @@ type Post struct {
 	Tags    []string
 }
 
+type Posts []Post
+
 func NewPost(fileContent io.Reader) (Post, error) {
 	post, err := getPost(fileContent)
 	if err != nil {
