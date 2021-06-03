@@ -26,7 +26,7 @@ func main() {
 func newServer() *mux.Router {
 	repository, err := pkg.NewInMemoryRepository(os.DirFS("posts"))
 	if err != nil {
-		log.Fatal(fmt.Sprintf("Failed to create a repository %s", err))
+		log.Fatal(fmt.Sprintf("Failed to create a repository: %s", err))
 	}
 
 	s, err := server.NewServer(
