@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	is2 "github.com/matryer/is"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -29,6 +30,8 @@ func (s *StubRepo) GetPost(title string) (blog.Post, error) {
 }
 
 func TestServer(t *testing.T) {
+	is := is2.New(t)
+
 	post := blog.Post{
 		Title:   "this is a title",
 		Content: "HTML template which is basically a string",
@@ -59,14 +62,9 @@ func TestServer(t *testing.T) {
 
 		blogServer.viewAllPosts(response, request)
 
-		gotStatusCode := response.Code
-		wantStatusCode := http.StatusOK
-
 		body := response.Body.String()
 
-		if gotStatusCode != wantStatusCode {
-			t.Fatalf("got %d, want %d", gotStatusCode, wantStatusCode)
-		}
+		is.Equal(response.Code, http.StatusOK)
 
 		//TODO: this does not work in the test (works on live) because we are not using NewServer in this test. Source of header code: https://stackoverflow.com/questions/51456253/how-to-set-http-responsewriter-content-type-header-globally-for-all-api-endpoint
 		//if response.Header().Get("Cache-Control") != "public, max-age=86400" {
@@ -94,12 +92,7 @@ func TestServer(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		gotStatusCode := res.StatusCode
-		wantStatusCode := http.StatusOK
-
-		if gotStatusCode != wantStatusCode {
-			t.Fatalf("got %d, want %d", gotStatusCode, wantStatusCode)
-		}
+		is.Equal(res.StatusCode, http.StatusOK)
 
 		body, err := ioutil.ReadAll(res.Body)
 		res.Body.Close()
@@ -122,12 +115,7 @@ func TestServer(t *testing.T) {
 
 		blogServer.viewAbout(response, request)
 
-		gotStatusCode := response.Code
-		wantStatusCode := http.StatusOK
-
-		if gotStatusCode != wantStatusCode {
-			t.Fatalf("got %d, want %d", gotStatusCode, wantStatusCode)
-		}
+		is.Equal(response.Code, http.StatusOK)
 
 		//TODO: this does not work in the test (works on live) because we are not using NewServer in this test. Source of header code: https://stackoverflow.com/questions/51456253/how-to-set-http-responsewriter-content-type-header-globally-for-all-api-endpoint
 		//if response.Header().Get("Cache-Control") != "public, max-age=86400" {

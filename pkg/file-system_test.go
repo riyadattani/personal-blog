@@ -16,10 +16,7 @@ func TestBlog(t *testing.T) {
 picture.jpg
 cat,dog
 -----
-This is the first sentence of the content.
-This is the second sentence.
-
-This is the second paragraph.`
+blah blah blah`
 
 		secondPost = `This is the title of the second post
 2013-Mar-01
@@ -48,12 +45,7 @@ This is the first sentence of the content.`
 		is.Equal(latestPost.Date, time.Date(2013, 03, 03, 0, 0, 0, 0, time.UTC))
 		is.Equal(latestPost.Picture, "picture.jpg")
 		is.Equal(latestPost.Tags, []string{"cat", "dog"})
-
-		expectedContent := "<p>This is the first sentence of the content.\nThis is the second sentence.</p>\n\n<p>This is the second paragraph.</p>\n"
-
-		if string(latestPost.Content) != expectedContent {
-			t.Errorf("got %q, want %q", latestPost.Content, expectedContent)
-		}
+		is.Equal(string(latestPost.Content), "<p>blah blah blah</p>\n")
 	})
 
 	t.Run("parses the next post correctly", func(t *testing.T) {
