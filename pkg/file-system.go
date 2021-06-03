@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/fs"
 	"personal-blog/pkg/blog"
+	"sort"
 )
 
 func New(postsDir fs.FS) (blog.Posts, error) {
@@ -11,10 +12,10 @@ func New(postsDir fs.FS) (blog.Posts, error) {
 	if err != nil {
 		return nil, fmt.Errorf("cannot read the posts directory: %s", err)
 	}
-	return getPosts(postsDir, dir)
+	return getSortedPosts(postsDir, dir)
 }
 
-func getPosts(postsDir fs.FS, dir []fs.DirEntry) ([]blog.Post, error) {
+func getSortedPosts(postsDir fs.FS, dir []fs.DirEntry) ([]blog.Post, error) {
 	var posts []blog.Post
 	for _, file := range dir {
 		post, err := newPostFromFile(postsDir, file.Name())
@@ -23,6 +24,11 @@ func getPosts(postsDir fs.FS, dir []fs.DirEntry) ([]blog.Post, error) {
 		}
 		posts = append(posts, post)
 	}
+
+	sort.Slice(posts, func(i, j int) bool {
+		return posts[i].Date.After(posts[j].Date)
+	})
+
 	return posts, nil
 }
 

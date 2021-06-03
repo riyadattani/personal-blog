@@ -24,7 +24,7 @@ func main() {
 }
 
 func newServer() *mux.Router {
-	repository, err := pkg.NewInMemoryRepository()
+	repository, err := pkg.NewInMemoryRepository(os.DirFS("posts"))
 	if err != nil {
 		log.Fatal(fmt.Sprintf("Failed to create a repository %s", err))
 	}
@@ -41,4 +41,3 @@ func newServer() *mux.Router {
 	return s
 }
 
-//TODO: 4 greens on lighthouse!!!
