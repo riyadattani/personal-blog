@@ -25,11 +25,7 @@ func getSortedPosts(postsDir fs.FS, dir []fs.DirEntry) ([]blog.Post, error) {
 		posts = append(posts, post)
 	}
 
-	sort.Slice(posts, func(i, j int) bool {
-		return posts[i].Date.After(posts[j].Date)
-	})
-
-	return posts, nil
+	return sortByDate(posts), nil
 }
 
 func newPostFromFile(postsDir fs.FS, fileName string) (blog.Post, error) {
@@ -41,4 +37,11 @@ func newPostFromFile(postsDir fs.FS, fileName string) (blog.Post, error) {
 	}
 
 	return blog.NewPost(f)
+}
+
+func sortByDate(posts []blog.Post) []blog.Post{
+	sort.Slice(posts, func(i, j int) bool {
+		return posts[i].Date.After(posts[j].Date)
+	})
+	return posts
 }

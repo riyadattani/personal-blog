@@ -22,7 +22,7 @@ This is the second sentence.
 This is the second paragraph.`
 
 		secondPost = `This is the title of the second post
-2013-Mar-10
+2013-Mar-01
 picture2.jpg
 bird,fly
 -----
@@ -31,7 +31,7 @@ This is the first sentence of the content.`
 
 	dirFS := fstest.MapFS{
 		"first-post.md":  {Data: []byte(firstPost)},
-		"second post.md": {Data: []byte(secondPost)},
+		"second-post.md": {Data: []byte(secondPost)},
 	}
 
 	posts, err := New(dirFS)
@@ -41,15 +41,24 @@ This is the first sentence of the content.`
 		is.Equal(len(posts), len(dirFS))
 	})
 
-	t.Run("it parses the first post correctly", func(t *testing.T) {
+	t.Run("it parses the latest post correctly", func(t *testing.T) {
+		latestPost := posts[0]
+
+		is.Equal(latestPost.Title, "This is the title")
+		is.Equal(latestPost.Date, time.Date(2013, 03, 03, 0, 0, 0, 0, time.UTC))
+		is.Equal(latestPost.Picture, "picture.jpg")
+		is.Equal(latestPost.Tags, []string{"cat", "dog"})
+
 		expectedContent := "<p>This is the first sentence of the content.\nThis is the second sentence.</p>\n\n<p>This is the second paragraph.</p>\n"
 
-		if string(posts[0].Content) != expectedContent {
-			t.Errorf("got %q, want %q",posts[0].Content, expectedContent)
+		if string(latestPost.Content) != expectedContent {
+			t.Errorf("got %q, want %q", latestPost.Content, expectedContent)
 		}
-		is.Equal(posts[0].Tags, []string{"cat", "dog"})
-		is.Equal(posts[0].Picture, "picture.jpg")
-		is.Equal(posts[0].Title, "This is the title")
-		is.Equal(posts[0].Date, time.Date(2013, 03, 03, 0, 0, 0, 0, time.UTC))
+	})
+
+	t.Run("parses the next post correctly", func(t *testing.T) {
+		nextPost := posts[1]
+		is.Equal(nextPost.Title, "This is the title of the second post")
+		is.Equal(nextPost.Date, time.Date(2013, 03, 01, 0, 0, 0, 0, time.UTC))
 	})
 }
