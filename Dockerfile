@@ -10,9 +10,9 @@ COPY pkg ./pkg
 COPY posts ./posts
 COPY html ./html
 COPY css ./css
-COPY cmd/web ./cmd/web
+COPY cmd ./cmd
 
-WORKDIR cmd/web
+WORKDIR cmd
 RUN go build main.go
 RUN echo "build successful"
 
