@@ -7,6 +7,7 @@ COPY go.mod ./
 RUN go mod download
 
 COPY pkg ./pkg
+COPY posts ./posts
 COPY html ./html
 COPY css ./css
 COPY cmd/web ./cmd/web
