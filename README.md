@@ -3,7 +3,7 @@
 To start: 
 
 ```
-cd cmd/web/
+cd cmd/
 go run .
 ```
 

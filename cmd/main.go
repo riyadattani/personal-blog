@@ -30,8 +30,8 @@ func newServer() *mux.Router {
 	}
 
 	s, err := server.NewServer(
-		"../../html/*",
-		"../../css",
+		"./html/*",
+		"./css",
 		repository,
 	)
 	if err != nil {
