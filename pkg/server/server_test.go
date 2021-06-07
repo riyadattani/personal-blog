@@ -7,12 +7,14 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"personal-blog/pkg/blog"
+	"personal-blog/pkg/event"
 	"strings"
 	"testing"
 )
 
 type StubRepo struct {
-	posts []blog.Post
+	posts  []blog.Post
+	events []event.Event
 }
 
 func (s *StubRepo) GetPosts() []blog.Post {
@@ -29,6 +31,10 @@ func (s *StubRepo) GetPost(title string) (blog.Post, error) {
 	return blog.Post{}, fmt.Errorf("could not find %q in %+v", title, s.posts)
 }
 
+func (s *StubRepo) GetEvents() []event.Event {
+	return s.events
+}
+
 func TestServer(t *testing.T) {
 	is := is2.New(t)
 
@@ -42,8 +48,12 @@ func TestServer(t *testing.T) {
 		Content: "HTML template which is basically a string",
 	}
 
+	event1 := event.Event{Title: "Event1"}
+	event2 := event.Event{Title: "Event2"}
+
 	repo := StubRepo{
 		[]blog.Post{post, post2},
+		[]event.Event{event1, event2},
 	}
 
 	template, err := newBlogTemplate("../../html/*")
@@ -56,56 +66,77 @@ func TestServer(t *testing.T) {
 		repository: &repo,
 	}
 
-	t.Run("returns status code 200 on home page when getting posts", func(t *testing.T) {
-		request, _ := http.NewRequest(http.MethodGet, "/", nil)
+	t.Run("Posts", func(t *testing.T) {
+		t.Run("returns status code 200 on home page when getting posts", func(t *testing.T) {
+			request, _ := http.NewRequest(http.MethodGet, "/", nil)
+			response := httptest.NewRecorder()
+
+			blogServer.viewAllPosts(response, request)
+
+			body := response.Body.String()
+
+			is.Equal(response.Code, http.StatusOK)
+
+			//TODO: this does not work in the test (works on live) because we are not using NewServer in this test. Source of header code: https://stackoverflow.com/questions/51456253/how-to-set-http-responsewriter-content-type-header-globally-for-all-api-endpoint
+			//if response.Header().Get("Cache-Control") != "public, max-age=86400" {
+			//	t.Error("Response header does not contain the cache control values")
+			//}
+
+			if !strings.Contains(body, post.Title) {
+				t.Error("Response body does not contain the first post")
+			}
+
+			if !strings.Contains(body, post2.Title) {
+				t.Error("Response body does not contain the second post")
+			}
+		})
+
+		t.Run("returns a status OK on a single post and has the content", func(t *testing.T) {
+			server2, _ := NewServer("../../html/*", "../../css/*", &repo)
+			newServer := httptest.NewServer(server2)
+			defer newServer.Close()
+
+			url := newServer.URL + "/blog/this is a title"
+
+			res, err := http.Get(url)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			is.Equal(res.StatusCode, http.StatusOK)
+
+			body, err := ioutil.ReadAll(res.Body)
+			res.Body.Close()
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			if !strings.Contains(string(body), string(post.Content)) {
+				t.Error("Response body does not contain the first post content")
+			}
+
+			if res.Header.Get("Cache-Control") != "public, max-age=86400" {
+				t.Error("Response header does not contain the cache control values")
+			}
+		})
+	})
+
+	t.Run("Events", func(t *testing.T) {
+		request, _ := http.NewRequest(http.MethodGet, "/events", nil)
 		response := httptest.NewRecorder()
 
-		blogServer.viewAllPosts(response, request)
+		blogServer.viewEvents(response, request)
 
 		body := response.Body.String()
 
 		is.Equal(response.Code, http.StatusOK)
 
-		//TODO: this does not work in the test (works on live) because we are not using NewServer in this test. Source of header code: https://stackoverflow.com/questions/51456253/how-to-set-http-responsewriter-content-type-header-globally-for-all-api-endpoint
-		//if response.Header().Get("Cache-Control") != "public, max-age=86400" {
-		//	t.Error("Response header does not contain the cache control values")
-		//}
-
-		if !strings.Contains(body, post.Title) {
-			t.Error("Response body does not contain the first post")
+		if !strings.Contains(body, event1.Title) {
+			t.Error("Response body does not contain the first event")
 		}
 
-		if !strings.Contains(body, post2.Title) {
-			t.Error("Response body does not contain the second post")
-		}
-	})
-
-	t.Run("returns a status OK on a single post and has the content", func(t *testing.T) {
-		server2, _ := NewServer("../../html/*", "../../css/*", &repo)
-		newServer := httptest.NewServer(server2)
-		defer newServer.Close()
-
-		url := newServer.URL + "/blog/this is a title"
-
-		res, err := http.Get(url)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		is.Equal(res.StatusCode, http.StatusOK)
-
-		body, err := ioutil.ReadAll(res.Body)
-		res.Body.Close()
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		if !strings.Contains(string(body), string(post.Content)) {
-			t.Error("Response body does not contain the first post content")
-		}
-
-		if res.Header.Get("Cache-Control") != "public, max-age=86400" {
-			t.Error("Response header does not contain the cache control values")
+		if !strings.Contains(body, event2.Title) {
+			t.Error("Response body does not contain the second event")
 		}
 	})
 

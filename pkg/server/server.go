@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"net/http"
 	"personal-blog/pkg/blog"
+	"personal-blog/pkg/event"
 
 	"github.com/gorilla/mux"
 )
@@ -12,6 +13,7 @@ import (
 type Repository interface {
 	GetPosts() []blog.Post
 	GetPost(title string) (blog.Post, error)
+	GetEvents() []event.Event
 }
 
 type BlogServer struct {
@@ -41,6 +43,7 @@ func NewServer(tempFolderPath string, cssFolderPath string, repo Repository) (*m
 	router.HandleFunc("/", server.viewAllPosts).Methods(http.MethodGet)
 	router.HandleFunc("/about", server.viewAbout).Methods(http.MethodGet)
 	router.HandleFunc("/blog/{title}", server.viewPost).Methods(http.MethodGet)
+	router.HandleFunc("/events", server.viewEvents).Methods(http.MethodGet)
 	//TODO: You can create a custom 404 page
 	router.NotFoundHandler = router.NewRoute().HandlerFunc(http.NotFound).GetHandler()
 
@@ -76,4 +79,8 @@ func (s *BlogServer) viewPost(w http.ResponseWriter, request *http.Request) {
 		return
 	}
 	s.template.ExecuteTemplate(w, "blog.gohtml", post)
+}
+
+func (s *BlogServer) viewEvents(w http.ResponseWriter, e *http.Request) {
+	s.template.ExecuteTemplate(w, "events.gohtml", s.repository.GetEvents())
 }

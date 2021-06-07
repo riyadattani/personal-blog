@@ -141,7 +141,26 @@ nav div ul {
   color: var(--link-colour);
 }
 
+/*The events page */
 
+.eventList {
+  text-decoration: none;
+  margin: 1rem 0;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  background: var(--block-bg-colour);
+  max-width: var(--image-width);
+}
+
+.eventInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.eventInfo > * {
+  margin: 0.5rem 0;
+}
 
 /*Homepage*/
 
