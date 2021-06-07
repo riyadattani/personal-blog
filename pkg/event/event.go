@@ -1,4 +1,4 @@
-package blog
+package event
 
 import (
 	"bufio"
@@ -10,27 +10,27 @@ import (
 	"time"
 )
 
-type Post struct {
+type Event struct {
 	Title   string
-	Content template.HTML
+	Description template.HTML
 	Date    time.Time
 	Picture string
 	Tags    []string
 }
 
-type Posts []Post
+type Events []Event
 
-func NewPost(fileContent io.Reader) (Post, error) {
-	post, err := getPost(fileContent)
+func New(fileContent io.Reader) (Event, error) {
+	event, err := getEvent(fileContent)
 	if err != nil {
-		return Post{}, err
+		return Event{}, err
 	}
 
-	return post, nil
+	return event, nil
 }
 
-func getPost(r io.Reader) (Post, error) {
-	post := Post{}
+func getEvent(r io.Reader) (Event, error) {
+	post := Event{}
 	scanner := bufio.NewScanner(r)
 	scanner.Split(bufio.ScanLines)
 
@@ -42,7 +42,7 @@ func getPost(r io.Reader) (Post, error) {
 	post.Title = readLine()
 	date, err := helpers.StringToDate(readLine())
 	if err != nil {
-		return Post{}, err
+		return Event{}, err
 	}
 	post.Date = date
 	post.Picture = readLine()
@@ -54,7 +54,7 @@ func getPost(r io.Reader) (Post, error) {
 		body.Write(scanner.Bytes())
 		body.WriteString("\n")
 	}
-	post.Content = helpers.RenderMarkdown(body.Bytes())
+	post.Description = helpers.RenderMarkdown(body.Bytes())
 
 	return post, nil
 }
