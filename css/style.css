@@ -165,8 +165,12 @@ nav div ul {
 
 .blogImage {
   display: block;
-  width: var(--image-width);
-  height: var(--image-height);
+  max-width: var(--image-width);
+  max-height: var(--image-height);
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  overflow: hidden;
   border: 0.1rem solid var(--text-colour);
 }
 
