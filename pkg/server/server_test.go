@@ -52,8 +52,8 @@ func TestServer(t *testing.T) {
 	}
 
 	blogServer := &BlogServer{
-		blogTemplate: template,
-		repository:   &repo,
+		template:   template,
+		repository: &repo,
 	}
 
 	t.Run("returns status code 200 on home page when getting posts", func(t *testing.T) {

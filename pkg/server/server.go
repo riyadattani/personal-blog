@@ -15,19 +15,19 @@ type Repository interface {
 }
 
 type BlogServer struct {
-	blogTemplate *template.Template
-	repository   Repository
+	template   *template.Template
+	repository Repository
 }
 
 func NewServer(tempFolderPath string, cssFolderPath string, repo Repository) (*mux.Router, error) {
-	blogTemplate, err := newBlogTemplate(tempFolderPath)
+	templ, err := newBlogTemplate(tempFolderPath)
 	if err != nil {
 		return nil, err
 	}
 
 	server := BlogServer{
-		blogTemplate: blogTemplate,
-		repository:   repo,
+		template:   templ,
+		repository: repo,
 	}
 	//TODO: allow cloudflare to cache website
 	router := mux.NewRouter()
@@ -48,7 +48,7 @@ func NewServer(tempFolderPath string, cssFolderPath string, repo Repository) (*m
 }
 
 func newBlogTemplate(tempFolderPath string) (*template.Template, error) {
-	blogTemplate, err := template.ParseGlob(tempFolderPath)
+	template, err := template.ParseGlob(tempFolderPath)
 	if err != nil {
 		return nil, fmt.Errorf(
 			"could not load template from %q, %v",
@@ -56,15 +56,15 @@ func newBlogTemplate(tempFolderPath string) (*template.Template, error) {
 			err,
 		)
 	}
-	return blogTemplate, nil
+	return template, nil
 }
 
 func (s *BlogServer) viewAllPosts(w http.ResponseWriter, _ *http.Request) {
-	s.blogTemplate.ExecuteTemplate(w, "home.gohtml", s.repository.GetPosts())
+	s.template.ExecuteTemplate(w, "home.gohtml", s.repository.GetPosts())
 }
 
 func (s *BlogServer) viewAbout(w http.ResponseWriter, _ *http.Request) {
-	s.blogTemplate.ExecuteTemplate(w, "about.gohtml", nil)
+	s.template.ExecuteTemplate(w, "about.gohtml", nil)
 }
 
 func (s *BlogServer) viewPost(w http.ResponseWriter, request *http.Request) {
@@ -75,5 +75,5 @@ func (s *BlogServer) viewPost(w http.ResponseWriter, request *http.Request) {
 		http.Error(w, err.Error(), http.StatusNotFound)
 		return
 	}
-	s.blogTemplate.ExecuteTemplate(w, "blog.gohtml", post)
+	s.template.ExecuteTemplate(w, "blog.gohtml", post)
 }
