@@ -11,11 +11,12 @@ import (
 )
 
 type Event struct {
-	Title   string
+	Title       string
 	Description template.HTML
-	Date    time.Time
-	Picture string
-	Tags    []string
+	Date        time.Time
+	Picture     string
+	Tags        []string
+	Link        string
 }
 
 type Events []Event
@@ -45,6 +46,7 @@ func getEvent(r io.Reader) (Event, error) {
 		return Event{}, err
 	}
 	post.Date = date
+	post.Link = readLine()
 	post.Picture = readLine()
 	post.Tags = strings.Split(readLine(), ",")
 	readLine()

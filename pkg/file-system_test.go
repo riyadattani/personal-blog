@@ -60,6 +60,7 @@ This is the first sentence of the content.`
 		const (
 			event1 = `This is the title
 2013-Mar-03
+www.google.com
 picture.jpg
 cat,dog
 -----
@@ -67,6 +68,7 @@ blah blah blah`
 
 			event2 = `This is the title of the second post
 2013-Mar-01
+www.google.com
 picture2.jpg
 bird,fly
 -----
@@ -86,19 +88,20 @@ This is the first sentence of the content.`
 		})
 
 		t.Run("it parses the latest event correctly", func(t *testing.T) {
-			latestPost := events[0]
+			latestEvent := events[0]
 
-			is.Equal(latestPost.Title, "This is the title")
-			is.Equal(latestPost.Date, time.Date(2013, 03, 03, 0, 0, 0, 0, time.UTC))
-			is.Equal(latestPost.Picture, "picture.jpg")
-			is.Equal(latestPost.Tags, []string{"cat", "dog"})
-			is.Equal(string(latestPost.Description), "<p>blah blah blah</p>\n")
+			is.Equal(latestEvent.Title, "This is the title")
+			is.Equal(latestEvent.Date, time.Date(2013, 03, 03, 0, 0, 0, 0, time.UTC))
+			is.Equal(latestEvent.Picture, "picture.jpg")
+			is.Equal(latestEvent.Link, "www.google.com")
+			is.Equal(latestEvent.Tags, []string{"cat", "dog"})
+			is.Equal(string(latestEvent.Description), "<p>blah blah blah</p>\n")
 		})
 
 		t.Run("parses the next event correctly", func(t *testing.T) {
-			nextPost := events[1]
-			is.Equal(nextPost.Title, "This is the title of the second post")
-			is.Equal(nextPost.Date, time.Date(2013, 03, 01, 0, 0, 0, 0, time.UTC))
+			nextEvent := events[1]
+			is.Equal(nextEvent.Title, "This is the title of the second post")
+			is.Equal(nextEvent.Date, time.Date(2013, 03, 01, 0, 0, 0, 0, time.UTC))
 		})
 
 	})
