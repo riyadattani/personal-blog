@@ -31,6 +31,7 @@ This is the second paragraph.`
 		is.Equal(post.Date, expectedDate)
 		is.Equal(post.Picture, "picture.jpg")
 		is.Equal(post.Tags, []string{"cat", "dog"})
+		is.Equal(post.URLTitle, "This-is-the-title")
 	})
 
 	//TODO: test error case

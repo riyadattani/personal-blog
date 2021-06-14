@@ -11,11 +11,12 @@ import (
 )
 
 type Post struct {
-	Title   string
-	Content template.HTML
-	Date    time.Time
-	Picture string
-	Tags    []string
+	Title    string
+	Content  template.HTML
+	Date     time.Time
+	Picture  string
+	Tags     []string
+	URLTitle string
 }
 
 type Posts []Post
@@ -39,7 +40,8 @@ func getPost(r io.Reader) (Post, error) {
 		return scanner.Text()
 	}
 
-	post.Title = readLine()
+	title := readLine()
+	post.Title = title
 	date, err := helpers.StringToDate(readLine())
 	if err != nil {
 		return Post{}, err
@@ -55,6 +57,7 @@ func getPost(r io.Reader) (Post, error) {
 		body.WriteString("\n")
 	}
 	post.Content = helpers.RenderMarkdown(body.Bytes())
+	post.URLTitle = strings.Replace(title, " ", "-", -1)
 
 	return post, nil
 }

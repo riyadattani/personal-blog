@@ -42,7 +42,7 @@ func NewServer(tempFolderPath string, cssFolderPath string, repo Repository) (*m
 	router.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir(cssFolderPath))))
 	router.HandleFunc("/", server.viewAllPosts).Methods(http.MethodGet)
 	router.HandleFunc("/about", server.viewAbout).Methods(http.MethodGet)
-	router.HandleFunc("/blog/{title}", server.viewPost).Methods(http.MethodGet)
+	router.HandleFunc("/blog/{URLTitle}", server.viewPost).Methods(http.MethodGet)
 	router.HandleFunc("/events", server.viewEvents).Methods(http.MethodGet)
 	//TODO: You can create a custom 404 page
 	router.NotFoundHandler = router.NewRoute().HandlerFunc(http.NotFound).GetHandler()
@@ -72,8 +72,8 @@ func (s *BlogServer) viewAbout(w http.ResponseWriter, _ *http.Request) {
 
 func (s *BlogServer) viewPost(w http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
-	title := vars["title"]
-	post, err := s.repository.GetPost(title)
+	urlTitle := vars["URLTitle"]
+	post, err := s.repository.GetPost(urlTitle)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
 		return

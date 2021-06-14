@@ -22,9 +22,9 @@ func NewInMemoryRepository(postsDir fs.FS, eventsDir fs.FS) (*InMemoryRepository
 	return &InMemoryRepository{posts: posts, events: events}, nil
 }
 
-func (i *InMemoryRepository) GetPost(title string) (blog.Post, error) {
+func (i *InMemoryRepository) GetPost(urlTitle string) (blog.Post, error) {
 	for _, post := range i.posts {
-		if post.Title == title {
+		if post.URLTitle == urlTitle {
 			return post, nil
 		}
 	}

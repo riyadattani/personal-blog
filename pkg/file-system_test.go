@@ -43,6 +43,7 @@ This is the first sentence of the content.`
 			latestPost := posts[0]
 
 			is.Equal(latestPost.Title, "This is the title")
+			is.Equal(latestPost.URLTitle, "This-is-the-title")
 			is.Equal(latestPost.Date, time.Date(2013, 03, 03, 0, 0, 0, 0, time.UTC))
 			is.Equal(latestPost.Picture, "picture.jpg")
 			is.Equal(latestPost.Tags, []string{"cat", "dog"})
