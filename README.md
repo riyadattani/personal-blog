@@ -3,11 +3,15 @@
 To start: 
 
 ```
+go mod 
 cd cmd/
 go run .
 ```
 
-If you need to manually deploy the app, use this command:
+To run tests:
+
 ```
-git push heroku YOUR_BRANCH:refs/heads/main
+go test ./...
 ```
+
+
