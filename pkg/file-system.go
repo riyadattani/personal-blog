@@ -8,6 +8,8 @@ import (
 	"sort"
 )
 
+//TODO: what is the best way to refactor this
+
 func NewPosts(postsDir fs.FS) (blog.Posts, error) {
 	dir, err := fs.ReadDir(postsDir, ".")
 	if err != nil {
