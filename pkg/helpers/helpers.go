@@ -24,7 +24,7 @@ func renderer() *bfchroma.Renderer {
 				Flags: blackfriday.CommonHTMLFlags,
 			}),
 		),
-		bfchroma.Style("lovelace"),
+		bfchroma.Style("solarized-dark"),
 	)
 }
 

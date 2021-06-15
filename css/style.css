@@ -1,10 +1,10 @@
 :root {
   --link-colour: hsl(174, 39%, var(--l-57));
-  --bg-colour: 	hsl(43, 47%, var(--l-97));
+  --bg-colour: hsl(43, 47%, var(--l-97));
   --block-bg-colour: hsl(0, 0%, var(--l-100));
   --pastel-pink: hsl(351, 100%, var(--l-91));
   --orange-colour: hsl(17, 81%, var(--l-63));
-  --text-colour: 	hsl(185, 57%, var(--l-21));
+  --text-colour: hsl(185, 57%, var(--l-21));
 
   --l-21: 21%;
   --l-57: 57%;
@@ -84,7 +84,6 @@ p img {
   height: auto;
   width: auto
 }
-
 
 
 /*Navigation!*/
@@ -186,8 +185,8 @@ nav div ul {
   display: block;
   max-width: var(--image-width);
   max-height: var(--image-height);
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   overflow: hidden;
   border: 0.1rem solid var(--text-colour);
@@ -224,7 +223,6 @@ nav div ul {
 }
 
 
-
 /*Blog page*/
 
 .blogPostHeading {
@@ -256,16 +254,8 @@ pre {
   font-size: 16px;
   max-height: 30rem;
   overflow: auto;
+  border-radius: 0.5rem;
 }
-
-code {
-  font-size: calc(var(--font-size) * 1.1);
-  padding: 0 0.5rem;
-  background: var(--block-bg-colour);
-  border-radius: 0.3rem;
-}
-
-
 
 /*This is for the about page*/
 
