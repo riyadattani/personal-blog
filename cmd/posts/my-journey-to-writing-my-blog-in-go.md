@@ -4,8 +4,8 @@ golangPic1.png
 golang
 -----
 
-I built this blog from scratch, without a blog engine. I used Go to build it and some html + css to make it look pretty.
-This is my first personal project in Go, in fact, its my first personal project on a live
+I built this blog from scratch, without a blog engine. I used Go to build it, and some html + css to make it look pretty.
+This is my first personal project in Go, in fact, it's my first personal project on a live
 website. [Tweet me](https://twitter.com/DattaniRiya) if you have any feedback whether its kind, mean or funny! I also wrote a technical counterpart to this blog - you can find it [here](https://www.riyadattani.com/blog/A%20technical%20approach%20on%20building%20this%20blog%20from%20scratch%20).
 
 So I made the decision to make a blog in Go because it was different language to what I normally use at work (Node) and
@@ -13,15 +13,15 @@ when I was introduced to it, it felt fun and simple.
 
 ### First attempt
 
-Once the decision was made, the question was where do I begin? I surfed the web and looked for other desirable blogs. I
+The question was where do I begin? I surfed the web and looked for other desirable blogs. I
 gathered a list of my favourite features and thought I would figure out a way to replicate them. I wanted very cool
-features like an animated background and an interactive interface such as a built in game. These features sounded
+features like an animated background, and an interactive interface such as a built-in game. These features sounded
 fabulous but in reality, they were a nice-to-have rather than necessary. Frankly, the more I thought about what my blog
 should look like, the more I ventured further away from the purpose of the blog: to share articles. "Agile" developers
-would say I envisioned a shiny gold standard website rather than a MVP (Minimum Viable Product).
+would say I envisioned a shiny gold standard website rather than an MVP (Minimum Viable Product).
 
 I started building the `Hello World` version of my site and I cheated a little by not writing any tests. Not very long after, I frantically searched for tutorials to get me these fancy features. I was directed to multiple plugins, I
-read a lot of stack overflow and I spent most of my time searching for resources on google rather than coding... I
+read a lot of stack overflow, I spent most of my time searching for resources on google rather than coding... I
 eventually got frustrated. Naturally, I didn't want to open the project anymore because I didn't really know what to do
 and where to start.
 
@@ -58,11 +58,11 @@ learnings:
     - What would be included in my acceptance test? Do I need one?
 
 4. Have a _process_ and develop it to be more systematic.
-    - **Github Issues**:  I used these to keep a backlog of tasks, bugs and general thoughts that need doing especially
+    - **GitHub Issues**:  I used these to keep a backlog of tasks, bugs and general thoughts that need doing especially
       when they crop up in the middle of something else.
     - **Continuous Integration**:
         - I tried to apply some processes from work to make it as easy as possible to continuously integrate my code to
-          the live site. I created a github action that builds, tests and deploys the code, every time I push to master. I
+          the live site. I created a GitHub action that builds, tests and deploys the code, every time I push to master. I
           always work on master.
         - I took this opportunity to learn more about docker. I used docker to build my code in a container and this is
           used by Heroku when deploying my site.

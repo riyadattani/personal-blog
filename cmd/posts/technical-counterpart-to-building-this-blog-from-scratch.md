@@ -61,7 +61,7 @@ Hooray, the Steel thread is complete! The proof of concept is now a reality, and
 ### How can I publish blog posts easily?
 
 In respect to _my own_ experience of publishing blogs to the website, my ultimate goal was to use markdown files to write
-the blogs that I can simply commit to the Github repository for this site. Markdown files are perfect as I can reap the
+the blogs that I can simply commit to the GitHub repository for this site. Markdown files are perfect as I can reap the
 benefits of basic formatting, and I can easily embed videos or images.
 The next step was to shift the hard-coded blog posts from the `InMemoryRepository` to markdown files.
 
@@ -213,7 +213,7 @@ template:
 </time>
 ```
 
-The MVP is complete! Building this in an iterative way gave me the opportunity to break down the scary big problems into
+The MVP is complete! Building this iteratively gave me the opportunity to break down the scary big problems into
 digestible small problems. Soon after, I added tags and a picture to the metadata (and to the `Post`) with ease.
 
 ### Future features
@@ -246,4 +246,4 @@ type MetaData struct {
 - Read the documentation and find **examples**. I found it especially difficult to wrap my head around the `bufio` package. After spending a long time "googling" how to scan a file, I broke down the problem further and focused on solving something simpler. This allowed me to narrow my search terms and apply the relevant solutions to my problem. The [Go website](https://golang.org/) itself has some great examples.
 - **Feedback** is SO important. It's one thing to write software, but it's another thing to write _good quality_ software. Getting feedback on the code, the design and the content is not only beneficial to the user, but it is motivating for me to grow the blog and make it better.
 
-Overall, writing this blog has been quite fun and I learned some valuable lessons. This is only the start of my Golang journey. I can't wait to explore it more!
+Overall, writing this blog has been quite fun, and I learned some valuable lessons. This is only the start of my Golang journey. I can't wait to explore it more!
