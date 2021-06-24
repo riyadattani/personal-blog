@@ -3,7 +3,7 @@
 To start: 
 
 ```
-go mod 
+go mod download
 cd cmd/
 go run .
 ```
