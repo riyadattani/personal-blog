@@ -21,6 +21,7 @@
   --h1-font-size: 4.8rem;
   --font-size: 1.6rem;
   --line-height-multiplier: 1.7;
+  --max-main-width: 85rem;
   --image-width: 28rem;
   --image-height: 18rem;
 }
@@ -45,7 +46,7 @@ html {
 
 main {
   min-height: calc(100vh - 280px);
-  max-width: 85rem;
+  max-width: var(--max-main-width);
   padding: 0 2rem;
   margin: 2rem auto;
 }
@@ -142,6 +143,14 @@ nav div ul {
 
 /*The events page */
 
+.eventListOL {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0
+}
+
 .eventList {
   text-decoration: none;
   margin: 1rem 0;
@@ -149,7 +158,8 @@ nav div ul {
   display: flex;
   flex-direction: column;
   background: var(--block-bg-colour);
-  max-width: var(--image-width);
+  max-width: calc((var(--max-main-width)/2) - 2.5rem);
+  height: fit-content;
 }
 
 .eventInfo {
