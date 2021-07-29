@@ -51,7 +51,7 @@ func NewServer(tempFolderPath string, cssFolderPath string, repo Repository) (*m
 }
 
 func newBlogTemplate(tempFolderPath string) (*template.Template, error) {
-	template, err := template.ParseGlob(tempFolderPath)
+	temp, err := template.ParseGlob(tempFolderPath)
 	if err != nil {
 		return nil, fmt.Errorf(
 			"could not load template from %q, %v",
@@ -59,15 +59,23 @@ func newBlogTemplate(tempFolderPath string) (*template.Template, error) {
 			err,
 		)
 	}
-	return template, nil
+	return temp, nil
 }
 
 func (s *BlogServer) viewAllPosts(w http.ResponseWriter, _ *http.Request) {
-	s.template.ExecuteTemplate(w, "home.gohtml", s.repository.GetPosts())
+	err := s.template.ExecuteTemplate(w, "home.gohtml", s.repository.GetPosts())
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func (s *BlogServer) viewAbout(w http.ResponseWriter, _ *http.Request) {
-	s.template.ExecuteTemplate(w, "about.gohtml", nil)
+	err :=	s.template.ExecuteTemplate(w, "about.gohtml", nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func (s *BlogServer) viewPost(w http.ResponseWriter, request *http.Request) {
@@ -78,9 +86,18 @@ func (s *BlogServer) viewPost(w http.ResponseWriter, request *http.Request) {
 		http.Error(w, err.Error(), http.StatusNotFound)
 		return
 	}
-	s.template.ExecuteTemplate(w, "blog.gohtml", post)
+
+	err = s.template.ExecuteTemplate(w, "blog.gohtml", post)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func (s *BlogServer) viewEvents(w http.ResponseWriter, e *http.Request) {
-	s.template.ExecuteTemplate(w, "events.gohtml", s.repository.GetEvents())
+	err := s.template.ExecuteTemplate(w, "events.gohtml", s.repository.GetEvents())
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }

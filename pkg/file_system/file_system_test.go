@@ -1,4 +1,4 @@
-package pkg
+package file_system
 
 import (
 	"github.com/matryer/is"

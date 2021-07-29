@@ -5,6 +5,7 @@ import (
 	"io/fs"
 	"personal-blog/pkg/blog"
 	"personal-blog/pkg/event"
+	"personal-blog/pkg/file_system"
 )
 
 type InMemoryRepository struct {
@@ -13,10 +14,13 @@ type InMemoryRepository struct {
 }
 
 func NewInMemoryRepository(postsDir fs.FS, eventsDir fs.FS) (*InMemoryRepository, error) {
-	posts, err := NewPosts(postsDir)
-	events, err := NewEvents(eventsDir)
+	posts, err := file_system.NewPosts(postsDir)
 	if err != nil {
 		return nil, err
+	}
+	events, err1 := file_system.NewEvents(eventsDir)
+	if err1 != nil {
+		return nil, err1
 	}
 
 	return &InMemoryRepository{posts: posts, events: events}, nil

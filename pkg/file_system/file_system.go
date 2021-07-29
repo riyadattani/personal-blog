@@ -1,6 +1,7 @@
-package pkg
+package file_system
 
 import (
+	"errors"
 	"fmt"
 	"io/fs"
 	"personal-blog/pkg/blog"
@@ -33,6 +34,10 @@ func getSortedPosts(postsDir fs.FS, dir []fs.DirEntry) ([]blog.Post, error) {
 
 func newPostFromFile(postsDir fs.FS, fileName string) (blog.Post, error) {
 	f, err := postsDir.Open(fileName)
+	if f == nil {
+		return blog.Post{}, errors.New("this should not be a nil pointer")
+	}
+
 	defer f.Close()
 
 	if err != nil {
@@ -79,6 +84,10 @@ func sortEventsByDate(events []event.Event) []event.Event {
 
 func newEventFromFile(eventsDir fs.FS, fileName string) (event.Event, error) {
 	f, err := eventsDir.Open(fileName)
+	if f == nil {
+		return event.Event{}, errors.New("this should not be a nil pointer")
+	}
+
 	defer f.Close()
 
 	if err != nil {
