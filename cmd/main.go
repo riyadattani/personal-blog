@@ -2,29 +2,22 @@ package main
 
 import (
 	"fmt"
-	"github.com/gorilla/mux"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
 	"personal-blog/pkg"
 	"personal-blog/pkg/http_api"
+	"time"
 )
 
 func main() {
-	port, ok := os.LookupEnv("PORT")
-	if !ok {
-		port = "3000"
-	}
-
-	log.Println("listening on", port)
-
-	if err := http.ListenAndServe(":"+port, newServer()); err != nil {
-		log.Fatal("Cannot listen and serve", err)
+	if err := newServer().ListenAndServe(); err != nil {
+		os.Exit(1)
 	}
 }
 
-func newServer() *mux.Router {
+func newServer() *http.Server {
 	repository, err := pkg.NewInMemoryRepository(os.DirFS("posts"), os.DirFS("events"))
 	if err != nil {
 		log.Fatal(fmt.Sprintf("Failed to create a repository: %s", err))
@@ -35,9 +28,10 @@ func newServer() *mux.Router {
 		log.Fatal(fmt.Sprintf("Failed to create templates: %s", err))
 	}
 
-	server := http_api.NewHandler(t, repository)
+	handler := http_api.NewHandler(t, repository)
 
-	return http_api.NewRouter(server, "../css")
+	server := http_api.NewServer(newConfig(), handler, "../css")
+	return server
 }
 
 func newTemplate(tempFolderPath string) (*template.Template, error) {
@@ -50,4 +44,26 @@ func newTemplate(tempFolderPath string) (*template.Template, error) {
 		)
 	}
 	return temp, nil
+}
+
+func newConfig() http_api.ServerConfig {
+	return http_api.ServerConfig{
+		Port:             lookupEnvOr("PORT", defaultPort),
+		HTTPReadTimeout:  defaultHTTPReadTimeout,
+		HTTPWriteTimeout: defaulHTTPtWriteTimeout,
+	}
+}
+
+const (
+	defaultHTTPReadTimeout  = 2 * time.Second
+	defaulHTTPtWriteTimeout = 2 * time.Second
+	defaultPort             = "3000"
+)
+
+func lookupEnvOr(key string, defaultValue string) string {
+	port, ok := os.LookupEnv(key)
+	if !ok {
+		port = defaultValue
+	}
+	return port
 }

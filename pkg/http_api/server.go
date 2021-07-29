@@ -2,66 +2,40 @@ package http_api
 
 import (
 	"github.com/gorilla/mux"
-	"html/template"
 	"net/http"
-	"personal-blog/pkg/blog"
-	"personal-blog/pkg/event"
 )
 
-type Repository interface {
-	GetPosts() []blog.Post
-	GetPost(title string) (blog.Post, error)
-	GetEvents() []event.Event
-}
+//TODO: create a sever instead of using listen and serve (this is how you REALLY do stuff)
 
-type BlogServer struct {
-	template   *template.Template
-	repository Repository
-}
+func NewServer(config ServerConfig, handler *BlogServer, cssFolderPath string) (server *http.Server) {
+	router := NewRouter(handler, cssFolderPath)
 
-func NewHandler(template *template.Template, repo Repository) *BlogServer {
-	return &BlogServer{
-		template:   template,
-		repository: repo,
-	}
-}
-
-func (s *BlogServer) viewAllPosts(w http.ResponseWriter, _ *http.Request) {
-	err := s.template.ExecuteTemplate(w, "home.gohtml", s.repository.GetPosts())
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-}
-
-func (s *BlogServer) viewAbout(w http.ResponseWriter, _ *http.Request) {
-	err := s.template.ExecuteTemplate(w, "about.gohtml", nil)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-}
-
-func (s *BlogServer) viewPost(w http.ResponseWriter, request *http.Request) {
-	vars := mux.Vars(request)
-	urlTitle := vars["URLTitle"]
-	post, err := s.repository.GetPost(urlTitle)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusNotFound)
-		return
+	server = &http.Server{
+		Addr:         config.TCPAddress(),
+		Handler:      router,
+		ReadTimeout:  config.HTTPReadTimeout,
+		WriteTimeout: config.HTTPWriteTimeout,
 	}
 
-	err = s.template.ExecuteTemplate(w, "blog.gohtml", post)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	return
 }
 
-func (s *BlogServer) viewEvents(w http.ResponseWriter, e *http.Request) {
-	err := s.template.ExecuteTemplate(w, "events.gohtml", s.repository.GetEvents())
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+func NewRouter(handler *BlogServer, cssFolderPath string) *mux.Router {
+	//TODO: allow cloudflare to cache website
+	router := mux.NewRouter()
+	router.Use(func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Add("Cache-Control", "public, max-age=86400")
+			next.ServeHTTP(w, r)
+		})
+	})
+	router.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir(cssFolderPath))))
+	router.HandleFunc("/", handler.viewAllPosts).Methods(http.MethodGet)
+	router.HandleFunc("/about", handler.viewAbout).Methods(http.MethodGet)
+	router.HandleFunc("/blog/{URLTitle}", handler.viewPost).Methods(http.MethodGet)
+	router.HandleFunc("/events", handler.viewEvents).Methods(http.MethodGet)
+	//TODO: You can create a custom 404 page
+	router.NotFoundHandler = router.NewRoute().HandlerFunc(http.NotFound).GetHandler()
+
+	return router
 }
