@@ -21,7 +21,6 @@ func NewPosts(postsDir fs.FS) (blog.Posts, error) {
 
 func getSortedPosts(postsDir fs.FS, dir []fs.DirEntry) ([]blog.Post, error) {
 	var posts []blog.Post
-	jsdjkj
 	for _, file := range dir {
 		post, err := newPostFromFile(postsDir, file.Name())
 		if err != nil {
