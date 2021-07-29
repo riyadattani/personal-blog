@@ -3,11 +3,12 @@ package main
 import (
 	"fmt"
 	"github.com/gorilla/mux"
+	"html/template"
 	"log"
 	"net/http"
 	"os"
 	"personal-blog/pkg"
-	server "personal-blog/pkg/server"
+	"personal-blog/pkg/http_api"
 )
 
 func main() {
@@ -29,15 +30,24 @@ func newServer() *mux.Router {
 		log.Fatal(fmt.Sprintf("Failed to create a repository: %s", err))
 	}
 
-	s, err := server.NewServer(
-		"../html/*",
-		"../css",
-		repository,
-	)
+	t, err := newTemplate("../html/*")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(fmt.Sprintf("Failed to create templates: %s", err))
 	}
 
-	return s
+	server := http_api.NewHandler(t, repository)
+
+	return http_api.NewRouter(server, "../css")
 }
 
+func newTemplate(tempFolderPath string) (*template.Template, error) {
+	temp, err := template.ParseGlob(tempFolderPath)
+	if err != nil {
+		return nil, fmt.Errorf(
+			"could not load template from %q, %v",
+			tempFolderPath,
+			err,
+		)
+	}
+	return temp, nil
+}
