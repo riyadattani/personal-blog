@@ -9,8 +9,8 @@ import (
 )
 
 type App struct {
-	Config     http_api.ServerConfig
-	Handler    http_api.BlogHandler
+	Config  http_api.ServerConfig
+	Handler http_api.BlogHandler
 }
 
 func NewApplication() (*App, error) {
@@ -20,7 +20,7 @@ func NewApplication() (*App, error) {
 		return nil, fmt.Errorf("failed to create a repository: %s", err)
 	}
 
-	templ, err := newTemplate("../html/*")
+	templ, err := newTemplate(config.HTMLDir)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create templates: %s", err)
 	}
@@ -28,8 +28,8 @@ func NewApplication() (*App, error) {
 	handler := http_api.NewHandler(templ, repository)
 
 	return &App{
-		Config:     config,
-		Handler:    *handler,
+		Config:  config,
+		Handler: *handler,
 	}, nil
 }
 
@@ -50,10 +50,14 @@ func newConfig() http_api.ServerConfig {
 		Port:             lookupEnvOr("PORT", defaultPort),
 		HTTPReadTimeout:  defaultHTTPReadTimeout,
 		HTTPWriteTimeout: defaulHTTPtWriteTimeout,
+		CSSDir:           defaultCSSDir,
+		HTMLDir:          defaultHTMLDir,
 	}
 }
 
 const (
+	defaultCSSDir           = "../css"
+	defaultHTMLDir          = "../html/*"
 	defaultHTTPReadTimeout  = 2 * time.Second
 	defaulHTTPtWriteTimeout = 2 * time.Second
 	defaultPort             = "3000"

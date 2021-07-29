@@ -5,8 +5,8 @@ import (
 	"net/http"
 )
 
-func NewServer(config ServerConfig, handler *BlogHandler, cssFolderPath string) (server *http.Server) {
-	router := newRouter(handler, cssFolderPath)
+func NewServer(config ServerConfig, handler *BlogHandler) (server *http.Server) {
+	router := newRouter(handler, config.CSSDir)
 
 	server = &http.Server{
 		Addr:         config.TCPAddress(),
