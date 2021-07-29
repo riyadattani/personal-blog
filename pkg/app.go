@@ -10,8 +10,6 @@ import (
 
 type App struct {
 	Config     http_api.ServerConfig
-	Repository InMemoryRepository
-	Template   *template.Template
 	Handler    http_api.BlogHandler
 }
 
@@ -31,8 +29,6 @@ func NewApplication() (*App, error) {
 
 	return &App{
 		Config:     config,
-		Repository: *repository,
-		Template:   templ,
 		Handler:    *handler,
 	}, nil
 }

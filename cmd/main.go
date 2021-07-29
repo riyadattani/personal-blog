@@ -12,7 +12,7 @@ func main() {
 		log.Fatalf("Oops there is an error: %v", err)
 	}
 
-	server := http_api.NewServer(app.Config, http_api.NewHandler(app.Template, &app.Repository), "../css")
+	server := http_api.NewServer(app.Config, &app.Handler, "../css")
 
 	log.Printf("listening on port %s\n", app.Config.Port)
 	log.Fatal(server.ListenAndServe())
