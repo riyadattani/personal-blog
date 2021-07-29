@@ -14,19 +14,19 @@ type Repository interface {
 	GetEvents() []event.Event
 }
 
-type BlogServer struct {
+type BlogHandler struct {
 	template   *template.Template
 	repository Repository
 }
 
-func NewHandler(template *template.Template, repo Repository) *BlogServer {
-	return &BlogServer{
+func NewHandler(template *template.Template, repo Repository) *BlogHandler {
+	return &BlogHandler{
 		template:   template,
 		repository: repo,
 	}
 }
 
-func (s *BlogServer) viewAllPosts(w http.ResponseWriter, _ *http.Request) {
+func (s *BlogHandler) viewAllPosts(w http.ResponseWriter, _ *http.Request) {
 	err := s.template.ExecuteTemplate(w, "home.gohtml", s.repository.GetPosts())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -34,7 +34,7 @@ func (s *BlogServer) viewAllPosts(w http.ResponseWriter, _ *http.Request) {
 	}
 }
 
-func (s *BlogServer) viewAbout(w http.ResponseWriter, _ *http.Request) {
+func (s *BlogHandler) viewAbout(w http.ResponseWriter, _ *http.Request) {
 	err := s.template.ExecuteTemplate(w, "about.gohtml", nil)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -42,7 +42,7 @@ func (s *BlogServer) viewAbout(w http.ResponseWriter, _ *http.Request) {
 	}
 }
 
-func (s *BlogServer) viewPost(w http.ResponseWriter, request *http.Request) {
+func (s *BlogHandler) viewPost(w http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
 	urlTitle := vars["URLTitle"]
 	post, err := s.repository.GetPost(urlTitle)
@@ -58,7 +58,7 @@ func (s *BlogServer) viewPost(w http.ResponseWriter, request *http.Request) {
 	}
 }
 
-func (s *BlogServer) viewEvents(w http.ResponseWriter, e *http.Request) {
+func (s *BlogHandler) viewEvents(w http.ResponseWriter, e *http.Request) {
 	err := s.template.ExecuteTemplate(w, "events.gohtml", s.repository.GetEvents())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

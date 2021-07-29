@@ -62,7 +62,7 @@ package http_api
 //		t.Fatal("could not load blog template", err)
 //	}
 //
-//	blogServer := &BlogServer{
+//	blogServer := &BlogHandler{
 //		template:   template,
 //		repository: &repo,
 //	}
@@ -78,7 +78,7 @@ package http_api
 //
 //			is.Equal(response.Code, http.StatusOK)
 //
-//			//TODO: this does not work in the test (works on live) because we are not using NewRouter in this test. Source of header code: https://stackoverflow.com/questions/51456253/how-to-set-http-responsewriter-content-type-header-globally-for-all-api-endpoint
+//			//TODO: this does not work in the test (works on live) because we are not using newRouter in this test. Source of header code: https://stackoverflow.com/questions/51456253/how-to-set-http-responsewriter-content-type-header-globally-for-all-api-endpoint
 //			//if response.Header().Get("Cache-Control") != "public, max-age=86400" {
 //			//	t.Error("Response header does not contain the cache control values")
 //			//}
@@ -140,7 +140,7 @@ package http_api
 //
 //		is.Equal(response.Code, http.StatusOK)
 //
-//		//TODO: this does not work in the test (works on live) because we are not using NewRouter in this test. Source of header code: https://stackoverflow.com/questions/51456253/how-to-set-http-responsewriter-content-type-header-globally-for-all-api-endpoint
+//		//TODO: this does not work in the test (works on live) because we are not using newRouter in this test. Source of header code: https://stackoverflow.com/questions/51456253/how-to-set-http-responsewriter-content-type-header-globally-for-all-api-endpoint
 //		//if response.Header().Get("Cache-Control") != "public, max-age=86400" {
 //		//	t.Error("Response header does not contain the cache control values")
 //		//}

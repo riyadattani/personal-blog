@@ -29,7 +29,6 @@ func newServer() *http.Server {
 	}
 
 	handler := http_api.NewHandler(t, repository)
-
 	server := http_api.NewServer(newConfig(), handler, "../css")
 	return server
 }

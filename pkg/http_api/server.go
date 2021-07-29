@@ -5,10 +5,8 @@ import (
 	"net/http"
 )
 
-//TODO: create a sever instead of using listen and serve (this is how you REALLY do stuff)
-
-func NewServer(config ServerConfig, handler *BlogServer, cssFolderPath string) (server *http.Server) {
-	router := NewRouter(handler, cssFolderPath)
+func NewServer(config ServerConfig, handler *BlogHandler, cssFolderPath string) (server *http.Server) {
+	router := newRouter(handler, cssFolderPath)
 
 	server = &http.Server{
 		Addr:         config.TCPAddress(),
@@ -20,7 +18,7 @@ func NewServer(config ServerConfig, handler *BlogServer, cssFolderPath string) (
 	return
 }
 
-func NewRouter(handler *BlogServer, cssFolderPath string) *mux.Router {
+func newRouter(handler *BlogHandler, cssFolderPath string) *mux.Router {
 	//TODO: allow cloudflare to cache website
 	router := mux.NewRouter()
 	router.Use(func(next http.Handler) http.Handler {
