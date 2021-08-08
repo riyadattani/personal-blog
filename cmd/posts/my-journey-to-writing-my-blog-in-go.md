@@ -82,4 +82,4 @@ Looking back at my second attempt at building this blog, here is what I would've
 3. Get feedback on the code and the design as soon as possible.
 
 In hindsight, building this blog has been a fantastic learning experience! I felt technically challenged, and I learned
-about the process of creating a website from scratch to live. If you are interested in the technicalities, have a read through [this complimentary blog](https://www.riyadattani.com/blog/A%20technical%20approach%20on%20building%20this%20blog%20from%20scratch%20) to view some code.
+about the process of creating a website from scratch to live. If you are interested in the technicalities, have a read through [this complimentary blog](https://www.riyadattani.com/blog/A-technical-approach-on-building-this-blog-from-scratch) to view some code.

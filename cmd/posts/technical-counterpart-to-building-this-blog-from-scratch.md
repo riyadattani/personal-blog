@@ -4,7 +4,7 @@ golangPic2.png
 golang
 -----
 
-I am writing a more technical counterpart to my [previous blog post](https://www.riyadattani.com/blog/My%20journey%20to%20writing%20my%20blog%20in%20Go%20). I am going to explore my technical plan of achieving my MVP (Minimum Viable Product) and how my code base evolved.
+I am writing a more technical counterpart to my [previous blog post](https://www.riyadattani.com/blog/My-journey-to-writing-my-blog-in-Go). I am going to explore my technical plan of achieving my MVP (Minimum Viable Product) and how my code base evolved.
 
 ### What is my MVP?
 
