@@ -64,7 +64,7 @@ We talked about _how_ developers can work together but I think it's interesting 
 - A developer can miss out on instant feedback and may need to wait for a pull request (PR) review depending on the teams workflow. Having another pair of eyes providing instant feedback and understanding the thought process is more efficient than reading a PR and requesting changes (and then reviewing subsequent changes on top of that). In fact through pairing, there would not be a need to raise a PR since your pairing partner has worked on the code with you. If you pair regularly and trust the developers on your team, why not consider trunk-based development? Make small iterative changes and _really_ practice continuous integration by working on the most recent codebase.
 - Two heads are better than one. To design code that is sustainable, scaleable and all the lovely things developers want, you need to think about it. Discussing ideas, possibilities and architecture with another developer usually always produces a better outcome.
 
-### Benefits to pair programming
+### Benefits of pair programming
 
 - Knowledge sharing. Mitigating knowledge gaps leads to better decision making, increases the ability to work smarter and faster as a team and increases engagement.
 - Coaching and mentoring opportunities. More experienced developers have a chance to nurture less experienced developers and hone in on their coaching or teaching skills.
