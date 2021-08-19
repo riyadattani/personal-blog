@@ -75,7 +75,7 @@ This is the first sentence of the content.`
 		)
 
 		dirFS := fstest.MapFS{
-			"event1.md":  {Data: []byte(event1)},
+			"event1.md": {Data: []byte(event1)},
 			"event2.md": {Data: []byte(event2)},
 		}
 

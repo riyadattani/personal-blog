@@ -1,10 +1,10 @@
 :root {
-  --link-colour: hsl(174, 39%, var(--l-57));
-  --bg-colour: hsl(43, 47%, var(--l-97));
-  --block-bg-colour: hsl(0, 0%, var(--l-100));
-  --pastel-pink: hsl(351, 100%, var(--l-91));
-  --orange-colour: hsl(17, 81%, var(--l-63));
-  --text-colour: hsl(185, 57%, var(--l-21));
+  --link-colour: #67bcb4;
+  --bg-colour: #fbf9f4;
+  --block-bg-colour: #ffffff;
+  --tag-bg-colour: #ffd1d8;
+  --highlight-colour: #f3947c;
+  --text-colour: #174f54;
 
   --l-21: 21%;
   --l-57: 57%;
@@ -28,12 +28,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --l-21: 79%;
-    --l-57: 43%;
-    --l-63: 37%;
-    --l-91: 12%;
-    --l-97: 3%;
-    --l-100: 0%;
+    --link-colour: #67bcb4;
+    --bg-colour: #49545b;
+    --block-bg-colour: #363f44;
+    --tag-bg-colour: #B26C76;
+    --highlight-colour: #f3947c;
+    --text-colour: #fbf9f4;
   }
 }
 
@@ -62,7 +62,7 @@ h2 {
 }
 
 time {
-  color: var(--orange-colour);
+  color: var(--highlight-colour);
   font-size: var(--font-size);
 }
 
@@ -71,7 +71,7 @@ a {
 }
 
 a:hover {
-  color: var(--orange-colour);
+  color: var(--highlight-colour);
 }
 
 p {
@@ -220,7 +220,7 @@ nav div ul {
 }
 
 .tag {
-  background: var(--pastel-pink);
+  background: var(--tag-bg-colour);
   margin-right: 0.8rem;
   text-transform: capitalize;
   border-radius: 0.5rem;
@@ -252,8 +252,8 @@ article ol, ul {
 
 blockquote {
   margin: 1rem 0;
-  border-left: 1rem solid var(--orange-colour);
-  color: var(--orange-colour);
+  border-left: 1rem solid var(--highlight-colour);
+  color: var(--highlight-colour);
   padding-left: 1rem;
   font-style: italic;
   font-size: var(--font-size);
