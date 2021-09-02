@@ -61,3 +61,5 @@ func getPost(r io.Reader) (Post, error) {
 
 	return post, nil
 }
+
+//TODO: meth to turn blog post into markdown

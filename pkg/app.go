@@ -13,9 +13,8 @@ type App struct {
 	Handler http_api.BlogHandler
 }
 
-func NewApplication() (*App, error) {
-	config := newConfig()
-	repository, err := NewInMemoryRepository(os.DirFS("posts"), os.DirFS("events"))
+func NewApplication(config http_api.ServerConfig) (*App, error) {
+	repository, err := NewInMemoryRepository(os.DirFS(config.PostsDir), os.DirFS(config.EventsDir))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create a repository: %s", err)
 	}
@@ -45,13 +44,15 @@ func newTemplate(tempFolderPath string) (*template.Template, error) {
 	return temp, nil
 }
 
-func newConfig() http_api.ServerConfig {
+func NewConfig() http_api.ServerConfig {
 	return http_api.ServerConfig{
 		Port:             lookupEnvOr("PORT", defaultPort),
 		HTTPReadTimeout:  defaultHTTPReadTimeout,
 		HTTPWriteTimeout: defaulHTTPtWriteTimeout,
 		CSSDir:           defaultCSSDir,
 		HTMLDir:          defaultHTMLDir,
+		PostsDir:         "posts",
+		EventsDir:        "events",
 	}
 }
 

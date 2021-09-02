@@ -8,6 +8,8 @@ type ServerConfig struct {
 	Port             string
 	HTTPReadTimeout  time.Duration
 	HTTPWriteTimeout time.Duration
+	PostsDir         string
+	EventsDir        string
 }
 
 func (c ServerConfig) TCPAddress() string {

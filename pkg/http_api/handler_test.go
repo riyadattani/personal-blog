@@ -1,5 +1,4 @@
 package http_api
-
 //
 //import (
 //	"fmt"
@@ -9,6 +8,7 @@ package http_api
 //	"net/http/httptest"
 //	"personal-blog/pkg/blog"
 //	"personal-blog/pkg/event"
+//	"personal-blog/pkg/teshelpers"
 //	"strings"
 //	"testing"
 //)
@@ -39,17 +39,8 @@ package http_api
 //func TestBlogHandler(t *testing.T) {
 //	is := is2.New(t)
 //
-//	post := blog.Post{
-//		URLTitle: "this-is-a-title",
-//		Title:   "this is a title",
-//		Content: "HTML template which is basically a string",
-//	}
-//
-//	post2 := blog.Post{
-//		URLTitle: "this-is-another-title",
-//		Title:   "this is another title",
-//		Content: "HTML template which is basically a string",
-//	}
+//	post := teshelpers.NewPostBuilder().WithTitle("blog post 1").Build()
+//	post2 := teshelpers.NewPostBuilder().WithTitle("blog post 2").Build()
 //
 //	event1 := event.Event{Title: "Event1"}
 //	event2 := event.Event{Title: "Event2"}
@@ -62,7 +53,6 @@ package http_api
 //	templ := template.New("test")
 //	blogHandler := NewHandler(templ, &repo)
 //
-//
 //	t.Run("Posts", func(t *testing.T) {
 //		t.Run("returns status code 200 on home page when getting posts", func(t *testing.T) {
 //			request, _ := http.NewRequest(http.MethodGet, "/", nil)
@@ -73,11 +63,6 @@ package http_api
 //			body := response.Body.String()
 //
 //			is.Equal(response.Code, http.StatusOK)
-//
-//			//TODO: this does not work in the test (works on live) because we are not using newRouter in this test. Source of header code: https://stackoverflow.com/questions/51456253/how-to-set-http-responsewriter-content-type-header-globally-for-all-api-endpoint
-//			//if response.Header().Get("Cache-Control") != "public, max-age=86400" {
-//			//	t.Error("Response header does not contain the cache control values")
-//			//}
 //
 //			if !strings.Contains(body, post.Title) {
 //				t.Error("Response body does not contain the first post")

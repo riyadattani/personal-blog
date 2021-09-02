@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	app, err := pkg.NewApplication()
+	app, err := pkg.NewApplication(pkg.NewConfig())
 	if err != nil {
 		log.Fatalf("Oops there is an error: %v", err)
 	}
