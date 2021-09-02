@@ -10,6 +10,7 @@ COPY pkg ./pkg
 COPY html ./html
 COPY css ./css
 COPY cmd ./cmd
+COPY acceptance-tests ./acceptance-tests
 
 WORKDIR cmd
 RUN go build main.go
