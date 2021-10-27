@@ -1,4 +1,4 @@
-package http_api
+package blog_handler
 //
 //import (
 //	"fmt"

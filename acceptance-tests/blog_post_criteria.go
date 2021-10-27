@@ -3,7 +3,7 @@ package acceptance_tests
 import (
 	is2 "github.com/matryer/is"
 	"personal-blog/pkg/blog"
-	"personal-blog/pkg/teshelpers"
+	testHelpers "personal-blog/pkg/testhelpers"
 	"testing"
 )
 
@@ -15,7 +15,7 @@ type BlogDriver interface {
 func BlogAcceptanceCriteria(t *testing.T, blog BlogDriver) {
 	t.Run("Can publish a post, find by title and read the content", func(t *testing.T) {
 		is := is2.New(t)
-		post := teshelpers.NewPostBuilder().Build()
+		post := testHelpers.NewPostBuilder().Build()
 
 		err := blog.Publish(post)
 		is.NoErr(err)

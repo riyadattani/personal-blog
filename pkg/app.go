@@ -5,18 +5,25 @@ import (
 	"html/template"
 	"os"
 	"personal-blog/pkg/http_api"
+	"personal-blog/pkg/http_api/blog_handler"
+	in_mem "personal-blog/pkg/in-mem"
 	"time"
 )
 
 type App struct {
 	Config  http_api.ServerConfig
-	Handler http_api.BlogHandler
+	Handler blog_handler.BlogHandler
 }
 
 func NewApplication(config http_api.ServerConfig) (*App, error) {
-	repository, err := NewInMemoryRepository(os.DirFS(config.PostsDir), os.DirFS(config.EventsDir))
+	eventStore, err := in_mem.NewEventStore(os.DirFS(config.EventsDir))
 	if err != nil {
-		return nil, fmt.Errorf("failed to create a repository: %s", err)
+		return nil, fmt.Errorf("failed to create the event store: %s", err)
+	}
+
+	postStore, err := in_mem.NewPostStore(os.DirFS(config.PostsDir))
+	if err != nil {
+		return nil, fmt.Errorf("failed to create the post store: %s", err)
 	}
 
 	templ, err := newTemplate(config.HTMLDir)
@@ -24,7 +31,7 @@ func NewApplication(config http_api.ServerConfig) (*App, error) {
 		return nil, fmt.Errorf("failed to create templates: %s", err)
 	}
 
-	handler := http_api.NewHandler(templ, repository)
+	handler := blog_handler.NewHandler(templ, eventStore, postStore)
 
 	return &App{
 		Config:  config,
