@@ -7,11 +7,6 @@ import (
 	"personal-blog/pkg/file_system"
 )
 
-type PostService interface {
-	GetPosts() []blog.Post
-	GetPost(title string) (blog.Post, error)
-}
-
 type PostSore struct {
 	posts []blog.Post
 }

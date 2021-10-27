@@ -6,10 +6,6 @@ import (
 	"personal-blog/pkg/file_system"
 )
 
-type EventService interface {
-	GetEvents() []event.Event
-}
-
 type EventStore struct {
 	events []event.Event
 }
