@@ -7,12 +7,12 @@ import (
 	"testing"
 )
 
-type BlogAdapter interface {
+type BlogDriver interface {
 	Publish(post blog.Post) error
 	ReadPost(urlTitle string) (exists bool, err error)
 }
 
-func BlogAcceptanceCriteria(t *testing.T, blog BlogAdapter) {
+func BlogAcceptanceCriteria(t *testing.T, blog BlogDriver) {
 	t.Run("Can publish a post, find by title and read the content", func(t *testing.T) {
 		is := is2.New(t)
 		post := teshelpers.NewPostBuilder().Build()

@@ -11,12 +11,37 @@ import (
 	"testing"
 )
 //TODO: use selinium to create the adapter - this is like cypress
-type LocalBlogAdapter struct {
+type LocalBlogDriver struct {
 }
 
-func (l LocalBlogAdapter) Publish(post blog.Post) error {
-	//TODO: testing lib has a thing where it create a temp file and then deletes it when it is done
-	file, err := os.Create("posts-test/acceptance-test.md")
+func (l LocalBlogDriver) Publish(post blog.Post) error {
+
+	//TODO: testing lib has a thing where it create a temp file and then deletes it when it is done - this is not working though - deleting before can read
+	//postsDir, err := ioutil.TempDir(".", "posts-dir-test")
+	//if err != nil {
+	//	return err
+	//}
+	//defer os.RemoveAll(postsDir)
+
+	//eventsDir, err := ioutil.TempDir(".", "events-dir-test")
+	//if err != nil {
+	//	return err
+	//}
+	//defer os.RemoveAll(eventsDir)
+
+	//content := []byte(fmt.Sprintf("%s\n2013-Mar-03\npicture.jpg\ncat,dog\n-----\nThis is the first sentence of the content.\nThis is the second sentence.\n\nThis is the second paragraph.", post.Title))
+	//tempFile, err := ioutil.TempFile(postsDirTest, "example_post")
+	//if err != nil {
+	//	return err
+	//}
+	//
+	//_, err = tempFile.Write(content)
+	//
+	//if err != nil {
+	//	return err
+	//}
+
+	file, err := os.Create("posts-test/example.md")
 	if err != nil {
 		return err
 	}
@@ -33,7 +58,7 @@ This is the second paragraph.`, post.Title)
 	return nil
 }
 
-func (l LocalBlogAdapter) ReadPost(urlTitle string) (bool, error) {
+func (l LocalBlogDriver) ReadPost(urlTitle string) (bool, error) {
 	config := pkg.NewConfig()
 	config.PostsDir = "posts-test"
 	config.EventsDir = "events-test"
@@ -57,7 +82,7 @@ func (l LocalBlogAdapter) ReadPost(urlTitle string) (bool, error) {
 
 func TestViewAPost(t *testing.T) {
 	t.Run("Successfully view a post", func(t *testing.T) {
-		adapter := LocalBlogAdapter{}
-		BlogAcceptanceCriteria(t, adapter)
+		driver := LocalBlogDriver{}
+		BlogAcceptanceCriteria(t, driver)
 	})
 }
