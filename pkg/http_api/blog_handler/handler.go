@@ -8,20 +8,23 @@ import (
 )
 
 type BlogHandler struct {
-	template     *template.Template
-	postService  ports.PostService
-	eventService ports.EventService
+	template       *template.Template
+	postService    ports.PostService
+	eventService   ports.EventService
+	twitterGateway ports.TwitterGateway
 }
 
 func NewHandler(
 	template *template.Template,
 	eventService ports.EventService,
 	postService ports.PostService,
+	twitterGateway ports.TwitterGateway,
 ) *BlogHandler {
 	return &BlogHandler{
-		template:     template,
-		postService:  postService,
-		eventService: eventService,
+		template:       template,
+		postService:    postService,
+		eventService:   eventService,
+		twitterGateway: twitterGateway,
 	}
 }
 
@@ -34,7 +37,13 @@ func (s *BlogHandler) ViewAllPosts(w http.ResponseWriter, _ *http.Request) {
 }
 
 func (s *BlogHandler) ViewAbout(w http.ResponseWriter, _ *http.Request) {
-	err := s.template.ExecuteTemplate(w, "about.gohtml", nil)
+	myTwitterTimeline, err := s.twitterGateway.GetUserTimeline()
+	if err != nil {
+		http.Error(w, "could not get riya's tweets", http.StatusInternalServerError)
+		//todo: I dont want to site to break if this does not work right?
+		//return
+	}
+	err = s.template.ExecuteTemplate(w, "about.gohtml", myTwitterTimeline)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
