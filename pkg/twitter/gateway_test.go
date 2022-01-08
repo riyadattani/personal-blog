@@ -11,7 +11,6 @@ import (
 
 func TestName(t *testing.T) {
 	t.Run("hit twitter api and retrieve my first 5 tweets", func(t *testing.T) {
-		t.Skip()
 		is := is.New(t)
 
 		someTweets := twitter.APIResponse{
@@ -50,5 +49,6 @@ func TestName(t *testing.T) {
 
 		is.NoErr(err)
 		is.True(len(feed.Data) != 0)
+		is.Equal(feed, someTweets)
 	})
 }

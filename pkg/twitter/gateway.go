@@ -16,7 +16,7 @@ func NewGateway(config TwitterConfig, client *http.Client) *Gateway {
 }
 
 func (g Gateway) GetUserTimeline() (APIResponse, error) {
-	userTimelinePath := "2/users/1048233506470612993/tweets"
+	userTimelinePath := "/2/users/1048233506470612993/tweets"
 	request, err := http.NewRequest(http.MethodGet, g.config.URL+userTimelinePath, nil)
 	if err != nil {
 		return APIResponse{}, fmt.Errorf("failed to create request, err: %v", err)

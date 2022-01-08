@@ -75,7 +75,7 @@ func NewConfig() Config {
 		},
 		TwitterConfig: twitter.TwitterConfig{
 			BearerToken: "AAAAAAAAAAAAAAAAAAAAAMUlXwEAAAAA0ACYpMLy5XExHotYOCxYsIWV%2B1o%3D2slZICJTu5ArCfTQmlqgklyhvlnDbbA6atV13zQYTEar0RM3DF",
-			URL:         "https://api.twitter.com/",
+			URL:         "https://api.twitter.com",
 		},
 	}
 }
