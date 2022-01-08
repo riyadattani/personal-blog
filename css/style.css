@@ -29,8 +29,8 @@
 @media (prefers-color-scheme: dark) {
     :root {
         --link-colour: #67bcb4;
-        --bg-colour: #49545b;
-        --block-bg-colour: #363f44;
+        --bg-colour: #373E43;
+        --block-bg-colour: #2E3438;
         --tag-bg-colour: #B26C76;
         --highlight-colour: #f3947c;
         --text-colour: #fbf9f4;
