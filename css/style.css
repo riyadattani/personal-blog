@@ -35,6 +35,14 @@
         --highlight-colour: #f3947c;
         --text-colour: #fbf9f4;
     }
+
+    .tweets-light {
+        display: none;
+    }
+
+    .tweets-dark {
+        display: block !important;
+    }
 }
 
 html {
@@ -282,6 +290,10 @@ pre {
     margin-bottom: 2rem;
 }
 
+.tweets-dark {
+    display: none;
+}
+
 #selfPortrait {
     display: block;
     margin-left: auto;
@@ -346,7 +358,6 @@ footer a svg {
     height: 2.4rem;
     width: 2.4rem;
 }
-
 
 /*Code to make it responsive*/
 
